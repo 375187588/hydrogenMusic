@@ -1,0 +1,8 @@
+[Dolphin]
+HeaderColumnWidths=354,66,60,68,172,64,182
+PreviewsShown=true
+SortOrder=1
+Timestamp=2018,1,15,15,45,57
+Version=4
+ViewMode=1
+VisibleRoles=Details_text,Details_size,Details_type,Details_permissions,Details_owner,Details_destination,Details_modificationtime,CustomizedDetails
