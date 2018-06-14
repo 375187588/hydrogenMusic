@@ -1,0 +1,1 @@
+Before you make, compile your own ffmpeg library first, then set the directory in Makefile.
