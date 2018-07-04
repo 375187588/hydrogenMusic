@@ -24,7 +24,7 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
     lyrics.cpp \
-    onlinelyrics.cpp
+    database.cpp
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -47,4 +47,12 @@ macx {
 
 HEADERS += \
     lyrics.h \
-    onelinelyric.h
+    database.h
+
+DISTFILES += \
+    qml/myscript.js \
+    qml/Lyrics.qml \
+    qml/SongInterface.qml \
+    qml/SongList.qml \
+    qml/Upload.qml \
+    qml/Searchfor.qml

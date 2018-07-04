@@ -3,12 +3,12 @@
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
 #include "lyrics.h"
+#include "database.h"
 
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
-    qmlRegisterType<OneLineLyric>("qt.OneLineLyric",1,0,"OneLineLyricMessage");
     qmlRegisterType<Lyric>("qt.Lyric",1,0,"LyricMessage");
     VPApplication vplay;
 
@@ -16,10 +16,12 @@ int main(int argc, char *argv[])
     vplay.setPreservePlatformFonts(true);
 
     QQmlApplicationEngine engine;
-    Lyric lyric;
-    engine.rootContext()->setContextProperty("qtLyric",&lyric);
+//    Lyric lyric;
+//    engine.rootContext()->setContextProperty("qtLyric",&lyric);
     vplay.initialize(&engine);
+    Database db;
 
+    engine.rootContext()->setContextProperty("db",&db);
     // use this during development
     // for PUBLISHING, use the entry point below
     vplay.setMainQmlFileName(QStringLiteral("qml/Main.qml"));
