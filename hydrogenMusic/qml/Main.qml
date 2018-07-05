@@ -13,7 +13,8 @@ App {
         visible: false
     }
     Component.onCompleted: {
-        db.usedb("songListShow")
+        personal.run()
+        personal.sendMessage("songListShow")
     }
 
     Searchfor {
@@ -34,41 +35,43 @@ App {
         anchors.top: searchfor.bottom
         width: parent.width
         onListenThis: {
-            songinterface.s = address
-            console.log(address)
             songinterface.visible = true
-            songlist.visible = false
+            songinterface.s = address
             songinterface.nameAr = nameAr
+            console.log(address)
+
+            songlist.visible = false
+            searchfor.visible = false
         }
 
         onWantUpload: {
-            console.log("99999999999999")
             searchfor.visible = false
             songlist.visible = false
-            //            load.sourceComponent = upload
-            upload.visible = true
+            load.sourceComponent = upload
         }
     }
 
-    //    Loader {
-    //        id: load
-    //        anchors.fill: parent
-    //    }
-    Upload {
+    Loader {
+        id: load
+        anchors.fill: parent
+    }
+
+    Component {
         id: upload
-        visible: false
-        onUploadBack: {
-            visible = false
-            searchfor.visible = true
-            songlist.visible = true
-        }
-        onTextFieldAddressChanged: {
-            if (ttext == 1) {
-                soaField = textFieldAddress
+        Upload {
+            onUploadBack: {
+                load.sourceComponent = null
+                searchfor.visible = true
+                songlist.visible = true
             }
-            if (ttext == 2)
-                loaField = textFieldAddress
-            ttext = 0
+            onTextFieldAddressChanged: {
+                if (ttext == 1) {
+                    soaField = textFieldAddress
+                }
+                if (ttext == 2)
+                    loaField = textFieldAddress
+                ttext = 0
+            }
         }
     }
 }

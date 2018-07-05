@@ -24,7 +24,8 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
     lyrics.cpp \
-    database.cpp
+    client.cpp \
+    personal.cpp
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -47,8 +48,11 @@ macx {
 
 HEADERS += \
     lyrics.h \
-    database.h
+    client.h \
+    myerror.h \
+    personal.h
 
+QMAKE_LFLAGS += -lboost_system -lpthread -lboost_thread
 DISTFILES += \
     qml/myscript.js \
     qml/Lyrics.qml \

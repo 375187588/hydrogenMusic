@@ -78,7 +78,7 @@ Page {
                 anchors.right: rec.right
                 onClicked: {
                     var e = "downLoad " + nameAr + " " + s
-                    db.usedb(e)
+                    personal.sendMessage(e)
                 }
             }
         }
@@ -90,7 +90,7 @@ Page {
     }
 
     Connections {
-        target: db
+        target: personal
         onDownloadOk:{
                 message.text = "download OK."
                 appflickable.opacity = 0.5

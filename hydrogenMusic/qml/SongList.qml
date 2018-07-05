@@ -52,6 +52,12 @@ Page {
         }
     }
 
+    Loader {
+        id: songListLoa
+        sourceComponent: list
+        anchors.fill: parent
+    }
+
     IconButton {
         id: newAdd
         icon: IconType.upload
@@ -60,9 +66,7 @@ Page {
         height: dp(50)
         width: dp(50)
         onClicked: {
-            console.log("meovmrold")
             wantUpload()
-            console.log("meovmrokvmerklvmerklmverkld")
         }
     }
 
@@ -77,26 +81,23 @@ Page {
         }
     }
 
-    Loader {
-        id: songListLoa
-        sourceComponent: list
-        anchors.fill: parent
-    }
-
     Connections {
-        target: db
+        target: personal
         onSongList: {
             newAdd.visible = true
-            songVec = vec
-            songListLoa.sourceComponent = list
+            if (vec.length !== 1) {
+                songVec = vec
+                songListLoa.sourceComponent = list
+            }
         }
         onSearchOk: {
             newAdd.visible = false
             if (vec.length !== 1) {
                 songVec = vec
                 songListLoa.sourceComponent = list
-            } else
+            } else {
                 songListLoa.sourceComponent = noList
+            }
         }
     }
 }

@@ -3,7 +3,7 @@
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
 #include "lyrics.h"
-#include "database.h"
+#include "personal.h"
 
 
 int main(int argc, char *argv[])
@@ -19,9 +19,9 @@ int main(int argc, char *argv[])
 //    Lyric lyric;
 //    engine.rootContext()->setContextProperty("qtLyric",&lyric);
     vplay.initialize(&engine);
-    Database db;
 
-    engine.rootContext()->setContextProperty("db",&db);
+    Personal personal;
+    engine.rootContext()->setContextProperty("personal",&personal);
     // use this during development
     // for PUBLISHING, use the entry point below
     vplay.setMainQmlFileName(QStringLiteral("qml/Main.qml"));

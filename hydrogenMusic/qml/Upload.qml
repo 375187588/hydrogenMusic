@@ -98,7 +98,7 @@ Page {
                     text: "upload"
                     onClicked: {
                         var e = "upload " + sOAField.text + " " + lOAField.text
-                        db.usedb(e)
+                        personal.sendMessage(e)
                     }
                 }
                 AppButton {
@@ -174,7 +174,7 @@ Page {
         //                        onClicked: {
         //                            var e = "INSERT INTO songList VALUES('" + sOAField.text
         //                                    + "','" + lOAField.text + "');"
-        //                            if (db.changeDatabase(e)) {
+        //                            if (personnal.changeDatabase(e)) {
         //                                message.text = "upload OK."
         //                                column.opacity = 0.5
         //                                messageRet.visible = true
@@ -195,7 +195,7 @@ Page {
         //        }
     }
     Connections {
-        target: db
+        target: personal
         onUploadOk: {
             message.text = "upload OK."
             list.opacity = 0.3

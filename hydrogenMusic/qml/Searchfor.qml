@@ -30,8 +30,10 @@ Page {
 
             anchors.verticalCenter: parent.verticalCenter
             onAccepted: {
-                var t = "search " + text + " " + searchforWhat[sfw]
-                db.usedb(t)
+                if(text.length != 0) {
+                    var t = "search " + text + " " + searchforWhat[sfw]
+                    personal.sendMessage(t)
+                }else personal.sendMessage("songListShow")
             }
             onIconColorChanged: searching()
         }
