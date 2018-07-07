@@ -1,10 +1,11 @@
 import QtQuick 2.0
 import VPlayApps 1.0
+import "../qml/myscript.js" as Logic
 
 Page {
     id: songlis
     property var songVec: []
-    signal listenThis(string nameAr, string address)
+    signal listenThis(var vec)
     signal wantUpload
 
     Component {
@@ -15,7 +16,7 @@ Page {
             Column {
                 Repeater {
                     id: rep1
-                    model: songVec.length / 2
+                    model: personal.songlis.length / 6
 
                     Rectangle {
                         id: rec
@@ -33,7 +34,7 @@ Page {
                             color: "black"
                             font.pixelSize: sp(12)
                             font.bold: sp(5)
-                            text: songVec[index * 2]
+                            text: songVec[index * 6 + 4]
                         }
                         MouseArea {
                             anchors.fill: parent
@@ -42,8 +43,12 @@ Page {
                             }
                             onReleased: {
                                 parent.opacity = 1
-                                listenThis(songVec[index * 2],
-                                           songVec[index * 2 + 1])
+                                var temvec = []
+                                for (var i = 0; i < 6; i++) {
+                                    temvec.push(Logic.transToString(
+                                                    songVec[index * 6 + i]))
+                                }
+                                listenThis(temvec)
                             }
                         }
                     }
@@ -54,7 +59,7 @@ Page {
 
     Loader {
         id: songListLoa
-        sourceComponent: list
+        //        sourceComponent: list
         anchors.fill: parent
     }
 

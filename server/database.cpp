@@ -55,7 +55,8 @@ std::string Database::output_database(int i)
     while(m_query.next()){
         for(int a = 0;a != i;a++) {
             std::cout << m_query.value(a).toString().toStdString() << " ";
-            str += m_query.value(a).toString().toStdString() + " ";
+            if(a==4) str += m_query.value(a).toString().toStdString() + " || ";
+            else str += m_query.value(a).toString().toStdString() + " ";
         }
         str += " ||| ";
         std::cout << std::endl;

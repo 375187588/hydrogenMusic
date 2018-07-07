@@ -17,10 +17,11 @@ class Lyric:public QObject
     Q_PROPERTY(QList<QString> lyricContent READ lyricContent WRITE setlyricContent NOTIFY lyricContentChanged)
     Q_PROPERTY(QList<int> endTime READ endTime)
     Q_PROPERTY(QList<int> startTime READ startTime WRITE setstartTime NOTIFY startTimeChanged)
+    Q_PROPERTY(QString lAddress READ lAddress WRITE setlAddress NOTIFY lAddressChanged)
 
 public:
     explicit Lyric(QObject *parent = 0):QObject(parent)
-    {readLyric();}
+    {/*readLyric();*/}
 
     QList<QString> header() const;
     int lineNum() const;
@@ -32,16 +33,21 @@ public:
     QList<int> endTime() const;
     QList<int> startTime() const;
     void setstartTime(QList<int> &s);
+    QString lAddress();
+    void setlAddress(QString l);
 
     Q_INVOKABLE void readLyric();
     void analysisOneLine(std::string str);
     bool getLyricHeader(std::string str);
 
     Q_INVOKABLE int changeStringToInt(std::string str_time);
+    void clean();
 signals:
     void lheaderChanged();
     void lyricContentChanged();
     void startTimeChanged();
+    void lAddressChanged();
+    void ok();
 private:
 
     QList<QString> m_header;
@@ -50,6 +56,8 @@ private:
     QList<QString> m_lyricContent;
     QList<int> m_endTime;
     QList<int> m_startTime;
+
+    QString m_lAddress;
 };
 
 

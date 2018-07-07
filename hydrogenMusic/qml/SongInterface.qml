@@ -4,30 +4,70 @@ import QtMultimedia 5.5
 import qt.Lyric 1.0
 
 Page {
-    id: page
+    id: songinterfacepage
     title: qsTr("Hydrogen music")
-    property string s: "file:///root/c_note/hydrogenMusic/assets/music/薛之谦 - 动物世界.mp3"
-    property var nameAr
+    property var thisSong: ["a", "b", "c", '1', "../hydrogenMusic/assets/music/薛之谦 - 动物世界.mp3", "../hydrogenMusic/a"]
     MediaPlayer {
         //可以播放音频和视频
         id: music
-        //                source: "../assets/music/薛之谦 - 动物世界.mp3"
-        //             autoPlay: true
-        source: s
+        source: "../hydrogenMusic/assets/music/薛之谦 - 动物世界.mp3"
+        //        source: thisSong[4]
+    }
+
+    onThisSongChanged: {
+        //        lyrics.lAddr = thisSong[5]
+        //        lyrics.lAddr = personal.songlis[5]
+        lyrics.lAddr = "../hydrogenMusic/a"
+        console.log("thisSongChanged,thisSong[5]:" + thisSong[5])
+    }
+    Rectangle {
+        id: ret
+        width: parent.width
+        height: parent.height * 0.05
+        anchors.top: parent.top
+        color: "grey"
+        IconButton {
+            id: retPictrue
+            icon: IconType.backward
+            anchors.top: parent.top
+            anchors.left: parent.left
+            onClicked: {
+                music.play()
+                lyrics.lyricsTime.start()
+            }
+        }
     }
 
     AppFlickable {
         id: appflickable
-        anchors.fill: parent
+        anchors.top: ret.bottom
         anchors.centerIn: parent
-        contentWidth: width
-        contentHeight: page.height
+        contentWidth: parent.width
+        contentHeight: parent.height * 0.8
 
+        Lyrics {
+            id: lyrics
+            anchors.fill: parent
+            onLyricOk: {
+                console.log("diogvjdolvgjolvg")
+                bar.sourceComponent = rec
+            }
+        }
+    }
+    Loader {
+        id: bar
+        anchors.bottom: parent.bottom
+        width: parent.width
+        height: parent.height * 0.1
+    }
+
+    Component {
+        id: rec
         Rectangle {
-            id: rec
+            id: re
             border.color: "grey"
             width: parent.width
-            height: 55
+            height: parent.height
             Image {
                 id: musicPictrue
                 source: "../assets/img/audio-x-mpeg.svg"
@@ -66,7 +106,7 @@ Page {
                 anchors.left: pausePictrue.right
                 anchors.top: musicPictrue.bottom
                 onClicked: {
-                    lyrics.cleanHightLight()
+                    /*lyrics.*/ cleanHightLight()
                     music.stop()
                 }
             }
@@ -74,28 +114,24 @@ Page {
             IconButton {
                 id: download
                 icon: IconType.download
-                anchors.top: musicPictrue.bottom
-                anchors.right: rec.right
+                //                anchors.bottom: re.bottom
+                anchors.right: re.right
                 onClicked: {
-                    var e = "downLoad " + nameAr + " " + s
+                    var e = "download " + thisSong[0] + " " + thisSong[1] + " "
+                            + thisSong[2] + " " + personal.ID
                     personal.sendMessage(e)
                 }
             }
-        }
-
-        Lyrics {
-            id: lyrics
-            anchors.top: rec.bottom
         }
     }
 
     Connections {
         target: personal
-        onDownloadOk:{
-                message.text = "download OK."
-                appflickable.opacity = 0.5
-                messageRet.visible = true
-                showTime.restart()
+        onDownloadOk: {
+            message.text = "download OK."
+            appflickable.opacity = 0.5
+            messageRet.visible = true
+            showTime.restart()
         }
     }
 

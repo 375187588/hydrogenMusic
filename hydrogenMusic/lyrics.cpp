@@ -6,9 +6,17 @@
 
 void Lyric::readLyric()
 {
+    clean();
     m_header <<"ti:"<<"ar:"<<"al:"<<"by:";
 
     m_lineNum=0;
+
+    const QByteArray text = m_lAddress.toLocal8Bit();
+    const char *data = text.data();
+
+    std::cout << "I'm lyric here." << m_lAddress.toStdString()<<std::endl;
+//    std::ifstream fin((const char *)m_lAddress.toLocal8Bit());
+
     std::ifstream fin("../hydrogenMusic/a");
 
     std::string str;
@@ -21,7 +29,9 @@ void Lyric::readLyric()
         }
         getline(fin, str);
     }
+//    std::cout << m_lyricContent[0].toStdString() << std::endl;
 
+    emit ok();
     fin.close();
 }
 
@@ -93,11 +103,21 @@ int Lyric::changeStringToInt(std::string str_time)
 {
     int time, min, sec, msc = 0; //分钟,秒,毫秒 转换成毫秒
     min = atof(const_cast<const char *>(str_time.substr(0, 2).c_str()));
-    sec = atof(const_cast<const char *>(str_time.substr(3, 2).c_str()));
+    sec = atof(const_cast<const char *>(str_time.substr(3, 5).c_str()));
     if(str_time.length() > 5)
         msc = atof(const_cast<const char *>(str_time.substr(6, 2).c_str()));
     time = min * 60 * 1000 + sec * 1000 + msc;
     return time;
+}
+
+void Lyric::clean()
+{
+    m_header.clear();
+    m_Lheader.clear();
+    m_lyricContent.clear();
+    m_endTime.clear();
+    m_startTime.clear();
+//    m_lAddress.clear();
 }
 
 
@@ -147,5 +167,17 @@ void Lyric::setstartTime(QList<int> &s)
 {
     m_startTime = s;
     emit startTimeChanged();
+}
+
+QString Lyric::lAddress()
+{
+    return m_lAddress;
+}
+
+void Lyric::setlAddress(QString l)
+{
+    m_lAddress = l;
+    std::cout << "setAddress :" <<m_lAddress.toStdString() << std::endl;
+    emit lAddressChanged();
 }
 

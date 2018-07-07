@@ -14,8 +14,8 @@ Client::Client(boost::asio::io_service &ios):m_sock(ios)
 {
     std::cout << "client start." << std::endl;
 //    m_ep = ip::tcp::endpoint(ip::address::from_string("10.253.10.10"),6688);
-//        m_ep = ip::tcp::endpoint(ip::address::from_string("127.0.0.1"),6688);
-    m_ep = ip::tcp::endpoint(ip::address::from_string("192.168.30.96"),6688);
+        m_ep = ip::tcp::endpoint(ip::address::from_string("127.0.0.1"),6688);
+//    m_ep = ip::tcp::endpoint(ip::address::from_string("192.168.30.96"),6688);
 //    m_sock.asy_connect(m_ep);//连接时执行,完成后执行onconnect
     m_sock.async_connect(m_ep,boost::bind(&Client::onConnect,this,_1));
 }

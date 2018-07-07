@@ -16,3 +16,4 @@ HEADERS += \
     database.h
 QMAKE_LFLAGS += -Wl,-rpath,/opt/Qt/5.4/gcc_64/plugins/sqldrivers
 
+

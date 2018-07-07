@@ -10,9 +10,13 @@ Server::Server() : m_acceptor(m_ser,endpoint_type(boost::asio::ip::tcp::v4(), 66
 
 void Server::run(){
 
-    QString a = "CREATE TABLE IF NOT EXISTS songList(nameAr CHAR(60) primary key,address TEXT);";
+    QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,downloads BIGINT,sAddress CHAR(200) primary key,lAddress TEXT);";
     m_db.changeDatabase(a);
-    a = "CREATE TABLE IF NOT EXISTS downLoad(nameAr CHAR(20) primary key,address TEXT);";
+    a = "CREATE TABLE IF NOT EXISTS download(song TEXT,singer TEXT,album TEXT,personalID TEXT);";
+    m_db.changeDatabase(a);
+    a = "CREATE TABLE IF NOT EXISTS ilike(song TEXT,singer TEXT,album TEXT,personalID TEXT);";
+    m_db.changeDatabase(a);
+    a = "CREATE TABLE IF NOT EXISTS personal(ID CHAR(20) primary key,password TEXT);";
     m_db.changeDatabase(a);
     m_ser.run();
 }
@@ -63,19 +67,19 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
     std::string head;
     record >> head;
     if(head == "songListShow") {
-        std::string c = "select * from songList;";
+        std::string c = "select * from warehouse;";
         QString cmd = QString::fromStdString(c);
-        std::string returnM = "songListShow "+m_db.selectDatabase(cmd,2);
+        std::string returnM = "songListShow "+m_db.selectDatabase(cmd,6);
         do_write(sock,returnM);
 
     } else if(head == "download") {
-        std::string nameAr;
-        std::string addr;
-        record >> nameAr;
-        while (record >> head) {
-            addr += head;
-        }
-        std::string c = "INSERT INTO downLoad VALUES('" + nameAr + "','" + addr + "');";
+        std::string song;
+        std::string singer;
+        std::string album;
+        std::string personalID;
+        record >> song >> singer >> album >> personalID;
+
+        std::string c = "INSERT INTO download VALUES('" + song + "','" + singer + "','" + album + "','" + personalID + "');";
         QString cmd = QString::fromStdString(c);
         std::string returnM;
         if(m_db.changeDatabase(cmd))
@@ -85,13 +89,38 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         do_write(sock,returnM);
 
     }else if(head == "upload") {
-        std::string nameAr;
-        std::string addr;
-        record >> nameAr;
+        std::string sAddress;
+        std::string lAddress;
+        //        record >> head;
+        //        while (head != "|||") {
+        //            sAddress += head;
+        //            sAddress += " ";
+        //            record >> head;
+        //        }
+        //        record >> head;
+        //        while (head != "|||") {
+        //            lAddress += head;
+        //            lAddress += " ";
+        //            record >> head;
+        //        }
+
         while (record >> head) {
-            addr += head;
+            if(head != "|||") {
+                sAddress += head;
+                sAddress += " ";
+            }else break;
         }
-        std::string c = "INSERT INTO songList VALUES('" + nameAr + "','" + addr + "');";
+
+        while (record >> head) {
+            if(head != "|||") {
+                lAddress += head;
+                lAddress += " ";
+            }else break;
+        }
+
+
+        std::cout << "---" << sAddress << "---" << lAddress << "---";
+        std::string c = "INSERT INTO warehouse VALUES('a','b','c','1','" + sAddress + "','" + lAddress + "');";
         QString cmd = QString::fromStdString(c);
         std::string returnM;
         if(m_db.changeDatabase(cmd))
@@ -104,9 +133,35 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         std::string searchforWhat;
         std::string c;
         record >> searchContent >> searchforWhat;
-        if(searchforWhat == "nameAr") c = "select * from songList where nameAr = '"+ searchContent +"'";
+        if(searchforWhat == "song") c = "select * from warehouse where song = '"+ searchContent +"'";
+        if(searchforWhat == "singer") c = "select * from warehouse where singer = '"+ searchContent +"'";
+        if(searchforWhat == "album") c = "select * from warehouse where album = '"+ searchContent +"'";
         QString cmd = QString::fromStdString(c);
-        std::string returnM = "search "+ m_db.selectDatabase(cmd,2);
+        std::string returnM = "search "+ m_db.selectDatabase(cmd,6);
+        do_write(sock,returnM);
+    }else if(head == "register") {
+        std::string ID;
+        std::string password;
+        record >> ID >> password;
+        std::string c = "INSERT INTO personal VALUES('" + ID + "','" + password + "');";;
+        QString cmd = QString::fromStdString(c);
+        std::string returnM;
+        if(m_db.changeDatabase(cmd))
+            returnM = "register ok";
+        else
+            returnM = "register failed";
+        do_write(sock,returnM);
+    }else if(head == "login") {
+        std::string ID;
+        std::string password;
+        std::string returnM;
+        record >> ID >> password;
+        std::string c = "select * from personal where ID = '"+ ID +"' and password = '"+ password +"'" ;
+        QString cmd = QString::fromStdString(c);
+        if(m_db.selectDatabase(cmd,2).empty())
+            returnM = "login failed";
+        else
+            returnM = "login " + ID;
         do_write(sock,returnM);
     }
 

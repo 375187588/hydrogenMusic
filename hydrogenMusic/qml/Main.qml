@@ -4,22 +4,26 @@ import QtQuick.Dialogs 1.0
 
 App {
     id: mainpage
-    screenWidth: 540
-    screenHeight: 960
+    screenWidth: 600
+    screenHeight: 900
 
-    SongInterface {
+    //    screenWidth: 540
+    //    screenHeight: 960
+    property var tempLaddress
+    Component {
         id: songinterface
-        anchors.fill: parent
-        visible: false
+        SongInterface {
+            anchors.fill: parent
+            thisSong: tempLaddress
+        }
     }
-    Component.onCompleted: {
-        personal.run()
-        personal.sendMessage("songListShow")
-    }
+
+    Component.onCompleted: personal.run()
 
     Searchfor {
         id: searchfor
         height: sp(30)
+        visible: false
         onHeightcan: {
             songlist.opacity = 0.6
             height = sp(60)
@@ -34,12 +38,10 @@ App {
         id: songlist
         anchors.top: searchfor.bottom
         width: parent.width
+        visible: false
         onListenThis: {
-            songinterface.visible = true
-            songinterface.s = address
-            songinterface.nameAr = nameAr
-            console.log(address)
-
+            mainpage.tempLaddress = vec
+            load.sourceComponent = songinterface
             songlist.visible = false
             searchfor.visible = false
         }
@@ -54,6 +56,16 @@ App {
     Loader {
         id: load
         anchors.fill: parent
+    }
+    Login {
+        id: login
+        anchors.fill: parent
+        onLoginBack: {
+            personal.sendMessage("songListShow")
+            searchfor.visible = true
+            songlist.visible = true
+            login.visible = false
+        }
     }
 
     Component {

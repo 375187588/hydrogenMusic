@@ -10,3 +10,7 @@ function highLightLyric(current) {
         }
     }
 }
+
+function transToString(a) {
+    return String(a)
+}

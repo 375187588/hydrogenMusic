@@ -3,11 +3,11 @@ import VPlayApps 1.0
 import QtGraphicalEffects 1.0
 
 Page {
-    id: songlis
-    property var searchforWhat: ["nameAr", "nameAr", "album"]
+    id: songlispage
+    property var searchforWhat: ["song", "singer", "album"]
     property var sfw: 0
     property bool mutiIsClick: false
-    property alias heigts: songlis.height
+    property alias heigts: songlispage.height
     property bool hightlight: false
     property string mutiBlockColor: "grey"
     signal heightcan
@@ -30,10 +30,11 @@ Page {
 
             anchors.verticalCenter: parent.verticalCenter
             onAccepted: {
-                if(text.length != 0) {
+                if (text.length != 0) {
                     var t = "search " + text + " " + searchforWhat[sfw]
                     personal.sendMessage(t)
-                }else personal.sendMessage("songListShow")
+                } else
+                    personal.sendMessage("songListShow")
             }
             onIconColorChanged: searching()
         }
@@ -70,7 +71,7 @@ Page {
             opacity: 0.5
             Rectangle {
                 id: r1
-                width: songlis.width / 3
+                width: songlispage.width / 3
                 height: sp(30)
                 color: mutiBlockColor
                 border.color: "white"
@@ -79,7 +80,7 @@ Page {
                 Text {
                     id: t1
                     anchors.centerIn: parent
-                    text: qsTr("songName")
+                    text: qsTr("song")
                 }
                 MouseArea {
                     anchors.fill: parent
@@ -98,7 +99,7 @@ Page {
 
             Rectangle {
                 id: r2
-                width: songlis.width / 3
+                width: songlispage.width / 3
                 height: sp(30)
                 color: mutiBlockColor
                 border.color: "white"
@@ -124,7 +125,7 @@ Page {
 
             Rectangle {
                 id: r3
-                width: songlis.width / 3
+                width: songlispage.width / 3
                 height: sp(30)
                 color: mutiBlockColor
                 border.color: "white"

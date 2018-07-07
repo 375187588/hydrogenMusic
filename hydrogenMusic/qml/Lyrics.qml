@@ -5,13 +5,23 @@ import qt.Lyric 1.0
 import "../qml/myscript.js" as Logic
 
 Page {
-    id: page
+    id: lyricspage
     title: qsTr("Lyrics")
+    signal lyricOk
 
     property alias lyricsTime: time
-    property alias currentHightLight: rep2
+    property alias lAddr: lyric2.lAddress
+
+    onLAddrChanged: {
+        lyric2.readLyric()
+    }
+
     LyricMessage {
         id: lyric2
+        onOk: {
+            lyricOk()
+            show.sourceComponent = appflickable
+        }
     }
 
     Timer {
@@ -29,46 +39,56 @@ Page {
         }
     }
 
-    AppFlickable {
-        id: appflickable
+    Loader {
+        id: show
         anchors.fill: parent
         anchors.centerIn: parent
-        contentWidth: width
-        contentHeight: lyricContent.height
+    }
 
-        Column {
-            id: lyricContent
+    Component {
+        id: appflickable
+        AppFlickable {
+            contentWidth: width
+            contentHeight: lyricContent.height
 
-            Repeater {
-                id: rep1
-                model: lyric2.lheader.length
+            Column {
+                id: lyricContent
 
-                Text {
-                    id: t1
-                    font.pixelSize: sp(12)
-                    wrapMode: Text.WordWrap
-                    color: Theme.secondaryTextColor
-                    text: lyric2.lheader[index]
+                width: parent.width
+                height: parent.height
+                Repeater {
+                    id: rep1
+                    model: lyric2.lheader.length
+
+                    Text {
+                        id: t1
+                        anchors.horizontalCenter: lyricContent.horizontalCenter
+                        font.pixelSize: sp(12)
+                        wrapMode: Text.WordWrap
+                        color: Theme.secondaryTextColor
+                        text: lyric2.lheader[index]
+                    }
                 }
-            }
 
-            Repeater {
-                id: rep2
-                model: lyric2.lyricContent.length
+                Repeater {
+                    id: rep2
+                    model: lyric2.lyricContent.length
 
-                Text {
-                    id: t0
-                    font.pixelSize: sp(12)
-                    wrapMode: Text.WordWrap
-                    color: Theme.secondaryTextColor
-                    text: lyric2.lyricContent[index]
-                    MouseArea {
-                        anchors.fill: parent
-                        onClicked: {
-                            rep2.itemAt(time.at).color = Theme.secondaryTextColor
-                            color = "red"
-                            music.seek(lyric2.startTime[index])
-                            time.restart()
+                    Text {
+                        id: t0
+                        anchors.horizontalCenter: lyricContent.horizontalCenter
+                        font.pixelSize: sp(12)
+                        wrapMode: Text.WordWrap
+                        color: Theme.secondaryTextColor
+                        text: lyric2.lyricContent[index]
+                        MouseArea {
+                            anchors.fill: parent
+                            onClicked: {
+                                rep2.itemAt(time.at).color = Theme.secondaryTextColor
+                                color = "red"
+                                music.seek(lyric2.startTime[index])
+                                time.restart()
+                            }
                         }
                     }
                 }

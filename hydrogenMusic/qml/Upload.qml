@@ -3,7 +3,7 @@ import VPlayApps 1.0
 import QtQuick.Dialogs 1.0
 
 Page {
-    id: upload
+    id: uploadpage
     width: mainpage.width
     height: mainpage.height
     signal uploadBack
@@ -15,7 +15,7 @@ Page {
 
     AppListView {
         id: list
-        y: upload.height * 0.04
+        y: uploadpage.height * 0.04
         anchors.fill: parent
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -50,7 +50,7 @@ Page {
                     anchors.verticalCenter: parent.verticalCenter
                     text: "select"
                     onClicked: {
-                        upload.ttext = 1
+                        uploadpage.ttext = 1
                         fileDialog.open()
                     }
                 }
@@ -85,7 +85,7 @@ Page {
                     anchors.verticalCenter: parent.verticalCenter
                     text: "select"
                     onClicked: {
-                        upload.ttext = 2
+                        uploadpage.ttext = 2
                         fileDialog.open()
                     }
                 }
@@ -97,7 +97,7 @@ Page {
                     radius: 5
                     text: "upload"
                     onClicked: {
-                        var e = "upload " + sOAField.text + " " + lOAField.text
+                        var e = "upload " + sOAField.text + " ||| " + lOAField.text
                         personal.sendMessage(e)
                     }
                 }
@@ -172,7 +172,7 @@ Page {
         //                        radius: 5
         //                        text: "upload"
         //                        onClicked: {
-        //                            var e = "INSERT INTO songList VALUES('" + sOAField.text
+        //                            var e = "INSERT INTO warehouse VALUES('" + sOAField.text
         //                                    + "','" + lOAField.text + "');"
         //                            if (personnal.changeDatabase(e)) {
         //                                message.text = "upload OK."
@@ -210,8 +210,9 @@ Page {
         folder: ".."
         onAccepted: {
             console.log("You chose: " + fileDialog.fileUrls[0].toString())
-            upload.temp = fileDialog.fileUrls[0].toString()
-            upload.textFieldAddress = upload.temp
+            uploadpage.temp = fileDialog.fileUrls[0].toString()
+            console.log(uploadpage.temp.substring(7))
+            uploadpage.textFieldAddress = uploadpage.temp.substring(7)
             fileDialog.close()
         }
         onRejected: {
