@@ -17,6 +17,10 @@ App {
             thisSong: tempLaddress
         }
     }
+    SongInterface {
+        anchors.fill: parent
+        thisSong: tempLaddress
+    }
 
     Component.onCompleted: personal.run()
 
@@ -47,16 +51,14 @@ App {
         }
 
         onWantUpload: {
-            searchfor.visible = false
-            songlist.visible = false
             load.sourceComponent = upload
         }
     }
-
     Loader {
         id: load
         anchors.fill: parent
     }
+
     Login {
         id: login
         anchors.fill: parent
@@ -67,14 +69,11 @@ App {
             login.visible = false
         }
     }
-
     Component {
         id: upload
         Upload {
             onUploadBack: {
                 load.sourceComponent = null
-                searchfor.visible = true
-                songlist.visible = true
             }
             onTextFieldAddressChanged: {
                 if (ttext == 1) {

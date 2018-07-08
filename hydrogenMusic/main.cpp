@@ -1,3 +1,7 @@
+#include <boost/asio.hpp>
+#include <boost/bind.hpp>
+#include <boost/thread.hpp>
+
 #include <QApplication>
 #include <VPApplication>
 #include <QQmlContext>
@@ -5,9 +9,26 @@
 #include "lyrics.h"
 #include "personal.h"
 
+void receive()
+{
+    asio::io_service io;
+    Tcp_server receiver(io, 1345);
+    io.run();
+}
 
 int main(int argc, char *argv[])
 {
+    //------------------s--------------
+    std::cout << "s" << std::endl;
+//    asio::io_service io;
+//    Tcp_server receiver(io,1345);
+//    boost::thread th(boost::bind(&Tcp_server::start_accept, &receiver));
+
+//    io.run();
+    boost::thread th(&receive);
+    //th.join();
+    std::cout << "e" << std::endl;
+        //---------------e-------------
     QApplication app(argc, argv);
     qmlRegisterType<Lyric>("qt.Lyric",1,0,"LyricMessage");
     VPApplication vplay;
@@ -21,6 +42,7 @@ int main(int argc, char *argv[])
     vplay.initialize(&engine);
 
     Personal personal;
+
     engine.rootContext()->setContextProperty("personal",&personal);
     // use this during development
     // for PUBLISHING, use the entry point below

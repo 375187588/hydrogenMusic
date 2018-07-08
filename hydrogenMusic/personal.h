@@ -7,7 +7,11 @@
 #include <boost/asio.hpp>
 
 #include "client.h"
-
+//---------s----------
+#include "file_info.h"
+#include "receiver.h"
+#include <string>
+//---------e--------
 using namespace boost::asio;
 
 class Personal:public QObject
@@ -37,6 +41,7 @@ signals:
     void registerFailed();
     void loginOk();
     void loginFailed();
+
 private:
     std::string m_receiveMessage;
     QString m_sendMessage;

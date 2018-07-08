@@ -2,6 +2,70 @@
 #include <sstream>
 #include <strstream>
 
+//-----------s----------
+#include <iostream>
+#include <cstdio>
+#include <cstring>
+#include <boost/shared_ptr.hpp>
+
+
+void sender(asio::io_service& io, const char* ip_address, unsigned port, const char* filename)
+{
+    typedef asio::ip::tcp TCP;
+
+    FILE *fp = fopen(filename, "rb");
+    if (fp == NULL) {
+        std::cerr << "cannot open file\n";
+        return;
+    }
+
+
+    boost::shared_ptr<FILE> file_ptr(fp, fclose);
+
+    clock_t cost_time = clock();
+
+    const size_t k_buffer_size = 32 * 1024;
+    char buffer[k_buffer_size];
+    File_info file_info;
+
+    int filename_size  = strlen(filename) + 1;
+    size_t file_info_size = sizeof(file_info);
+    size_t total_size = file_info_size + filename_size;
+    if (total_size > k_buffer_size) {
+        std::cerr << "File name is too long";
+        return;
+    }
+    file_info.filename_size = filename_size;
+
+    fseek(fp, 0, SEEK_END);
+    file_info.filesize = ftell(fp);
+    rewind(fp);
+
+    memcpy(buffer, &file_info, file_info_size);
+    memcpy(buffer + file_info_size, filename, filename_size);
+
+    TCP::socket socket(io);
+    socket.connect(TCP::endpoint(asio::ip::address_v4::from_string(ip_address), port));
+
+    std::cout << "Sending file : " << filename << "\n";
+    size_t len = total_size;
+    unsigned long long total_bytes_read = 0;
+    while (true) {
+        socket.send(asio::buffer(buffer, len), 0);
+        if (feof(fp)) break;
+        len = fread(buffer, 1, k_buffer_size, fp);
+        total_bytes_read += len;
+    }
+
+    cost_time = clock() - cost_time;
+    if (cost_time == 0) cost_time = 1;
+    double speed = total_bytes_read * (CLOCKS_PER_SEC / 1024.0 / 1024.0) / cost_time;
+    std::cout << "cost time: " << cost_time / (double) CLOCKS_PER_SEC  << " s "
+              << "  transferred_bytes: " << total_bytes_read << " bytes\n"
+              << "speed: " <<  speed << " MB/s\n\n";
+}
+//-----------e-----------
+
 Server::Server() : m_acceptor(m_ser,endpoint_type(boost::asio::ip::tcp::v4(), 6688))
 {
     accept();
@@ -73,11 +137,20 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         do_write(sock,returnM);
 
     } else if(head == "download") {
+        //------s------
+
+        //-------e------
+
         std::string song;
         std::string singer;
         std::string album;
         std::string personalID;
+
         record >> song >> singer >> album >> personalID;
+
+        char csong[20];
+        int length = song.copy(csong,19);
+        csong[length] = '\0';
 
         std::string c = "INSERT INTO download VALUES('" + song + "','" + singer + "','" + album + "','" + personalID + "');";
         QString cmd = QString::fromStdString(c);
@@ -87,6 +160,7 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         else
             returnM = "download failed";
         do_write(sock,returnM);
+        sender(m_ser, "127.0.0.1",1345, "a.mp3");
 
     }else if(head == "upload") {
         std::string sAddress;

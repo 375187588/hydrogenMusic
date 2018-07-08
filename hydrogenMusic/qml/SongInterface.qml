@@ -18,7 +18,7 @@ Page {
         //        lyrics.lAddr = thisSong[5]
         //        lyrics.lAddr = personal.songlis[5]
         lyrics.lAddr = "../hydrogenMusic/a"
-        console.log("thisSongChanged,thisSong[5]:" + thisSong[5])
+        //        console.log("thisSongChanged,thisSong[5]:" + thisSong[5])
     }
     Rectangle {
         id: ret
@@ -43,7 +43,9 @@ Page {
         anchors.top: ret.bottom
         anchors.centerIn: parent
         contentWidth: parent.width
-        contentHeight: parent.height * 0.8
+        contentHeight: parent.height * 1.5
+        width: parent.width
+        height: parent.height * 0.8
 
         Lyrics {
             id: lyrics

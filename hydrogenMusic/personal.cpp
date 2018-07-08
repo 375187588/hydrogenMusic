@@ -1,10 +1,14 @@
 #include "personal.h"
 #include <sstream>
 #include <QJSValue>
+
+
 void Personal::run()
 {
+    //Tcp_server receiver(m_io,57014);
     m_io.run();
     std::cout << "run" << std::endl;
+
 }
 
 void Personal::sendMessage(QString m)
@@ -22,6 +26,10 @@ void Personal::sendMessage(QString m)
         emit songList(vec);
     }
     else if(head == "download") {
+        //-------s--------
+        std::cout << "download a.mp3" << std::endl;
+        //Tcp_server receiver(m_io,57014);
+        //-------e-----------
         std::cout << m_receiveMessage <<std::endl;
         std::string ret;
         record >> ret;

@@ -50,7 +50,9 @@ HEADERS += \
     lyrics.h \
     client.h \
     myerror.h \
-    personal.h
+    personal.h \
+    file_info.h \
+    receiver.h
 
 QMAKE_LFLAGS += -lboost_system -lpthread -lboost_thread
 DISTFILES += \
