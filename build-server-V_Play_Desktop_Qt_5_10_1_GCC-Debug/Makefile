@@ -832,8 +832,7 @@ main.o: ../server/main.cpp ../server/server.h \
 		/opt/V-PlaySDK/V-Play/gcc_64/include/QtWidgets/qdialog.h \
 		/opt/V-PlaySDK/V-Play/gcc_64/include/QtSql/QSqlError \
 		/opt/V-PlaySDK/V-Play/gcc_64/include/QtSql/qsqlerror.h \
-		../server/file_info.h \
-		../server/sender.h
+		../server/file_info.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../server/main.cpp
 
 server.o: ../server/server.cpp ../server/server.h \
@@ -958,8 +957,7 @@ server.o: ../server/server.cpp ../server/server.h \
 		/opt/V-PlaySDK/V-Play/gcc_64/include/QtWidgets/qdialog.h \
 		/opt/V-PlaySDK/V-Play/gcc_64/include/QtSql/QSqlError \
 		/opt/V-PlaySDK/V-Play/gcc_64/include/QtSql/qsqlerror.h \
-		../server/file_info.h \
-		../server/sender.h
+		../server/file_info.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o server.o ../server/server.cpp
 
 database.o: ../server/database.cpp ../server/database.h \

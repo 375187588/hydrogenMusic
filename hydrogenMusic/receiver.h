@@ -101,7 +101,7 @@ private:
   TCP::socket socket_;
   FILE *fp_;
   File_info file_info_;
-  Size_type total_bytes_writen_;
+  Size_type total_bytes_writen_;//transport size
   static const unsigned k_buffer_size = 1024 * 32;
   char buffer_[k_buffer_size];
 };
@@ -111,23 +111,6 @@ class Tcp_server
 public:
   typedef asio::ip::tcp TCP;
   typedef asio::error_code Error;
-//    void start_accept()
-//    {
-//      Session::Pointer session = Session::create(acceptor_.get_io_service());
-//      acceptor_.async_accept(session->socket(),
-//        boost::bind(&Tcp_server::handle_accept, this, session, asio::placeholders::error));
-//      std::cout << "start accept" << std::endl;
-//    }
-//    Tcp_server(asio::io_service& io, unsigned port) :
-//        acceptor_(io, TCP::endpoint(TCP::v4(), port))
-//    {
-//      //start_accept();
-//    }
-
-//    static void print_asio_error(const Error& error) { std::cerr << error.message() << "\n";}
-
-//  private:
-
   Tcp_server(asio::io_service& io, unsigned port) :
       acceptor_(io, TCP::endpoint(TCP::v4(), port))
   {
@@ -141,7 +124,7 @@ private:
   {
     Session::Pointer session = Session::create(acceptor_.get_io_service());
     acceptor_.async_accept(session->socket(),
-      boost::bind(&Tcp_server::handle_accept, this, session, asio::placeholders::error));
+    boost::bind(&Tcp_server::handle_accept, this, session, asio::placeholders::error));
   }
 
   void handle_accept(Session::Pointer session, const Error& error)
@@ -154,14 +137,6 @@ private:
   TCP::acceptor acceptor_;
 };
 
-
-//int main()
-//{
-//  std::cout << "Auto receive files and save then in current directory.\n";
-//  asio::io_service io;
-//  Tcp_server receiver(io, 1345);
-//  io.run();
-//}
 
 
 #endif // RECEIVER_H
