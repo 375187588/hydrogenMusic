@@ -4,20 +4,16 @@
 #include <QString>
 #include <QDebug>
 
-void Lyric::readLyric()
+void Lyric::readLyric(QString addr)
 {
     clean();
     m_header <<"ti:"<<"ar:"<<"al:"<<"by:";
 
     m_lineNum=0;
 
-    const QByteArray text = m_lAddress.toLocal8Bit();
-    const char *data = text.data();
+    std::cout << "I'm lyric here." << addr.toStdString()<<std::endl;
 
-    std::cout << "I'm lyric here." << m_lAddress.toStdString()<<std::endl;
-//    std::ifstream fin((const char *)m_lAddress.toLocal8Bit());
-
-    std::ifstream fin("../hydrogenMusic/a");
+    std::ifstream fin(addr.toStdString());
 
     std::string str;
     getline(fin, str);
@@ -29,7 +25,6 @@ void Lyric::readLyric()
         }
         getline(fin, str);
     }
-//    std::cout << m_lyricContent[0].toStdString() << std::endl;
 
     emit ok();
     fin.close();
@@ -169,15 +164,4 @@ void Lyric::setstartTime(QList<int> &s)
     emit startTimeChanged();
 }
 
-QString Lyric::lAddress()
-{
-    return m_lAddress;
-}
-
-void Lyric::setlAddress(QString l)
-{
-    m_lAddress = l;
-    std::cout << "setAddress :" <<m_lAddress.toStdString() << std::endl;
-    emit lAddressChanged();
-}
 

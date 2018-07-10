@@ -1,14 +1,12 @@
 #include "personal.h"
 #include <sstream>
 #include <QJSValue>
-
-
+#include <QUrl>
+#include <vector>
 void Personal::run()
 {
-    //Tcp_server receiver(m_io,57014);
     m_io.run();
     std::cout << "run" << std::endl;
-
 }
 
 void Personal::sendMessage(QString m)
@@ -17,20 +15,27 @@ void Personal::sendMessage(QString m)
     m_client.doWrite(m_sendMessage.toStdString(),m_receiveMessage);
     std::istringstream record(m_receiveMessage);
     std::string head;
+    std::string head1;
     record >> head;
     if(head == "songListShow") {
+        record >> head1;
         std::string ret;
-        ret = m_receiveMessage.substr(head.length()+1);
-        QList<QString> vec = detach(ret);
+        ret = m_receiveMessage.substr(head.length() + head1.length() +2);
         m_songlis = detach(ret);
-        emit songList(vec);
+        if(head1 == "warehouse") {
+            m_songlis = detach(ret);
+            emit songList();
+        }
+        if(head1 == "ilike") {
+            m_ilik = detach(ret);
+            emit ilikeShow();
+        }
+        if(head1 == "download") {
+            m_downloa = detach(ret);
+            emit downloadShow();
+        }
     }
     else if(head == "download") {
-        //-------s--------
-        std::cout << "download a.mp3" << std::endl;
-        //Tcp_server receiver(m_io,57014);
-        //-------e-----------
-        std::cout << m_receiveMessage <<std::endl;
         std::string ret;
         record >> ret;
         if(ret == "ok") emit downloadOk();
@@ -39,13 +44,13 @@ void Personal::sendMessage(QString m)
         record >> ret;
         if(ret == "ok") {
             emit uploadOk();
-            sendMessage("songListShow");
+            sendMessage("songListShow warehouse");
         }
     }else if(head == "search") {
         std::string ret;
         ret = m_receiveMessage.substr(head.length()+1);
-        QList<QString> vec = detach(ret);
-        emit searchOk(vec);
+        m_searc = detach(ret);
+        emit searchOk();
     }else if(head == "register") {
         std::string ret;
         record >> ret;
@@ -56,11 +61,80 @@ void Personal::sendMessage(QString m)
         record >> ret;
         if(ret == "failed") {
             emit loginFailed();
-            //            sendMessage("songListShow");
-        }else{
+        }else {
+            record >> ret;
+            m_ID = QString::fromStdString(ret);
             emit loginOk();
         }
+    }else if(head == "ilike") {
+        std::string ret;
+        record >> ret;
+        if(ret == "ok") emit ilikeOk();
+    }else if(head == "delete") {
+        std::string ret;
+        record >> ret;
+        if(ret == "ilike") {
+            record >> ret;
+            if(ret == "ok") emit dislike();
+        }
     }
+
+}
+
+QList<QString> Personal::returnInfo(QString url)
+{
+    printf("into personal::return n=info\n");
+    printf("-------------\n");
+    std::cout<<url.toStdString()<<std::endl;
+
+    //    QByteArray ba = url.toLatin1();
+    //    char *ch=ba.data();
+
+    //    int len = p.length();
+    //    char *ch = (char *)malloc(len * sizeof(char));
+    //    p.copy(ch, len, 0);
+
+    char ch[50] = "\0";
+    std::string p = url.toStdString();
+    int i;
+    for(i = 0; i < p.length(); i++)
+    {
+        ch[i] = p[i];
+    }
+    ch[i] = '\0';
+
+
+
+    printf("ch is %s\n", ch);
+    std::vector<std::string> v = media->get_song_infos(ch);
+    if(!v.empty())
+    {
+        printf("v is not empty\n");
+    }else{
+        printf("v is  empty\n");
+    }
+
+    for(auto &l:v)
+    {
+        std::cout<<"v elements is "<<l<<std::endl;
+    }
+    std::cout << v[0]<<std::endl;
+    QList<QString> l;
+    l.append(QString::fromStdString(v[0]));
+    l.append(QString::fromStdString(v[1]));
+    l.append(QString::fromStdString(v[2]));
+    std::cout <<l[0].toStdString()<<l[1].toStdString()<<l[2].toStdString() << std::endl;
+    return l;
+
+}
+
+bool Personal::isIlike(QString nameArID)
+{
+    for (int i = 0;i<m_ilik.length();i++) {
+        if(m_ilik[m_ilik.length()*i + 4] == nameArID)
+            return true;
+    }
+    return false;
 }
 
 QList<QString> Personal::detach(std::string ret)
@@ -74,29 +148,22 @@ QList<QString> Personal::detach(std::string ret)
     std::istringstream rec(ret);
     std::string temp1;
     std::string temp2;
+    int t = 1;
+
     while(rec >> temp1) {
-        vec.append(QString::fromStdString(temp1));
-        rec >> temp1;
-        vec.append(QString::fromStdString(temp1));
-        rec >> temp1;
-        vec.append(QString::fromStdString(temp1));
-        rec >> temp1;
-        vec.append(QString::fromStdString(temp1));
-
-        temp2.clear();
-        while (rec >> temp1) {
-            if(temp1 != "||" ) temp2 +=temp1;
-            else break;
+        if(temp1 != "||" && temp1 != "|||" ) {
+            temp2 +=temp1;
+            temp2 +=" ";
+        }else {
+            if(!temp2.empty()) {
+                if(t%4 == 0) temp2 = temp2.substr(0,temp2.length()-1);
+                vec.append(QString::fromStdString(temp2));
+                t++;
+                temp2.clear();
+            }
         }
-        vec.append(QString::fromStdString(temp2));
-
-        temp2.clear();
-        while (rec >> temp1) {
-            if(temp1 != "|||" ) temp2 +=temp1;
-            else break;
-        }
-        vec.append(QString::fromStdString(temp2));
     }
+    std::cout << "detach::" <<vec[0].toStdString() <<std::endl;
     return vec;
 }
 
@@ -121,3 +188,49 @@ void Personal::setSonglis(QList<QString> s)
     m_songlis = s;
     emit songlisChanged();
 }
+
+QList<QString> Personal::downloa()
+{
+    return m_downloa;
+}
+
+void Personal::setDownloa(QList<QString> d)
+{
+    m_downloa = d;
+    emit downloaChanged();
+}
+
+QList<QString> Personal::searc()
+{
+    return m_searc;
+}
+
+void Personal::setSearc(QList<QString> s)
+{
+    m_searc = s;
+    emit searcChanged();
+}
+
+QList<QString> Personal::ilik()
+{
+    return m_ilik;
+}
+
+void Personal::setIlik(QList<QString> i)
+{
+    m_ilik = i;
+    emit ilikChanged();
+}
+
+QList<QString> Personal::playlist()
+{
+    return m_playlist;
+}
+
+void Personal::setPlaylist(QList<QString> l)
+{
+    m_playlist = l;
+    emit playlistChanged();
+}
+
+

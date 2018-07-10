@@ -97,7 +97,13 @@ Page {
                     radius: 5
                     text: "upload"
                     onClicked: {
-                        var e = "upload " + sOAField.text + " ||| " + lOAField.text
+                        var info = personal.returnInfo(sOAField.text)
+                        console.log("llllllllll" + info[0] + "   " + info[1]
+                                    + "   " + info[2] + "llllllllll")
+                        var a =  info[0] + " - " + info[1] + ".mp3"
+
+                        var e = "upload " + info[1] + " || " + info[0]
+                                + " || " + info[2] + " || " + a
                         personal.sendMessage(e)
                     }
                 }
@@ -110,89 +116,6 @@ Page {
                 }
             }
         }
-        //        model: ListModel {
-        //            ListElement {
-        //                name: "song of address:"
-        //                number: 1
-        //            }
-        //            ListElement {
-        //                name: "lyrics of address:"
-        //                number: 2
-        //            }
-        //            ListElement {
-        //                name: "upload"
-        //                number: 3
-        //            }
-        //        }
-        //        delegate: Rectangle {
-
-        //            width: parent.width * 0.8
-        //            height: 50
-        //            anchors.horizontalCenter: parent.horizontalCenter
-        //            Column {
-        //                width: parent.width
-        //                height: 100
-        //                Row {
-        //                    width: parent.width
-        //                    height: parent.height
-        //                    anchors.fill: parent
-        //                    AppText {
-        //                        id: sOA
-        //                        visible: number == 1 || number == 2
-        //                        //anchors.verticalCenter: parent.verticalCenter
-        //                        x: 20
-        //                        text: name
-        //                        color: "black"
-        //                    }
-        //                    AppTextField {
-        //                        id: sOAField
-        //                        visible: number == 1 || number == 2
-        //                        radius: 5
-        //                        //                        anchors.right: a1.left
-        //                        //anchors.verticalCenter: parent.verticalCenter
-        //                        borderColor: "grey"
-        //                        borderWidth: 2
-        //                        width: dp(70)
-        //                        // height: dp()
-        //                    }
-        //                    AppButton {
-        //                        id: a1
-        //                        visible: number == 1 || number == 2
-        //                        radius: 5
-        //                        //                        anchors.right: parent.right
-        //                        //anchors.verticalCenter: parent.verticalCenter
-        //                        text: "select"
-        //                        onClicked: {
-        //                            fileDialog.open()
-        //                            sOAField.text = fileDialog.fileUrls
-        //                        }
-        //                    }
-        //                    AppButton {
-        //                        visible: number == 3
-        //                        radius: 5
-        //                        text: "upload"
-        //                        onClicked: {
-        //                            var e = "INSERT INTO warehouse VALUES('" + sOAField.text
-        //                                    + "','" + lOAField.text + "');"
-        //                            if (personnal.changeDatabase(e)) {
-        //                                message.text = "upload OK."
-        //                                column.opacity = 0.5
-        //                                messageRet.visible = true
-        //                                showTime.restart()
-        //                            }
-        //                        }
-        //                    }
-        //                    AppButton {
-        //                        visible: number == 3
-        //                        radius: 5
-        //                        text: "cancel"
-        //                        onClicked: {
-        //                            uploadBack()
-        //                        }
-        //                    }
-        //                }
-        //            }
-        //        }
     }
     Connections {
         target: personal
@@ -211,7 +134,6 @@ Page {
         onAccepted: {
             console.log("You chose: " + fileDialog.fileUrls[0].toString())
             uploadpage.temp = fileDialog.fileUrls[0].toString()
-            console.log(uploadpage.temp.substring(7))
             uploadpage.textFieldAddress = uploadpage.temp.substring(7)
             fileDialog.close()
         }

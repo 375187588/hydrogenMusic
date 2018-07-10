@@ -15,10 +15,8 @@
 #include <sstream>
 
 #include "database.h"
-//----------s--------------
 #include "file_info.h"
-//#include "sender.h"
-//----------e--------------
+
 class Server
 {
     typedef Server this_type;

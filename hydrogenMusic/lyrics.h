@@ -17,7 +17,6 @@ class Lyric:public QObject
     Q_PROPERTY(QList<QString> lyricContent READ lyricContent WRITE setlyricContent NOTIFY lyricContentChanged)
     Q_PROPERTY(QList<int> endTime READ endTime)
     Q_PROPERTY(QList<int> startTime READ startTime WRITE setstartTime NOTIFY startTimeChanged)
-    Q_PROPERTY(QString lAddress READ lAddress WRITE setlAddress NOTIFY lAddressChanged)
 
 public:
     explicit Lyric(QObject *parent = 0):QObject(parent)
@@ -33,10 +32,8 @@ public:
     QList<int> endTime() const;
     QList<int> startTime() const;
     void setstartTime(QList<int> &s);
-    QString lAddress();
-    void setlAddress(QString l);
 
-    Q_INVOKABLE void readLyric();
+    Q_INVOKABLE void readLyric(QString addr);
     void analysisOneLine(std::string str);
     bool getLyricHeader(std::string str);
 
@@ -57,7 +54,6 @@ private:
     QList<int> m_endTime;
     QList<int> m_startTime;
 
-    QString m_lAddress;
 };
 
 

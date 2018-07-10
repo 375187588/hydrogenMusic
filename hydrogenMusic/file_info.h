@@ -1,8 +1,6 @@
 #ifndef FILE_INFO_H
 #define FILE_INFO_H
-
 //----xiaoyao------
-
 #if USE_ASIO_ALONE
     #include <asio.hpp>
   #else

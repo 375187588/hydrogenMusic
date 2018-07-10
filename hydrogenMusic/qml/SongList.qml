@@ -13,10 +13,11 @@ Page {
         AppFlickable {
             id: appflickable
             anchors.fill: parent
+            contentHeight: Loader.height * 2
             Column {
                 Repeater {
                     id: rep1
-                    model: personal.songlis.length / 6
+                    model: personal.songlis.length / 4
 
                     Rectangle {
                         id: rec
@@ -34,7 +35,7 @@ Page {
                             color: "black"
                             font.pixelSize: sp(12)
                             font.bold: sp(5)
-                            text: songVec[index * 6 + 4]
+                            text: songVec[index * 4]
                         }
                         MouseArea {
                             anchors.fill: parent
@@ -44,9 +45,9 @@ Page {
                             onReleased: {
                                 parent.opacity = 1
                                 var temvec = []
-                                for (var i = 0; i < 6; i++) {
+                                for (var i = 0; i < 4; i++) {
                                     temvec.push(Logic.transToString(
-                                                    songVec[index * 6 + i]))
+                                                    songVec[index * 4 + i]))
                                 }
                                 listenThis(temvec)
                             }
@@ -90,15 +91,34 @@ Page {
         target: personal
         onSongList: {
             newAdd.visible = true
-            if (vec.length !== 1) {
-                songVec = vec
+            if (personal.songlis.length !== 1) {
+                songVec = personal.songlis
                 songListLoa.sourceComponent = list
             }
         }
+        onIlikeShow: {
+            newAdd.visible = false
+            if (personal.ilik.length !== 1) {
+                songVec = personal.ilik
+                songListLoa.sourceComponent = list
+            } else {
+                songListLoa.sourceComponent = noList
+            }
+        }
+        onDownloadShow: {
+            newAdd.visible = false
+            if (personal.downloa.length !== 1) {
+                songVec = personal.downloa
+                songListLoa.sourceComponent = list
+            } else {
+                songListLoa.sourceComponent = noList
+            }
+        }
+
         onSearchOk: {
             newAdd.visible = false
-            if (vec.length !== 1) {
-                songVec = vec
+            if (personal.searc.length !== 1) {
+                songVec = personal.searc
                 songListLoa.sourceComponent = list
             } else {
                 songListLoa.sourceComponent = noList

@@ -1,95 +1,68 @@
 import VPlayApps 1.0
 import QtQuick 2.0
-import qt.Lyric 1.0
 
 import "../qml/myscript.js" as Logic
 
 Page {
     id: lyricspage
     title: qsTr("Lyrics")
-    signal lyricOk
-
     property alias lyricsTime: time
-    property alias lAddr: lyric2.lAddress
-
-    onLAddrChanged: {
-        lyric2.readLyric()
-    }
-
-    LyricMessage {
-        id: lyric2
-        onOk: {
-            lyricOk()
-            show.sourceComponent = appflickable
-        }
-    }
 
     Timer {
         id: time
-        interval: 300
+        interval: 100
         running: false
         repeat: true
-        property var at: Logic.highLightLyric(current)
-        property int current: music.position
+        property var at: highLightLyric(current)
+        //                property int current: hyMediaPlayer.get_current_schedule()
         onTriggered: {
-            rep2.itemAt(Logic.highLightLyric(current)).color = "red"
-            if (Logic.highLightLyric(current) !== 0)
-                rep2.itemAt(Logic.highLightLyric(
-                                current) - 1).color = Theme.secondaryTextColor
+            //            console.log(hyMediaPlayer.get_current_schedule())
+            rep2.itemAt(highLightLyric(hyMediaPlayer.get_current_schedule(
+                                           ))).color = "red"
+            if (highLightLyric(hyMediaPlayer.get_current_schedule()) !== 0)
+                rep2.itemAt(highLightLyric(
+                                hyMediaPlayer.get_current_schedule(
+                                    )) - 1).color = Theme.secondaryTextColor
         }
     }
 
-    Loader {
-        id: show
-        anchors.fill: parent
-        anchors.centerIn: parent
-    }
+    Column {
+        id: lyricContent
 
-    Component {
-        id: appflickable
-        AppFlickable {
-            contentWidth: width
-            contentHeight: lyricContent.height
+        width: parent.width
+        height: parent.height
+        Repeater {
+            id: rep1
+            model: qtLyric.lheader.length
 
-            Column {
-                id: lyricContent
+            Text {
+                id: t1
+                anchors.horizontalCenter: lyricContent.horizontalCenter
+                font.pixelSize: sp(12)
+                wrapMode: Text.WordWrap
+                color: Theme.secondaryTextColor
+                text: qtLyric.lheader[index]
+            }
+        }
 
-                width: parent.width
-                height: parent.height
-                Repeater {
-                    id: rep1
-                    model: lyric2.lheader.length
+        Repeater {
+            id: rep2
+            model: qtLyric.lyricContent.length
 
-                    Text {
-                        id: t1
-                        anchors.horizontalCenter: lyricContent.horizontalCenter
-                        font.pixelSize: sp(12)
-                        wrapMode: Text.WordWrap
-                        color: Theme.secondaryTextColor
-                        text: lyric2.lheader[index]
-                    }
-                }
-
-                Repeater {
-                    id: rep2
-                    model: lyric2.lyricContent.length
-
-                    Text {
-                        id: t0
-                        anchors.horizontalCenter: lyricContent.horizontalCenter
-                        font.pixelSize: sp(12)
-                        wrapMode: Text.WordWrap
-                        color: Theme.secondaryTextColor
-                        text: lyric2.lyricContent[index]
-                        MouseArea {
-                            anchors.fill: parent
-                            onClicked: {
-                                rep2.itemAt(time.at).color = Theme.secondaryTextColor
-                                color = "red"
-                                music.seek(lyric2.startTime[index])
-                                time.restart()
-                            }
-                        }
+            Text {
+                id: t0
+                anchors.horizontalCenter: lyricContent.horizontalCenter
+                font.pixelSize: sp(12)
+                wrapMode: Text.WordWrap
+                color: Theme.secondaryTextColor
+                text: qtLyric.lyricContent[index]
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: {
+                        rep2.itemAt(time.at).color = Theme.secondaryTextColor
+                        color = "red"
+                        music.seek(qtLyric.startTime[index])
+                        time.restart()
                     }
                 }
             }
@@ -99,5 +72,18 @@ Page {
     function cleanHightLight() {
         rep2.itemAt(time.at).color = Theme.secondaryTextColor
         time.stop()
+    }
+
+    function highLightLyric(current) {
+        var sum = qtLyric.startTime.length
+        for (var i = 0; i < sum; i++) {
+            var highLight = qtLyric.startTime[i]
+            if (current > highLight || current === highLight) {
+                continue
+            } else {
+                if (i > 0)
+                    return i - 1
+            }
+        }
     }
 }

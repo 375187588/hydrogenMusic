@@ -6,74 +6,166 @@ App {
     id: mainpage
     screenWidth: 600
     screenHeight: 900
-
-    //    screenWidth: 540
-    //    screenHeight: 960
     property var tempLaddress
-    Component {
-        id: songinterface
-        SongInterface {
-            anchors.fill: parent
-            thisSong: tempLaddress
-        }
-    }
-    SongInterface {
-        anchors.fill: parent
-        thisSong: tempLaddress
-    }
+    property string temp
+    property string prefix: "../hydrogenMusic/assets/music/"
 
     Component.onCompleted: personal.run()
 
+    Mainbar {
+        id: mainbar
+        width: parent.width
+        height: sp(30)
+        onWantSearch: {
+            visible = false
+            searchfor.visible = true
+            songlist.visible = false
+            mine.visible = false
+        }
+        onRecomand: {
+            personal.sendMessage("songListShow warehouse")
+            songlist.visible = true
+        }
+        onMine: {
+            mine.visible = true
+            songlist.visible = false
+        }
+    }
     Searchfor {
         id: searchfor
-        height: sp(30)
+        width: parent.width
+        height: parent.height
+        heigts: sp(30)
         visible: false
         onHeightcan: {
             songlist.opacity = 0.6
-            height = sp(60)
+            heigts = sp(60)
         }
         onHeightrec: {
-            height = sp(30)
+            heigts = sp(30)
             songlist.opacity = 1
+        }
+        onSearchforpageBack: {
+            visible = false
+            mainbar.visible = true
+            personal.sendMessage("songListShow warehouse")
+            songlist.visible = true
+        }
+        onSearching: songlist.visible = true
+        onSearchshow: songlist.visible = false
+    }
+
+    Mine {
+        id: mine
+        anchors.top: mainbar.bottom
+        width: parent.width
+        visible: false
+        onIlikeshow: {
+            visible = false
+            personal.sendMessage("songListShow ilike " + personal.ID)
+            songlist.visible = true
+            ret.visible = true
+            mainbar.visible = false
+        }
+
+        onDownloadshow: {
+            visible = false
+            personal.sendMessage("songListShow download " + personal.ID)
+            songlist.visible = true
+            ret.visible = true
+            mainbar.visible = false
         }
     }
 
     SongList {
         id: songlist
-        anchors.top: searchfor.bottom
+        anchors.top: mainbar.bottom
         width: parent.width
-        visible: false
+        height: parent.height - sp(30)
         onListenThis: {
-            mainpage.tempLaddress = vec
-            load.sourceComponent = songinterface
-            songlist.visible = false
-            searchfor.visible = false
+            temp = vec[3]
+            temp = temp.substring(0, temp.length - 4)
+            console.log(temp)
+            if (mainpage.tempLaddress) {
+                if (mainpage.tempLaddress[0] !== vec[0]
+                        || mainpage.tempLaddress[1] !== vec[1]) {
+                    load.sourceComponent = null
+                    mainpage.tempLaddress = vec
+                    qtLyric.readLyric(prefix + temp)
+                    console.log("onListenThis: " + tempLaddress[3])
+                } else {
+                    load.item.visible = true
+                }
+            } else {
+                mainpage.tempLaddress = vec
+                qtLyric.readLyric(prefix + temp)
+            }
         }
 
         onWantUpload: {
             load.sourceComponent = upload
         }
     }
+
+    Rectangle {
+        id: ret
+        width: parent.width
+        height: sp(30)
+        anchors.top: parent.top
+        visible: false
+        color: "grey"
+        IconButton {
+            id: retPictrue
+            icon: IconType.backward
+            anchors.top: parent.top
+            anchors.left: parent.left
+            onClicked: {
+                ret.visible = false
+                mine.visible = true
+                songlist.visible = false
+                mainbar.visible = true
+            }
+        }
+    }
     Loader {
         id: load
         anchors.fill: parent
     }
-
     Login {
         id: login
         anchors.fill: parent
         onLoginBack: {
-            personal.sendMessage("songListShow")
-            searchfor.visible = true
-            songlist.visible = true
+            personal.sendMessage("songListShow warehouse")
             login.visible = false
+            mainbar.myid = personal.ID
         }
     }
+
+    Component {
+        id: songinterface
+        SongInterface {
+            anchors.fill: parent
+            thisSong: tempLaddress
+            onSonginterfaceBack: {
+                visible = false
+            }
+        }
+    }
+
+    Connections {
+        target: qtLyric
+        onOk: {
+            load.sourceComponent = songinterface
+        }
+    }
+
     Component {
         id: upload
         Upload {
             onUploadBack: {
                 load.sourceComponent = null
+                searchfor.visible = true
+                songlist.visible = true
             }
             onTextFieldAddressChanged: {
                 if (ttext == 1) {

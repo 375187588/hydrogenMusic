@@ -3,64 +3,160 @@ import VPlayApps 1.0
 import QtGraphicalEffects 1.0
 
 Page {
-    id: songlispage
+    id: searchforpage
     property var searchforWhat: ["song", "singer", "album"]
     property var sfw: 0
     property bool mutiIsClick: false
-    property alias heigts: songlispage.height
+    property alias heigts: s.height
     property bool hightlight: false
     property string mutiBlockColor: "grey"
     signal heightcan
     signal heightrec
     signal searching
+    signal searchforpageBack
+    signal searchshow
 
     Behavior on heigts {
         NumberAnimation {
             duration: 200
         }
     }
-
-    Row {
-        id: searchBar
-        height: sp(30)
+    Item {
+        id: s
+        height: parent.height
         width: parent.width
-        SearchBar {
-            id: searchbarr
-            width: parent.width * 0.9
-
-            anchors.verticalCenter: parent.verticalCenter
-            onAccepted: {
-                if (text.length != 0) {
-                    var t = "search " + text + " " + searchforWhat[sfw]
-                    personal.sendMessage(t)
-                } else
-                    personal.sendMessage("songListShow")
+        Item {
+            id: searchBar
+            height: sp(30)
+            width: parent.width
+            SearchBar {
+                id: searchbarr
+                width: parent.width * 0.8
+                height: parent.height
+                anchors.verticalCenter: parent.verticalCenter
+                onAccepted: {
+                    searching()
+                    if (text.length != 0) {
+                        var t = "search " + text + " " + searchforWhat[sfw]
+                        personal.sendMessage(t)
+                    } else
+                        searchshow()
+                }
+                onIconColorChanged: console.log(show.visible)
             }
-            onIconColorChanged: searching()
-        }
-        IconButton {
-            id: mutiselectButton
-            icon: IconType.lifering
-            anchors.verticalCenter: parent.verticalCenter
-            onClicked: {
-                if (!mutiIsClick) {
-                    heightcan()
-                    lo.sourceComponent = mutiselect
-                    mutiIsClick = true
-                } else {
-                    heightrec()
-                    mutiIsClick = false
-                    lo.sourceComponent = null
+            IconButton {
+                id: mutiselectButton
+                icon: IconType.spinner
+                anchors.verticalCenter: parent.verticalCenter
+                anchors.right: ret.left
+                onClicked: {
+                    if (!mutiIsClick) {
+                        heightcan()
+                        lo.sourceComponent = mutiselect
+                        mutiIsClick = true
+                    } else {
+                        heightrec()
+                        mutiIsClick = false
+                        lo.sourceComponent = null
+                    }
+                }
+            }
+
+            Rectangle {
+                id: ret
+                anchors.right: parent.right
+                anchors.rightMargin: sp(6)
+                width: parent.width * 0.05
+                height: parent.height
+                Text {
+                    text: qsTr("取消")
+                    font.pixelSize: 20
+                    anchors.centerIn: parent
+                }
+                MouseArea {
+                    anchors.fill: parent
+                    onClicked: searchforpageBack()
                 }
             }
         }
+
+        Loader {
+            id: lo
+            anchors.top: searchBar.bottom
+            anchors.bottom: parent.bottom
+            width: parent.width
+        }
     }
 
-    Loader {
-        id: lo
-        anchors.top: searchBar.bottom
-        anchors.bottom: parent.bottom
-        width: parent.width
+    Rectangle {
+        id: show
+        width: parent.width * 0.6
+        height: parent.height * 0.4
+        //        visible: true
+        anchors.top: s.bottom
+        Flow {
+            anchors.fill: parent
+            anchors.margins: 10
+            spacing: 10
+
+            Text {
+                width: parent.width
+                height: sp(20)
+                text: qsTr("最近热搜")
+                font.pixelSize: 20
+            }
+            Rectangle {
+                color: "#CCCCCC"
+                width: parent.width * 0.3
+                height: sp(20)
+                radius: 20
+
+                IconButton {
+                    id: ico
+                    icon: IconType.bolt
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                Text {
+                    anchors.left: ico.right
+                    text: qsTr("周杰伦")
+                    anchors.verticalCenter: parent.verticalCenter
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            searchbarr.text = parent.text
+                        }
+                    }
+                }
+            }
+
+            Rectangle {
+                color: "#CCCCCC"
+                width: parent.width * 0.3
+                height: sp(20)
+                radius: 20
+
+                IconButton {
+                    id: ic
+                    icon: IconType.bolt
+                    anchors.left: parent.left
+                    anchors.verticalCenter: parent.verticalCenter
+                }
+
+                Text {
+                    anchors.left: ic.right
+                    text: qsTr("林俊杰")
+                    anchors.verticalCenter: parent.verticalCenter
+                    MouseArea {
+                        anchors.fill: parent
+                        onClicked: {
+                            searchbarr.text = parent.text
+                        }
+                    }
+                }
+            }
+        }
     }
 
     Component {
@@ -71,7 +167,7 @@ Page {
             opacity: 0.5
             Rectangle {
                 id: r1
-                width: songlispage.width / 3
+                width: searchforpage.width / 3
                 height: sp(30)
                 color: mutiBlockColor
                 border.color: "white"
@@ -99,7 +195,7 @@ Page {
 
             Rectangle {
                 id: r2
-                width: songlispage.width / 3
+                width: searchforpage.width / 3
                 height: sp(30)
                 color: mutiBlockColor
                 border.color: "white"
@@ -125,7 +221,7 @@ Page {
 
             Rectangle {
                 id: r3
-                width: songlispage.width / 3
+                width: searchforpage.width / 3
                 height: sp(30)
                 color: mutiBlockColor
                 border.color: "white"
@@ -150,13 +246,4 @@ Page {
             }
         }
     }
-
-    //    Component {
-    //        id: songList
-    //        SongList {
-    //            anchors.top: searchBar.bottom
-    //            anchors.bottom: songlis.bottom
-    //            width: songlis.width
-    //        }
-    //    }
 }

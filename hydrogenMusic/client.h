@@ -5,11 +5,7 @@
 #include "boost/thread.hpp"
 #include <iostream>
 #include <QObject>
-//---------s----------
-//#include "file_info.h"
-//#include "receiver.h"
-//#include <string>
-//---------e--------
+
 #define LENGTH 1024
 
 class Client/*:public QObject*/
@@ -25,7 +21,6 @@ public:
     void copystrAll(std::string l);//复制l到read_str
 
     void onConnect(const boost::system::error_code & err);
-    void download(char *filename);
 private:
     void stop();
     boost::asio::ip::tcp::socket m_sock;

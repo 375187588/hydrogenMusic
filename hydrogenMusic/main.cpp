@@ -1,13 +1,11 @@
-#include <boost/asio.hpp>
-#include <boost/bind.hpp>
-#include <boost/thread.hpp>
-
 #include <QApplication>
 #include <VPApplication>
 #include <QQmlContext>
 #include <QQmlApplicationEngine>
 #include "lyrics.h"
 #include "personal.h"
+#include "multimedia.h"
+
 
 void receive()
 {
@@ -29,20 +27,22 @@ int main(int argc, char *argv[])
     //th.join();
     std::cout << "e" << std::endl;
         //---------------e-------------
+
     QApplication app(argc, argv);
-    qmlRegisterType<Lyric>("qt.Lyric",1,0,"LyricMessage");
     VPApplication vplay;
 
     // Use platform-specific fonts instead of V-Play's default font
     vplay.setPreservePlatformFonts(true);
 
     QQmlApplicationEngine engine;
-//    Lyric lyric;
-//    engine.rootContext()->setContextProperty("qtLyric",&lyric);
+    Lyric lyric;
+    engine.rootContext()->setContextProperty("qtLyric",&lyric);
     vplay.initialize(&engine);
 
     Personal personal;
-
+//    personal.returnInfo("../hydrogenMusic/assets/music/Taylor Swift - Love Story.mp3");
+    Multimediaa hyMediaPlayer;
+    engine.rootContext()->setContextProperty("hyMediaPlayer",&hyMediaPlayer);
     engine.rootContext()->setContextProperty("personal",&personal);
     // use this during development
     // for PUBLISHING, use the entry point below

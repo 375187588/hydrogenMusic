@@ -150,7 +150,8 @@ Page {
         interval: 1000
         onTriggered: {
             messageRet.visible = false
-            loginBack()
+            if (message.text == "login OK.")
+                loginBack()
         }
     }
 }

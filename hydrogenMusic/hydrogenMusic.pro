@@ -25,7 +25,8 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 SOURCES += main.cpp \
     lyrics.cpp \
     client.cpp \
-    personal.cpp
+    personal.cpp \
+    multimedia.cpp
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -51,14 +52,18 @@ HEADERS += \
     client.h \
     myerror.h \
     personal.h \
+    multimedia.h \
     file_info.h \
     receiver.h
 
-QMAKE_LFLAGS += -lboost_system -lpthread -lboost_thread
+QMAKE_LFLAGS += -lboost_system -lpthread -lboost_thread -lavcodec -lavformat -lswresample -lavutil -lSDL
+
 DISTFILES += \
     qml/myscript.js \
     qml/Lyrics.qml \
     qml/SongInterface.qml \
     qml/SongList.qml \
     qml/Upload.qml \
-    qml/Searchfor.qml
+    qml/Searchfor.qml \
+    qml/Mainbar.qml \
+    qml/Mine.qml
