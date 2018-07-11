@@ -31,9 +31,12 @@ public:
     Q_INVOKABLE void run();
     Q_INVOKABLE void sendMessage(QString m);
     Q_INVOKABLE QList<QString> returnInfo(QString url);
-    Q_INVOKABLE bool isIlike(QString nameArID);
+    Q_INVOKABLE bool isIlike(QString nameAr);
     QList<QString> detach(std::string ret);
     Q_INVOKABLE bool addToL(QList<QString> l);
+    Q_INVOKABLE void deleteInPlaylist(int index);
+    Q_INVOKABLE void upList(int index);
+    Q_INVOKABLE int currentSong(QString nameArID);
 
 
     QString ID();
@@ -56,6 +59,7 @@ signals:
     void searcChanged();
     void ilikChanged();
     void playlistChanged();
+    void playlistChange();
 
     void songList();
     void downloadOk();

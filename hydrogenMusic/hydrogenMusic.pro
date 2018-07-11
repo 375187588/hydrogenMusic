@@ -66,4 +66,5 @@ DISTFILES += \
     qml/Upload.qml \
     qml/Searchfor.qml \
     qml/Mainbar.qml \
-    qml/Mine.qml
+    qml/Mine.qml \
+    qml/Playlist.qml

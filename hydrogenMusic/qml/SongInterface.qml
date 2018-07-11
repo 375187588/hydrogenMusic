@@ -1,19 +1,27 @@
 import QtQuick 2.0
 import VPlayApps 1.0
 import QtMultimedia 5.5
+import QtQuick.Controls 1.1
 
 Page {
     id: songinterfacepage
     title: qsTr("Hydrogen music")
     property var thisSong
+    property string prefixx: "../assets/music/"
 
     signal songinterfaceBack
 
     onThisSongChanged: {
-        hyMediaPlayer.set_url(prefix + thisSong[3])
-        console.log("onThisSongChanged: set_url:: " + prefix + thisSong[3])
+        pausePictrue.paused = false
+        pausePictrue.icon = IconType.pause
     }
 
+    MediaPlayer {
+        //可以播放音频和视频
+        id: music
+        autoPlay: true
+        source: prefixx + thisSong[3]
+    }
     Rectangle {
         id: ret
         width: parent.width
@@ -48,54 +56,101 @@ Page {
     Rectangle {
         id: re
         anchors.bottom: parent.bottom
-        border.color: "grey"
         width: parent.width
         height: parent.height * 0.1
         Image {
             id: musicPictrue
             source: "../assets/img/audio-x-mpeg.svg"
         }
+
+        //        Rectangle {
+        //            id: progressbar
+        //            width: parent.width * 0.85
+        //            height: sp(2)
+        //            color: "black"
+        //            anchors.horizontalCenter: parent.horizontalCenter
+        //            Rectangle {
+        //                id: progress
+        //                width: sp(5)
+        //                height: sp(9)
+        //                anchors.verticalCenter: parent.verticalCenter
+        //                x: parent.x + (music.position / music.duration) * parent.width
+        //            }
+        //            MouseArea {
+        //                width: parent.width
+        //                height: progress.height
+        //                onClicked: music.seek(
+        //                               (mouseX - progressbar.x) / progressbar.width * music.duration)
+        //            }
+
+        //        }
+        Slider {
+            id: progressbar
+            width: parent.width * 0.85
+            height: sp(2)
+            anchors.horizontalCenter: parent.horizontalCenter
+            maximumValue: music.duration//hyMediaPlayer.get_all_schedule()
+            value: music.position//hyMediaPlayer.get_current_schedule()
+            onValueChanged: music.seek(value)
+        }
+
         IconButton {
-            id: playPictrue
-            icon: IconType.play
-            anchors.top: musicPictrue.bottom
-            anchors.left: musicPictrue.left
+            id: pre
+            icon: IconType.stepbackward
+            anchors.right: pausePictrue.left
+            anchors.top: pausePictrue.top
             onClicked: {
-                console.log("play button click")
-                hyMediaPlayer.init_multimedia2()
-                lyrics.lyricsTime.start()
+                var temp = []
+                var index = personal.currentSong(thisSong[3])
+                if (index !== 0) {
+                    for (var i = 0; i < 4; i++) {
+                        temp.push(personal.playlist[(index - 1) * 4 + i])
+                    }
+                    lyrics.cleanHightLight()
+                    thisSong = temp
+                }
             }
         }
+
         IconButton {
             id: pausePictrue
             property bool paused: false
             icon: IconType.pause
-            anchors.left: playPictrue.right
+            anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: musicPictrue.bottom
             onClicked: {
                 //play state
-                console.log("pause button click")
-                if (!paused) {
-                    paused = true
-                    lyrics.lyricsTime.running = false
-                    hyMediaPlayer.pause_mulitimedia()
-                } else {
+                if (paused) {
+                    icon = IconType.pause
+                    music.play()
                     lyrics.lyricsTime.start()
                     paused = false
-                    hyMediaPlayer.play_multimedia()
+                    //                    hyMediaPlayer.play_multimedia()
+                } else {
+                    icon = IconType.play
+                    paused = true
+                    lyrics.lyricsTime.running = false
+                    //                    hyMediaPlayer.pause_mulitimedia()
+                    music.pause()
                 }
             }
         }
-        IconButton {
 
-            id: stopPictrue
-            icon: IconType.stop
+        IconButton {
+            id: next
+            icon: IconType.stepforward
             anchors.left: pausePictrue.right
-            anchors.top: musicPictrue.bottom
+            anchors.top: pausePictrue.top
             onClicked: {
-                console.log("stop button click")
-                lyrics.cleanHightLight()
-                hyMediaPlayer.stop_mulitimedia()
+                var temp = []
+                var index = personal.currentSong(thisSong[3])
+                if (index !== personal.playlist.length / 4 - 1) {
+                    for (var i = 0; i < 4; i++) {
+                        temp.push(personal.playlist[(index + 1) * 4 + i])
+                    }
+                    lyrics.cleanHightLight()
+                    thisSong = temp
+                }
             }
         }
 
@@ -104,13 +159,27 @@ Page {
             icon: IconType.ioxhost
             anchors.bottom: re.bottom
             anchors.right: re.right
+            property bool clickthis: false
+            onClicked: {
+                if (!clickthis) {
+                    appflickable.opacity = 0.4
+                    re.opacity = 0.4
+                    playlists.sourceComponent = plalistshow
+                    clickthis = true
+                } else {
+                    appflickable.opacity = 1
+                    re.opacity = 1
+                    playlists.sourceComponent = null
+                    clickthis = false
+                }
+            }
         }
 
         IconButton {
             id: download
             icon: IconType.download
+            anchors.left: parent.left
             anchors.bottom: re.bottom
-            anchors.right: playlist.left
             onClicked: {
                 var a = thisSong[3] + " - " + personal.ID
                 var e = "download " + thisSong[0] + " || " + thisSong[1] + " || " + thisSong[2]
@@ -123,7 +192,7 @@ Page {
             id: ilike
             icon: personal.isIlike(
                       thisSong[3]) ? IconType.heartbeat : IconType.heart
-            anchors.right: download.left
+            anchors.left: download.right
             anchors.bottom: re.bottom
             onClicked: {
                 var a = thisSong[3] + " - " + personal.ID
@@ -135,6 +204,26 @@ Page {
                             + " || " + thisSong[3] + " || " + personal.ID + " || " + a
                 personal.sendMessage(e)
             }
+        }
+    }
+    Loader {
+        id: playlists
+        width: parent.width
+        height: parent.height * 0.5
+        anchors.bottom: re.top
+    }
+
+    Component {
+        id: plalistshow
+        Playlist {
+        }
+    }
+
+    Connections {
+        target: playlists.item
+        onListen: {
+            lyrics.cleanHightLight()
+            thisSong = vec
         }
     }
 

@@ -165,8 +165,8 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         }
         //--------------s----------------
         char csong[50];
-        int length = downloadM[0].copy(csong,49);
-        csong[length] = '\0';
+        int length = downloadM[3].copy(csong,49);
+        csong[length-1] = '\0';
         //--------------e----------------------
         std::string c = "INSERT INTO download VALUES('" + downloadM[0] + "','" + downloadM[1] + "','" + downloadM[2] + "','" + downloadM[3] + "','" + downloadM[4] + "','" + downloadM[5] + "');";
         QString cmd = QString::fromStdString(c);
@@ -180,8 +180,17 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
             returnM = "download failed";
         do_write(sock,returnM);
         //------------s------------------
-        sender(m_ser, "127.0.0.1",1345, "a.mp3");
+        //sender(m_ser, "127.0.0.1",1345, "脸红的思春期 - You(=I).mp3");
 
+
+        std::cout << "lll"<< downloadM[3] << "lll"<< std::endl;
+        //std::cout << sock->remote_endpoint().address();
+        char caddress[50];
+        std::string address = sock->remote_endpoint().address().to_string();
+
+        int length1 = address.copy(caddress,49);
+        caddress[length1] = '\0';
+        sender(m_ser, caddress,1345, csong);
         //------------e---------------------
 
     }else if(head == "upload") {
@@ -266,23 +275,41 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         do_write(sock,returnM);
 
     }else if(head == "delete") {
+        //dislike是从歌词界面取消喜欢，ilike是从我喜欢列表里取消喜欢
         record >> head;
         std::string c;
         QString cmd;
         std::string returnM;
         std::string head1;
-        if(head == "dislike")  {
+        if(head == "dislike" || head == "ilike")  {
             while (record >> head) {
                 head1 += head;
                 head1 += " ";
             }
-            std::cout << head1;
             c = "delete from ilike where nameArID='"+ head1 +"';";
             cmd = QString::fromStdString(c);
+            if(head == "dislike") {
             if(m_db.changeDatabase(cmd))
                 returnM = "delete ilike ok";
             else
                 returnM = "delete ilike failed";
+            }else{
+                if(m_db.changeDatabase(cmd))
+                    returnM = "delete ilikes ok";
+                else
+                    returnM = "delete ilikes failed";
+            }
+        }else if(head == "download"){
+            while (record >> head) {
+                head1 += head;
+                head1 += " ";
+            }
+            c = "delete from download where nameArID='"+ head1 +"';";
+            cmd = QString::fromStdString(c);
+            if(m_db.changeDatabase(cmd))
+                returnM = "delete download ok";
+            else
+                returnM = "delete download failed";
         }
         do_write(sock,returnM);
     }

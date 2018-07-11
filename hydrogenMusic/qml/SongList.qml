@@ -8,6 +8,7 @@ Page {
     signal listenThis(var vec)
     signal wantUpload
     property string sState: "warehouse"
+    property bool isIlike: true
     property var preSongVec: []
 
     Component {
@@ -42,20 +43,35 @@ Page {
                         IconButton {
                             id: addToList
                             icon: IconType.plus
-                            anchors.right: parent.right
+                            anchors.right: deletethis.visible ? deletethis.left : parent.right
                             anchors.bottom: parent.bottom
                             onClicked: {
                                 var temp = []
                                 for (var i = 0; i < 4; i++) {
-                                    temvec.push(Logic.transToString(
-                                                    songVec[index * 4 + i]))
+                                    temp.push(Logic.transToString(
+                                                  songVec[index * 4 + i]))
                                 }
                                 personal.addToL(temp)
+                                message.text = "已加入播放列表"
+                                messageRet.visible = true
+                                showTime.restart()
+                            }
+                        }
+                        IconButton {
+                            id: deletethis
+                            icon: IconType.times
+                            visible: (sState === "warehouse"
+                                      || sState == "search") ? false : true
+                            anchors.right: parent.right
+                            anchors.bottom: parent.bottom
+                            onClicked: {
+                                personal.deleteInPlaylist(index)
                             }
                         }
 
                         MouseArea {
-                            anchors.fill: parent
+                            height: parent.height
+                            width: parent.width * 0.7
                             onPressed: {
                                 parent.opacity = 0.3
                             }
@@ -66,6 +82,7 @@ Page {
                                     temvec.push(Logic.transToString(
                                                     songVec[index * 4 + i]))
                                 }
+                                personal.addToL(temvec)
                                 listenThis(temvec)
                             }
                         }
@@ -118,7 +135,10 @@ Page {
             newAdd.visible = false
             if (personal.ilik.length !== 1) {
                 songVec = personal.ilik
-                sState = "ilike"
+                if (isIlike)
+                    sState = "ilike"
+                else
+                    isIlike = true
                 songListLoa.sourceComponent = list
             } else {
                 songListLoa.sourceComponent = noList
@@ -145,6 +165,37 @@ Page {
             } else {
                 songListLoa.sourceComponent = noList
             }
+        }
+    }
+
+    Rectangle {
+        id: messageRet
+        color: "white"
+        border.color: "black"
+        //        border.width: sp(1)
+        height: dp(30)
+        width: dp(150)
+        anchors.centerIn: parent
+        radius: 20
+        visible: false
+        AppText {
+            id: message
+            anchors.fill: parent
+            anchors.left: parent.left
+            anchors.leftMargin: 30
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "black"
+            visible: true
+            font.pixelSize: sp(12)
+            font.bold: sp(5)
+        }
+    }
+
+    Timer {
+        id: showTime
+        interval: 300
+        onTriggered: {
+            messageRet.visible = false
         }
     }
 }

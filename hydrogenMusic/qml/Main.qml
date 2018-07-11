@@ -90,6 +90,7 @@ App {
                 if (mainpage.tempLaddress[3] !== vec[3]) {
                     load.sourceComponent = null
                     mainpage.tempLaddress = vec
+                    isIlike = false
                     personal.sendMessage("songListShow ilike " + personal.ID)
                     qtLyric.readLyric(prefix + temp)
                     console.log("onListenThis: " + tempLaddress[3])
@@ -149,8 +150,10 @@ App {
             if (songlist.sState == "search")
                 songlist.songVec = prefix
             else if (songlist.sState == "warehouse") {
+                console.log("songListShow " + songlist.sState)
                 personal.sendMessage("songListShow " + songlist.sState)
             } else {
+                console.log("songListShow " + songlist.sState + " " + personal.ID)
                 personal.sendMessage(
                             "songListShow " + songlist.sState + " " + personal.ID)
             }
@@ -162,10 +165,6 @@ App {
         SongInterface {
             anchors.fill: parent
             thisSong: tempLaddress
-            //            onSonginterfaceBack: {
-            //                visible = false
-            //                personal.sendMessage("songListShow warehouse")
-            //            }
         }
     }
 

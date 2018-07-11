@@ -82,6 +82,12 @@ void Personal::sendMessage(QString m)
                 sendMessage("songListShow ilike");
                 emit dislike();
             }
+        }else if(ret == "ilikes") {
+            record >> ret;
+            if(ret == "ok") sendMessage("songListShow ilike");
+        }else if(ret == "download") {
+            record >> ret;
+            if(ret == "ok") emit downloadOk();
         }
     }
 
@@ -134,11 +140,11 @@ QList<QString> Personal::returnInfo(QString url)
 
 }
 
-bool Personal::isIlike(QString nameArID)
+bool Personal::isIlike(QString nameAr)
 {
     if(m_ilik.length() > 1) {
-        for (int i = 0;i<m_ilik.length();i++) {
-            if(m_ilik[4*i + 3] == nameArID) {
+        for (int i = 0;i<m_ilik.length()/4;i++) {
+            if(m_ilik[4*i + 3] == nameAr) {
                 return true;
             }
         }
@@ -172,17 +178,14 @@ QList<QString> Personal::detach(std::string ret)
             }
         }
     }
-    std::cout << "detach::" <<vec[0].toStdString() <<std::endl;
     return vec;
 }
 
 bool Personal::addToL(QList<QString> l)
 {
     if(m_playlist.length()>1) {
-        for(int i=0;i<m_playlist.length();i++) {
-            if(i%3 == 0) {
-                if(m_playlist[i] == l[3]) return false;
-            }
+        for(int i=0;i<m_playlist.length()/4;i++) {
+            if(m_playlist[4*i + 3] == l[3]) return false;
         }
     }
     for(int j=0;j<4;j++) {
@@ -191,6 +194,57 @@ bool Personal::addToL(QList<QString> l)
     return true;
 
 
+}
+
+void Personal::deleteInPlaylist(int index)
+{
+    for(int j = index;j!=m_playlist.length()/4-1;j++) {
+        if(j!=m_playlist.length()/4-1) {
+            for(int i=0;i<4;i++) {
+                m_playlist[4*j+ i] = m_playlist[4*(j+1)+ i];
+            }
+        }
+    }
+
+    for(int i=0;i<4;i++) {
+        m_playlist.pop_back();
+    }
+    emit playlistChange();
+}
+
+void Personal::upList(int index)
+{
+    QList<QString> temp;
+    for(int i = 0;i<4;i++) {
+        temp.append(m_playlist[4*index +i]);
+    }
+
+    for(int j = index;j!=-1;j--) {
+        if(j!=0) {
+            for(int i=0;i<4;i++) {
+                m_playlist[4*j+ i] = m_playlist[4*(j-1)+ i];
+            }
+        }else{
+            for(int i=0;i<4;i++) {
+                m_playlist[4*j+ i] = temp[i];
+            }
+        }
+    }
+    emit playlistChange();
+
+}
+
+int Personal::currentSong(QString nameArID)
+{
+    if(m_playlist.length() > 1) {
+        for (int i = 0;i<m_playlist.length()/4;i++) {
+            QString temp = m_playlist[4*i + 3] + " - " + m_ID;
+            if(temp == nameArID) {
+                return i;
+            }
+        }
+    }else
+        return 0;
 }
 
 QString Personal::ID()
@@ -256,7 +310,7 @@ QList<QString> Personal::playlist()
 void Personal::setPlaylist(QList<QString> l)
 {
     m_playlist = l;
-    emit playlistChanged();
+    emit playlistChange();
 }
 
 

@@ -14,15 +14,13 @@ Page {
         running: false
         repeat: true
         property var at: highLightLyric(current)
-        property int current: hyMediaPlayer.get_current_schedule()
+        property int current: music.position //hyMediaPlayer.get_current_schedule()
         onTriggered: {
-            //            console.log(hyMediaPlayer.get_current_schedule())
-            rep2.itemAt(highLightLyric(hyMediaPlayer.get_current_schedule(
-                                           ))).color = "red"
-            if (highLightLyric(hyMediaPlayer.get_current_schedule()) !== 0)
+            //            console.log(current)
+            rep2.itemAt(highLightLyric(current)).color = "red"
+            if (highLightLyric(current) !== 0)
                 rep2.itemAt(highLightLyric(
-                                hyMediaPlayer.get_current_schedule(
-                                    )) - 1).color = Theme.secondaryTextColor
+                                current) - 1).color = Theme.secondaryTextColor
         }
     }
 

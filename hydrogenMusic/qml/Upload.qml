@@ -11,11 +11,9 @@ Page {
     property int ttext
     property string temp
     property alias soaField: sOAField.text
-    property alias loaField: lOAField.text
 
     AppListView {
         id: list
-        y: uploadpage.height * 0.04
         anchors.fill: parent
         anchors.horizontalCenter: parent.horizontalCenter
 
@@ -24,6 +22,7 @@ Page {
             height: parent.height
             anchors.horizontalCenter: parent.horizontalCenter
             Row {
+                x: sp(10)
                 width: parent.width
                 height: parent.height * 0.3
                 AppText {
@@ -40,7 +39,7 @@ Page {
                     anchors.verticalCenter: parent.verticalCenter
                     borderColor: "grey"
                     borderWidth: 2
-                    width: dp(140)
+                    width: dp(200)
                     // height: dp()
                 }
                 AppButton {
@@ -59,40 +58,7 @@ Page {
             Row {
                 width: parent.width
                 height: parent.height * 0.3
-                //                anchors.horizontalCenter: parent.horizontalCenter
-                AppText {
-                    id: lOA
-                    anchors.verticalCenter: parent.verticalCenter
-                    x: 20
-                    text: "lyrics of address:"
-                    color: "black"
-                }
-                AppTextField {
-                    id: lOAField
-                    radius: 5
-                    //                        anchors.right: a1.left
-                    anchors.verticalCenter: parent.verticalCenter
-                    borderColor: "grey"
-                    borderWidth: 2
-                    width: dp(140)
-                    // height: dp()
-                }
-
-                AppButton {
-                    id: a2
-                    radius: 5
-                    //                        anchors.right: parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: "select"
-                    onClicked: {
-                        uploadpage.ttext = 2
-                        fileDialog.open()
-                    }
-                }
-            }
-            Row {
-                width: parent.width
-                height: parent.height * 0.3
+                x: sp(100)
                 AppButton {
                     radius: 5
                     text: "upload"
