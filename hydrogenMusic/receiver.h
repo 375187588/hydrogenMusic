@@ -8,7 +8,6 @@
 #include <boost/enable_shared_from_this.hpp>
 
 #include "file_info.h"
-
 class Session : public boost::enable_shared_from_this<Session> {
 public:
   typedef asio::ip::tcp TCP;

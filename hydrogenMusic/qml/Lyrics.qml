@@ -14,7 +14,7 @@ Page {
         running: false
         repeat: true
         property var at: highLightLyric(current)
-        //                property int current: hyMediaPlayer.get_current_schedule()
+        property int current: hyMediaPlayer.get_current_schedule()
         onTriggered: {
             //            console.log(hyMediaPlayer.get_current_schedule())
             rep2.itemAt(highLightLyric(hyMediaPlayer.get_current_schedule(

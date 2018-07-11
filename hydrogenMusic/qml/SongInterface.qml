@@ -74,7 +74,7 @@ Page {
             anchors.top: musicPictrue.bottom
             onClicked: {
                 //play state
-                 console.log("pause button click")
+                console.log("pause button click")
                 if (!paused) {
                     paused = true
                     lyrics.lyricsTime.running = false
@@ -129,7 +129,6 @@ Page {
                 var a = thisSong[3] + " - " + personal.ID
                 var e
                 if (ilike.icon === IconType.heartbeat) {
-                    console.log("ooo")
                     e = "delete dislike " + a
                 } else
                     e = "ilike " + thisSong[0] + " || " + thisSong[1] + " || " + thisSong[2]

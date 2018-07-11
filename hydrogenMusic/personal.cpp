@@ -69,13 +69,19 @@ void Personal::sendMessage(QString m)
     }else if(head == "ilike") {
         std::string ret;
         record >> ret;
-        if(ret == "ok") emit ilikeOk();
+        if(ret == "ok") {
+            sendMessage("songListShow ilike");
+            emit ilikeOk();
+        }
     }else if(head == "delete") {
         std::string ret;
         record >> ret;
         if(ret == "ilike") {
             record >> ret;
-            if(ret == "ok") emit dislike();
+            if(ret == "ok") {
+                sendMessage("songListShow ilike");
+                emit dislike();
+            }
         }
     }
 
@@ -94,7 +100,7 @@ QList<QString> Personal::returnInfo(QString url)
     //    char *ch = (char *)malloc(len * sizeof(char));
     //    p.copy(ch, len, 0);
 
-    char ch[50] = "\0";
+    char ch[100] = "\0";
     std::string p = url.toStdString();
     int i;
     for(i = 0; i < p.length(); i++)
@@ -130,9 +136,12 @@ QList<QString> Personal::returnInfo(QString url)
 
 bool Personal::isIlike(QString nameArID)
 {
-    for (int i = 0;i<m_ilik.length();i++) {
-        if(m_ilik[m_ilik.length()*i + 4] == nameArID)
-            return true;
+    if(m_ilik.length() > 1) {
+        for (int i = 0;i<m_ilik.length();i++) {
+            if(m_ilik[4*i + 3] == nameArID) {
+                return true;
+            }
+        }
     }
     return false;
 }
@@ -165,6 +174,23 @@ QList<QString> Personal::detach(std::string ret)
     }
     std::cout << "detach::" <<vec[0].toStdString() <<std::endl;
     return vec;
+}
+
+bool Personal::addToL(QList<QString> l)
+{
+    if(m_playlist.length()>1) {
+        for(int i=0;i<m_playlist.length();i++) {
+            if(i%3 == 0) {
+                if(m_playlist[i] == l[3]) return false;
+            }
+        }
+    }
+    for(int j=0;j<4;j++) {
+        m_playlist.push_back(l[j]);
+    }
+    return true;
+
+
 }
 
 QString Personal::ID()

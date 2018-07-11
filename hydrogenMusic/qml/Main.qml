@@ -87,10 +87,10 @@ App {
             temp = temp.substring(0, temp.length - 4)
             console.log(temp)
             if (mainpage.tempLaddress) {
-                if (mainpage.tempLaddress[0] !== vec[0]
-                        || mainpage.tempLaddress[1] !== vec[1]) {
+                if (mainpage.tempLaddress[3] !== vec[3]) {
                     load.sourceComponent = null
                     mainpage.tempLaddress = vec
+                    personal.sendMessage("songListShow ilike " + personal.ID)
                     qtLyric.readLyric(prefix + temp)
                     console.log("onListenThis: " + tempLaddress[3])
                 } else {
@@ -98,6 +98,7 @@ App {
                 }
             } else {
                 mainpage.tempLaddress = vec
+                personal.sendMessage("songListShow ilike " + personal.ID)
                 qtLyric.readLyric(prefix + temp)
             }
         }
@@ -141,14 +142,30 @@ App {
         }
     }
 
+    Connections {
+        target: load.item
+        onSonginterfaceBack: {
+            load.item.visible = false
+            if (songlist.sState == "search")
+                songlist.songVec = prefix
+            else if (songlist.sState == "warehouse") {
+                personal.sendMessage("songListShow " + songlist.sState)
+            } else {
+                personal.sendMessage(
+                            "songListShow " + songlist.sState + " " + personal.ID)
+            }
+        }
+    }
+
     Component {
         id: songinterface
         SongInterface {
             anchors.fill: parent
             thisSong: tempLaddress
-            onSonginterfaceBack: {
-                visible = false
-            }
+            //            onSonginterfaceBack: {
+            //                visible = false
+            //                personal.sendMessage("songListShow warehouse")
+            //            }
         }
     }
 

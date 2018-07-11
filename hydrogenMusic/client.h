@@ -7,7 +7,6 @@
 #include <QObject>
 
 #define LENGTH 1024
-
 class Client/*:public QObject*/
 {
 public:

@@ -14,7 +14,6 @@
 #include "receiver.h"
 #include <string>
 //---------e--------
-
 using namespace boost::asio;
 
 class Personal:public QObject
@@ -34,7 +33,7 @@ public:
     Q_INVOKABLE QList<QString> returnInfo(QString url);
     Q_INVOKABLE bool isIlike(QString nameArID);
     QList<QString> detach(std::string ret);
-
+    Q_INVOKABLE bool addToL(QList<QString> l);
 
 
     QString ID();

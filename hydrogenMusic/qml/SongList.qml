@@ -7,6 +7,8 @@ Page {
     property var songVec: []
     signal listenThis(var vec)
     signal wantUpload
+    property string sState: "warehouse"
+    property var preSongVec: []
 
     Component {
         id: list
@@ -17,7 +19,7 @@ Page {
             Column {
                 Repeater {
                     id: rep1
-                    model: personal.songlis.length / 4
+                    model: songVec.length / 4
 
                     Rectangle {
                         id: rec
@@ -35,8 +37,23 @@ Page {
                             color: "black"
                             font.pixelSize: sp(12)
                             font.bold: sp(5)
-                            text: songVec[index * 4]
+                            text: songVec[index * 4 + 3]
                         }
+                        IconButton {
+                            id: addToList
+                            icon: IconType.plus
+                            anchors.right: parent.right
+                            anchors.bottom: parent.bottom
+                            onClicked: {
+                                var temp = []
+                                for (var i = 0; i < 4; i++) {
+                                    temvec.push(Logic.transToString(
+                                                    songVec[index * 4 + i]))
+                                }
+                                personal.addToL(temp)
+                            }
+                        }
+
                         MouseArea {
                             anchors.fill: parent
                             onPressed: {
@@ -93,6 +110,7 @@ Page {
             newAdd.visible = true
             if (personal.songlis.length !== 1) {
                 songVec = personal.songlis
+                sState = "warehouse"
                 songListLoa.sourceComponent = list
             }
         }
@@ -100,6 +118,7 @@ Page {
             newAdd.visible = false
             if (personal.ilik.length !== 1) {
                 songVec = personal.ilik
+                sState = "ilike"
                 songListLoa.sourceComponent = list
             } else {
                 songListLoa.sourceComponent = noList
@@ -109,6 +128,7 @@ Page {
             newAdd.visible = false
             if (personal.downloa.length !== 1) {
                 songVec = personal.downloa
+                sState = "download"
                 songListLoa.sourceComponent = list
             } else {
                 songListLoa.sourceComponent = noList
@@ -119,6 +139,8 @@ Page {
             newAdd.visible = false
             if (personal.searc.length !== 1) {
                 songVec = personal.searc
+                sState = "search"
+                preSongVec = songVec
                 songListLoa.sourceComponent = list
             } else {
                 songListLoa.sourceComponent = noList

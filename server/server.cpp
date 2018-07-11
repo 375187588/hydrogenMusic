@@ -161,6 +161,7 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
                 }else break;
             }
             downloadM.push_back(temp);
+            temp.clear();
         }
         //--------------s----------------
         char csong[50];
@@ -253,6 +254,7 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
                 }else break;
             }
             ilikeM.push_back(temp);
+            temp.clear();
         }
         std::string c = "INSERT INTO ilike VALUES('" + ilikeM[0] + "','" + ilikeM[1] + "','" + ilikeM[2] + "','" + ilikeM[3] + "','" + ilikeM[4] + "','" + ilikeM[5] + "');";
         QString cmd = QString::fromStdString(c);
@@ -268,9 +270,14 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         std::string c;
         QString cmd;
         std::string returnM;
+        std::string head1;
         if(head == "dislike")  {
-            record >> head;
-            c = "delete from ilike where nameArID='"+ head +"';";
+            while (record >> head) {
+                head1 += head;
+                head1 += " ";
+            }
+            std::cout << head1;
+            c = "delete from ilike where nameArID='"+ head1 +"';";
             cmd = QString::fromStdString(c);
             if(m_db.changeDatabase(cmd))
                 returnM = "delete ilike ok";

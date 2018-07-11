@@ -10,7 +10,6 @@
 #include <iostream>
 #include <string>
 #include <stdio.h>
-
 class Database
 {
 public:

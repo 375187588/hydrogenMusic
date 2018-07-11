@@ -100,10 +100,10 @@ Page {
                         var info = personal.returnInfo(sOAField.text)
                         console.log("llllllllll" + info[0] + "   " + info[1]
                                     + "   " + info[2] + "llllllllll")
-                        var a =  info[0] + " - " + info[1] + ".mp3"
+                        var a = info[0] + " - " + info[1]
 
-                        var e = "upload " + info[1] + " || " + info[0]
-                                + " || " + info[2] + " || " + a
+                        var e = "upload " + info[1] + " || " + info[0] + " || "
+                                + info[2] + " || " + a + ".mp3"
                         personal.sendMessage(e)
                     }
                 }
