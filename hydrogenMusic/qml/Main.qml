@@ -62,6 +62,7 @@ App {
         visible: false
         onIlikeshow: {
             visible = false
+            songlist.isIlike = true
             personal.sendMessage("songListShow ilike " + personal.ID)
             songlist.visible = true
             ret.visible = true
@@ -90,8 +91,6 @@ App {
                 if (mainpage.tempLaddress[3] !== vec[3]) {
                     load.sourceComponent = null
                     mainpage.tempLaddress = vec
-                    isIlike = false
-                    personal.sendMessage("songListShow ilike " + personal.ID)
                     qtLyric.readLyric(prefix + temp)
                     console.log("onListenThis: " + tempLaddress[3])
                 } else {

@@ -89,8 +89,8 @@ Page {
             width: parent.width * 0.85
             height: sp(2)
             anchors.horizontalCenter: parent.horizontalCenter
-            maximumValue: music.duration//hyMediaPlayer.get_all_schedule()
-            value: music.position//hyMediaPlayer.get_current_schedule()
+            maximumValue: music.duration //hyMediaPlayer.get_all_schedule()
+            value: music.position //hyMediaPlayer.get_current_schedule()
             onValueChanged: music.seek(value)
         }
 
@@ -101,7 +101,8 @@ Page {
             anchors.top: pausePictrue.top
             onClicked: {
                 var temp = []
-                var index = personal.currentSong(thisSong[3])
+                var index = personal.currentSong(
+                            thisSong[3] + " - " + personal.ID)
                 if (index !== 0) {
                     for (var i = 0; i < 4; i++) {
                         temp.push(personal.playlist[(index - 1) * 4 + i])
@@ -143,7 +144,8 @@ Page {
             anchors.top: pausePictrue.top
             onClicked: {
                 var temp = []
-                var index = personal.currentSong(thisSong[3])
+                var index = personal.currentSong(
+                            thisSong[3] + " - " + personal.ID)
                 if (index !== personal.playlist.length / 4 - 1) {
                     for (var i = 0; i < 4; i++) {
                         temp.push(personal.playlist[(index + 1) * 4 + i])

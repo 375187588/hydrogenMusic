@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_Personal_t {
-    QByteArrayData data[42];
-    char stringdata0[391];
+    QByteArrayData data[43];
+    char stringdata0[407];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,45 +48,46 @@ QT_MOC_LITERAL(12, 135, 8), // "searchOk"
 QT_MOC_LITERAL(13, 144, 10), // "registerOk"
 QT_MOC_LITERAL(14, 155, 14), // "registerFailed"
 QT_MOC_LITERAL(15, 170, 7), // "loginOk"
-QT_MOC_LITERAL(16, 178, 11), // "loginFailed"
-QT_MOC_LITERAL(17, 190, 7), // "ilikeOk"
-QT_MOC_LITERAL(18, 198, 9), // "ilikeShow"
-QT_MOC_LITERAL(19, 208, 12), // "downloadShow"
-QT_MOC_LITERAL(20, 221, 7), // "dislike"
-QT_MOC_LITERAL(21, 229, 3), // "run"
-QT_MOC_LITERAL(22, 233, 11), // "sendMessage"
-QT_MOC_LITERAL(23, 245, 1), // "m"
-QT_MOC_LITERAL(24, 247, 10), // "returnInfo"
-QT_MOC_LITERAL(25, 258, 14), // "QList<QString>"
-QT_MOC_LITERAL(26, 273, 3), // "url"
-QT_MOC_LITERAL(27, 277, 7), // "isIlike"
-QT_MOC_LITERAL(28, 285, 6), // "nameAr"
-QT_MOC_LITERAL(29, 292, 6), // "addToL"
-QT_MOC_LITERAL(30, 299, 1), // "l"
-QT_MOC_LITERAL(31, 301, 16), // "deleteInPlaylist"
-QT_MOC_LITERAL(32, 318, 5), // "index"
-QT_MOC_LITERAL(33, 324, 6), // "upList"
-QT_MOC_LITERAL(34, 331, 11), // "currentSong"
-QT_MOC_LITERAL(35, 343, 8), // "nameArID"
-QT_MOC_LITERAL(36, 352, 2), // "ID"
-QT_MOC_LITERAL(37, 355, 7), // "songlis"
-QT_MOC_LITERAL(38, 363, 7), // "downloa"
-QT_MOC_LITERAL(39, 371, 5), // "searc"
-QT_MOC_LITERAL(40, 377, 4), // "ilik"
-QT_MOC_LITERAL(41, 382, 8) // "playlist"
+QT_MOC_LITERAL(16, 178, 15), // "touristsloginOk"
+QT_MOC_LITERAL(17, 194, 11), // "loginFailed"
+QT_MOC_LITERAL(18, 206, 7), // "ilikeOk"
+QT_MOC_LITERAL(19, 214, 9), // "ilikeShow"
+QT_MOC_LITERAL(20, 224, 12), // "downloadShow"
+QT_MOC_LITERAL(21, 237, 7), // "dislike"
+QT_MOC_LITERAL(22, 245, 3), // "run"
+QT_MOC_LITERAL(23, 249, 11), // "sendMessage"
+QT_MOC_LITERAL(24, 261, 1), // "m"
+QT_MOC_LITERAL(25, 263, 10), // "returnInfo"
+QT_MOC_LITERAL(26, 274, 14), // "QList<QString>"
+QT_MOC_LITERAL(27, 289, 3), // "url"
+QT_MOC_LITERAL(28, 293, 7), // "isIlike"
+QT_MOC_LITERAL(29, 301, 6), // "nameAr"
+QT_MOC_LITERAL(30, 308, 6), // "addToL"
+QT_MOC_LITERAL(31, 315, 1), // "l"
+QT_MOC_LITERAL(32, 317, 16), // "deleteInPlaylist"
+QT_MOC_LITERAL(33, 334, 5), // "index"
+QT_MOC_LITERAL(34, 340, 6), // "upList"
+QT_MOC_LITERAL(35, 347, 11), // "currentSong"
+QT_MOC_LITERAL(36, 359, 8), // "nameArID"
+QT_MOC_LITERAL(37, 368, 2), // "ID"
+QT_MOC_LITERAL(38, 371, 7), // "songlis"
+QT_MOC_LITERAL(39, 379, 7), // "downloa"
+QT_MOC_LITERAL(40, 387, 5), // "searc"
+QT_MOC_LITERAL(41, 393, 4), // "ilik"
+QT_MOC_LITERAL(42, 398, 8) // "playlist"
 
     },
     "Personal\0IDChanged\0\0songlisChanged\0"
     "downloaChanged\0searcChanged\0ilikChanged\0"
     "playlistChanged\0playlistChange\0songList\0"
     "downloadOk\0uploadOk\0searchOk\0registerOk\0"
-    "registerFailed\0loginOk\0loginFailed\0"
-    "ilikeOk\0ilikeShow\0downloadShow\0dislike\0"
-    "run\0sendMessage\0m\0returnInfo\0"
-    "QList<QString>\0url\0isIlike\0nameAr\0"
-    "addToL\0l\0deleteInPlaylist\0index\0upList\0"
-    "currentSong\0nameArID\0ID\0songlis\0downloa\0"
-    "searc\0ilik\0playlist"
+    "registerFailed\0loginOk\0touristsloginOk\0"
+    "loginFailed\0ilikeOk\0ilikeShow\0"
+    "downloadShow\0dislike\0run\0sendMessage\0"
+    "m\0returnInfo\0QList<QString>\0url\0isIlike\0"
+    "nameAr\0addToL\0l\0deleteInPlaylist\0index\0"
+    "upList\0currentSong\0nameArID\0ID\0songlis\0"
+    "downloa\0searc\0ilik\0playlist"
 };
 #undef QT_MOC_LITERAL
 
@@ -96,45 +97,47 @@ static const uint qt_meta_data_Personal[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      27,   14, // methods
-       6,  190, // properties
+      28,   14, // methods
+       6,  196, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-      19,       // signalCount
+      20,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  149,    2, 0x06 /* Public */,
-       3,    0,  150,    2, 0x06 /* Public */,
-       4,    0,  151,    2, 0x06 /* Public */,
-       5,    0,  152,    2, 0x06 /* Public */,
-       6,    0,  153,    2, 0x06 /* Public */,
-       7,    0,  154,    2, 0x06 /* Public */,
-       8,    0,  155,    2, 0x06 /* Public */,
-       9,    0,  156,    2, 0x06 /* Public */,
-      10,    0,  157,    2, 0x06 /* Public */,
-      11,    0,  158,    2, 0x06 /* Public */,
-      12,    0,  159,    2, 0x06 /* Public */,
-      13,    0,  160,    2, 0x06 /* Public */,
-      14,    0,  161,    2, 0x06 /* Public */,
-      15,    0,  162,    2, 0x06 /* Public */,
-      16,    0,  163,    2, 0x06 /* Public */,
-      17,    0,  164,    2, 0x06 /* Public */,
-      18,    0,  165,    2, 0x06 /* Public */,
-      19,    0,  166,    2, 0x06 /* Public */,
-      20,    0,  167,    2, 0x06 /* Public */,
+       1,    0,  154,    2, 0x06 /* Public */,
+       3,    0,  155,    2, 0x06 /* Public */,
+       4,    0,  156,    2, 0x06 /* Public */,
+       5,    0,  157,    2, 0x06 /* Public */,
+       6,    0,  158,    2, 0x06 /* Public */,
+       7,    0,  159,    2, 0x06 /* Public */,
+       8,    0,  160,    2, 0x06 /* Public */,
+       9,    0,  161,    2, 0x06 /* Public */,
+      10,    0,  162,    2, 0x06 /* Public */,
+      11,    0,  163,    2, 0x06 /* Public */,
+      12,    0,  164,    2, 0x06 /* Public */,
+      13,    0,  165,    2, 0x06 /* Public */,
+      14,    0,  166,    2, 0x06 /* Public */,
+      15,    0,  167,    2, 0x06 /* Public */,
+      16,    0,  168,    2, 0x06 /* Public */,
+      17,    0,  169,    2, 0x06 /* Public */,
+      18,    0,  170,    2, 0x06 /* Public */,
+      19,    0,  171,    2, 0x06 /* Public */,
+      20,    0,  172,    2, 0x06 /* Public */,
+      21,    0,  173,    2, 0x06 /* Public */,
 
  // methods: name, argc, parameters, tag, flags
-      21,    0,  168,    2, 0x02 /* Public */,
-      22,    1,  169,    2, 0x02 /* Public */,
-      24,    1,  172,    2, 0x02 /* Public */,
-      27,    1,  175,    2, 0x02 /* Public */,
-      29,    1,  178,    2, 0x02 /* Public */,
-      31,    1,  181,    2, 0x02 /* Public */,
-      33,    1,  184,    2, 0x02 /* Public */,
-      34,    1,  187,    2, 0x02 /* Public */,
+      22,    0,  174,    2, 0x02 /* Public */,
+      23,    1,  175,    2, 0x02 /* Public */,
+      25,    1,  178,    2, 0x02 /* Public */,
+      28,    1,  181,    2, 0x02 /* Public */,
+      30,    1,  184,    2, 0x02 /* Public */,
+      32,    1,  187,    2, 0x02 /* Public */,
+      34,    1,  190,    2, 0x02 /* Public */,
+      35,    1,  193,    2, 0x02 /* Public */,
 
  // signals: parameters
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -157,21 +160,21 @@ static const uint qt_meta_data_Personal[] = {
 
  // methods: parameters
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,   23,
-    0x80000000 | 25, QMetaType::QString,   26,
-    QMetaType::Bool, QMetaType::QString,   28,
-    QMetaType::Bool, 0x80000000 | 25,   30,
-    QMetaType::Void, QMetaType::Int,   32,
-    QMetaType::Void, QMetaType::Int,   32,
-    QMetaType::Int, QMetaType::QString,   35,
+    QMetaType::Void, QMetaType::QString,   24,
+    0x80000000 | 26, QMetaType::QString,   27,
+    QMetaType::Bool, QMetaType::QString,   29,
+    QMetaType::Bool, 0x80000000 | 26,   31,
+    QMetaType::Void, QMetaType::Int,   33,
+    QMetaType::Void, QMetaType::Int,   33,
+    QMetaType::Int, QMetaType::QString,   36,
 
  // properties: name, type, flags
-      36, QMetaType::QString, 0x00495103,
-      37, 0x80000000 | 25, 0x0049510b,
-      38, 0x80000000 | 25, 0x0049510b,
-      39, 0x80000000 | 25, 0x0049510b,
-      40, 0x80000000 | 25, 0x0049510b,
-      41, 0x80000000 | 25, 0x0049510b,
+      37, QMetaType::QString, 0x00495103,
+      38, 0x80000000 | 26, 0x0049510b,
+      39, 0x80000000 | 26, 0x0049510b,
+      40, 0x80000000 | 26, 0x0049510b,
+      41, 0x80000000 | 26, 0x0049510b,
+      42, 0x80000000 | 26, 0x0049510b,
 
  // properties: notify_signal_id
        0,
@@ -204,29 +207,30 @@ void Personal::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         case 11: _t->registerOk(); break;
         case 12: _t->registerFailed(); break;
         case 13: _t->loginOk(); break;
-        case 14: _t->loginFailed(); break;
-        case 15: _t->ilikeOk(); break;
-        case 16: _t->ilikeShow(); break;
-        case 17: _t->downloadShow(); break;
-        case 18: _t->dislike(); break;
-        case 19: _t->run(); break;
-        case 20: _t->sendMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
-        case 21: { QList<QString> _r = _t->returnInfo((*reinterpret_cast< QString(*)>(_a[1])));
+        case 14: _t->touristsloginOk(); break;
+        case 15: _t->loginFailed(); break;
+        case 16: _t->ilikeOk(); break;
+        case 17: _t->ilikeShow(); break;
+        case 18: _t->downloadShow(); break;
+        case 19: _t->dislike(); break;
+        case 20: _t->run(); break;
+        case 21: _t->sendMessage((*reinterpret_cast< QString(*)>(_a[1]))); break;
+        case 22: { QList<QString> _r = _t->returnInfo((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< QList<QString>*>(_a[0]) = std::move(_r); }  break;
-        case 22: { bool _r = _t->isIlike((*reinterpret_cast< QString(*)>(_a[1])));
+        case 23: { bool _r = _t->isIlike((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 23: { bool _r = _t->addToL((*reinterpret_cast< QList<QString>(*)>(_a[1])));
+        case 24: { bool _r = _t->addToL((*reinterpret_cast< QList<QString>(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< bool*>(_a[0]) = std::move(_r); }  break;
-        case 24: _t->deleteInPlaylist((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 25: _t->upList((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 26: { int _r = _t->currentSong((*reinterpret_cast< QString(*)>(_a[1])));
+        case 25: _t->deleteInPlaylist((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 26: _t->upList((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 27: { int _r = _t->currentSong((*reinterpret_cast< QString(*)>(_a[1])));
             if (_a[0]) *reinterpret_cast< int*>(_a[0]) = std::move(_r); }  break;
         default: ;
         }
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
         switch (_id) {
         default: *reinterpret_cast<int*>(_a[0]) = -1; break;
-        case 23:
+        case 24:
             switch (*reinterpret_cast<int*>(_a[1])) {
             default: *reinterpret_cast<int*>(_a[0]) = -1; break;
             case 0:
@@ -337,36 +341,43 @@ void Personal::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         }
         {
             typedef void (Personal::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::loginFailed)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::touristsloginOk)) {
                 *result = 14;
                 return;
             }
         }
         {
             typedef void (Personal::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::ilikeOk)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::loginFailed)) {
                 *result = 15;
                 return;
             }
         }
         {
             typedef void (Personal::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::ilikeShow)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::ilikeOk)) {
                 *result = 16;
                 return;
             }
         }
         {
             typedef void (Personal::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::downloadShow)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::ilikeShow)) {
                 *result = 17;
                 return;
             }
         }
         {
             typedef void (Personal::*_t)();
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::dislike)) {
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::downloadShow)) {
                 *result = 18;
+                return;
+            }
+        }
+        {
+            typedef void (Personal::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&Personal::dislike)) {
+                *result = 19;
                 return;
             }
         }
@@ -439,13 +450,13 @@ int Personal::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 27)
+        if (_id < 28)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 27;
+        _id -= 28;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 27)
+        if (_id < 28)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 27;
+        _id -= 28;
     }
 #ifndef QT_NO_PROPERTIES
    else if (_c == QMetaObject::ReadProperty || _c == QMetaObject::WriteProperty
@@ -552,33 +563,39 @@ void Personal::loginOk()
 }
 
 // SIGNAL 14
-void Personal::loginFailed()
+void Personal::touristsloginOk()
 {
     QMetaObject::activate(this, &staticMetaObject, 14, nullptr);
 }
 
 // SIGNAL 15
-void Personal::ilikeOk()
+void Personal::loginFailed()
 {
     QMetaObject::activate(this, &staticMetaObject, 15, nullptr);
 }
 
 // SIGNAL 16
-void Personal::ilikeShow()
+void Personal::ilikeOk()
 {
     QMetaObject::activate(this, &staticMetaObject, 16, nullptr);
 }
 
 // SIGNAL 17
-void Personal::downloadShow()
+void Personal::ilikeShow()
 {
     QMetaObject::activate(this, &staticMetaObject, 17, nullptr);
 }
 
 // SIGNAL 18
-void Personal::dislike()
+void Personal::downloadShow()
 {
     QMetaObject::activate(this, &staticMetaObject, 18, nullptr);
+}
+
+// SIGNAL 19
+void Personal::dislike()
+{
+    QMetaObject::activate(this, &staticMetaObject, 19, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

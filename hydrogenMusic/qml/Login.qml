@@ -98,6 +98,18 @@ Page {
         }
     }
 
+    Text {
+        id: name
+        y: regi.y + regi.height + sp(20)
+        text: qsTr("Tourists here")
+        anchors.right: regi.right
+        MouseArea {
+            anchors.fill: parent
+            onClicked: {
+                personal.sendMessage("tourists")
+            }
+        }
+    }
     Register {
         id: regis
         visible: false
@@ -117,6 +129,11 @@ Page {
         }
         onLoginFailed: {
             message.text = "Your ID and password don't match.."
+            messageRet.visible = true
+            showTime.restart()
+        }
+        onTouristsloginOk: {
+            message.text = "Enjoy it."
             messageRet.visible = true
             showTime.restart()
         }
@@ -150,7 +167,7 @@ Page {
         interval: 1000
         onTriggered: {
             messageRet.visible = false
-            if (message.text == "login OK.")
+            if (message.text == "login OK." || message.text == "Enjoy it.")
                 loginBack()
         }
     }

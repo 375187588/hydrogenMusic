@@ -70,7 +70,7 @@ void Personal::sendMessage(QString m)
         std::string ret;
         record >> ret;
         if(ret == "ok") {
-            sendMessage("songListShow ilike");
+            sendMessage("songListShow ilike " + m_ID);
             emit ilikeOk();
         }
     }else if(head == "delete") {
@@ -79,16 +79,22 @@ void Personal::sendMessage(QString m)
         if(ret == "ilike") {
             record >> ret;
             if(ret == "ok") {
-                sendMessage("songListShow ilike");
+                sendMessage("songListShow ilike " + m_ID);
                 emit dislike();
             }
         }else if(ret == "ilikes") {
             record >> ret;
-            if(ret == "ok") sendMessage("songListShow ilike");
+            if(ret == "ok") sendMessage("songListShow ilike " + m_ID);
         }else if(ret == "download") {
             record >> ret;
-            if(ret == "ok") emit downloadOk();
+            if(ret == "ok") sendMessage("songListShow download " + m_ID);
         }
+    }else if(head == "tourists") {
+
+        std::string ret;
+        record >> ret;
+        m_ID = QString::fromStdString(ret);
+        emit touristsloginOk();
     }
 
 }

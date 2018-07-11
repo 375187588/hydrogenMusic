@@ -8,8 +8,8 @@ Page {
     signal listenThis(var vec)
     signal wantUpload
     property string sState: "warehouse"
-    property bool isIlike: true
-    property var preSongVec: []
+    property bool isIlike: false
+    property var preSongVec: [] //for search
 
     Component {
         id: list
@@ -65,7 +65,8 @@ Page {
                             anchors.right: parent.right
                             anchors.bottom: parent.bottom
                             onClicked: {
-                                personal.deleteInPlaylist(index)
+                                var a = "delete " + sState + " " + songVec[3] + " - " + personal.ID
+                                personal.sendMessage(a)
                             }
                         }
 
@@ -135,10 +136,10 @@ Page {
             newAdd.visible = false
             if (personal.ilik.length !== 1) {
                 songVec = personal.ilik
-                if (isIlike)
+                if (isIlike) {
                     sState = "ilike"
-                else
-                    isIlike = true
+                    isIlike = false
+                }
                 songListLoa.sourceComponent = list
             } else {
                 songListLoa.sourceComponent = noList

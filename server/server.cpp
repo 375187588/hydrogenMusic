@@ -281,18 +281,20 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         QString cmd;
         std::string returnM;
         std::string head1;
+        std::string head2;
         if(head == "dislike" || head == "ilike")  {
-            while (record >> head) {
-                head1 += head;
+            while (record >> head2) {
+                head1 += head2;
                 head1 += " ";
             }
             c = "delete from ilike where nameArID='"+ head1 +"';";
             cmd = QString::fromStdString(c);
             if(head == "dislike") {
-            if(m_db.changeDatabase(cmd))
-                returnM = "delete ilike ok";
-            else
-                returnM = "delete ilike failed";
+                std::cout << c << std::endl;
+                if(m_db.changeDatabase(cmd))
+                    returnM = "delete ilike ok";
+                else
+                    returnM = "delete ilike failed";
             }else{
                 if(m_db.changeDatabase(cmd))
                     returnM = "delete ilikes ok";
@@ -300,8 +302,8 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
                     returnM = "delete ilikes failed";
             }
         }else if(head == "download"){
-            while (record >> head) {
-                head1 += head;
+            while (record >> head2) {
+                head1 += head2;
                 head1 += " ";
             }
             c = "delete from download where nameArID='"+ head1 +"';";
@@ -312,8 +314,28 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
                 returnM = "delete download failed";
         }
         do_write(sock,returnM);
+    }else if(head == "tourists"){
+        std::string c = "select * from personal where password = '**********'" ;
+        QString cmd = QString::fromStdString(c);
+        std::string ret =m_db.selectDatabase(cmd,1);
+        std::istringstream r(ret);
+        std::vector<std::string> t;
+        std::string returnM;
+        int i=0;
+        while(r >> head) {
+            if(head != "||") {
+                t.push_back(head);
+                i++;
+            }
+        }
+        std::string id = "***" + std::to_string(i+1);
+        c = "INSERT INTO personal VALUES('" + id + "','**********');";;
+        cmd = QString::fromStdString(c);
+        if(m_db.changeDatabase(cmd)){
+            returnM = "tourists " + id;
+        }
+        do_write(sock,returnM);
     }
-
 }
 
 

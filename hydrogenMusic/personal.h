@@ -68,6 +68,7 @@ signals:
     void registerOk();
     void registerFailed();
     void loginOk();
+    void touristsloginOk();
     void loginFailed();
     void ilikeOk();
     void ilikeShow();
