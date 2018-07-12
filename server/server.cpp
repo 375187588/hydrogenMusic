@@ -161,6 +161,8 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         do_write(sock,returnM);
 
     } else if(head == "download") {
+
+        std::cout<<"xiaoyao"<<std::endl;
         std::vector<std::string> downloadM;
         std::string temp;
         for(int i=0;i<6;i++) {
@@ -344,7 +346,6 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         while(r >> head) {
             if(head != "||" && head != "|||") {
                 t.push_back(head);
-                std::cout << head << std::endl;
                 i++;
             }
         }

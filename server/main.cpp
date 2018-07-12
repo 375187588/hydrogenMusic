@@ -1,4 +1,13 @@
 #include "server.h"
+#include "receiver.h"
+
+void receive()
+{
+    asio::io_service io;
+    Tcp_server receiver(io, 1347);
+    io.run();
+}
+
 
 using namespace boost::asio;
 using namespace std;
@@ -6,6 +15,7 @@ using namespace std;
 boost::thread_group threads;
 int main(int argc, char *argv[])
 {
+    boost::thread th(&receive);
     QApplication a(argc, argv);
 
     try

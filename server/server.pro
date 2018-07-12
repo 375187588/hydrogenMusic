@@ -14,7 +14,8 @@ LIBS += -lpthread -lboost_system -lboost_thread
 HEADERS += \
     server.h \
     database.h \
-    file_info.h
+    file_info.h \
+    receiver.h
 QMAKE_LFLAGS += -Wl,-rpath,/opt/Qt/5.4/gcc_64/plugins/sqldrivers
 
 

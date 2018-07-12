@@ -14,6 +14,14 @@
 #include "receiver.h"
 #include <string>
 //---------e--------
+//-----------s----------
+
+#include <cstdio>
+#include <cstring>
+#include <boost/shared_ptr.hpp>
+
+
+
 using namespace boost::asio;
 
 class Personal:public QObject
@@ -37,7 +45,7 @@ public:
     Q_INVOKABLE void deleteInPlaylist(int index);
     Q_INVOKABLE void upList(int index);
     Q_INVOKABLE int currentSong(QString nameArID);
-
+    Q_INVOKABLE void send(QString file);
 
     QString ID();
     void setID(QString n);

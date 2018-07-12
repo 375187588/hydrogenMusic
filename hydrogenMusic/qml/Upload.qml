@@ -71,6 +71,7 @@ Page {
                         var e = "upload " + info[1] + " || " + info[0] + " || "
                                 + info[2] + " || " + a + ".mp3"
                         personal.sendMessage(e)
+                        personal.send(sOAField.text)
                     }
                 }
                 AppButton {
