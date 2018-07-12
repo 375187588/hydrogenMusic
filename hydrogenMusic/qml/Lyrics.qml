@@ -11,7 +11,7 @@ Page {
     Timer {
         id: time
         interval: 100
-        running: false
+        running: true
         repeat: true
         property var at: highLightLyric(current)
         property int current: music.position //hyMediaPlayer.get_current_schedule()

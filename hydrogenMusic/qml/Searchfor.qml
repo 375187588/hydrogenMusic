@@ -10,6 +10,8 @@ Page {
     property alias heigts: s.height
     property bool hightlight: false
     property string mutiBlockColor: "grey"
+    property alias sv: show.visible
+    property alias stext:searchbarr.text
     signal heightcan
     signal heightrec
     signal searching
@@ -37,7 +39,7 @@ Page {
                 onAccepted: {
                     searching()
                     if (text.length != 0) {
-                        var t = "search " + text + " " + searchforWhat[sfw]
+                        var t = "search " + searchforWhat[sfw] + " " + text
                         personal.sendMessage(t)
                     } else
                         searchshow()
@@ -107,7 +109,7 @@ Page {
             }
             Rectangle {
                 color: "#CCCCCC"
-                width: parent.width * 0.3
+                width: parent.width * 0.5
                 height: sp(20)
                 radius: 20
 
@@ -120,7 +122,7 @@ Page {
 
                 Text {
                     anchors.left: ico.right
-                    text: qsTr("周杰伦")
+                    text: qsTr("Taylor Swift")
                     anchors.verticalCenter: parent.verticalCenter
                     MouseArea {
                         anchors.fill: parent
@@ -133,7 +135,7 @@ Page {
 
             Rectangle {
                 color: "#CCCCCC"
-                width: parent.width * 0.3
+                width: parent.width * 0.4
                 height: sp(20)
                 radius: 20
 

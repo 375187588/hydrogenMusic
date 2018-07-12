@@ -7,6 +7,7 @@ Page {
     property var songVec: []
     signal listenThis(var vec)
     signal wantUpload
+    signal searchComing
     property string sState: "warehouse"
     property bool isIlike: false
     property var preSongVec: [] //for search
@@ -150,6 +151,7 @@ Page {
             if (personal.downloa.length !== 1) {
                 songVec = personal.downloa
                 sState = "download"
+                searchComing()
                 songListLoa.sourceComponent = list
             } else {
                 songListLoa.sourceComponent = noList
@@ -158,6 +160,7 @@ Page {
 
         onSearchOk: {
             newAdd.visible = false
+            searchComing()
             if (personal.searc.length !== 1) {
                 songVec = personal.searc
                 sState = "search"

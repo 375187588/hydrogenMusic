@@ -74,6 +74,16 @@ Server::Server() : m_acceptor(m_ser,endpoint_type(boost::asio::ip::tcp::v4(), 66
 }
 
 void Server::run(){
+//删除四个表:
+//    QString b = "drop table warehouse;";
+//    m_db.changeDatabase(b);
+//    b = "drop table ilike;";
+//    m_db.changeDatabase(b);
+//    b = "drop table personal;";
+//    m_db.changeDatabase(b);
+//    b = "drop table download;";
+//    m_db.changeDatabase(b);
+
 
     QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50) primary key,downloads BIGINT);";
     m_db.changeDatabase(a);
@@ -190,7 +200,12 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
 
         int length1 = address.copy(caddress,49);
         caddress[length1] = '\0';
-        sender(m_ser, caddress,1345, csong);
+        //---------------s-------------
+        char s_source[100]="../server/source/song/";
+        strcat(s_source, csong);
+
+        //-----------------e---------------
+        sender(m_ser, caddress,1345, s_source);
         //------------e---------------------
 
     }else if(head == "upload") {
@@ -221,7 +236,11 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         std::string searchContent;
         std::string searchforWhat;
         std::string c;
-        record >> searchContent >> searchforWhat;
+        record >> searchforWhat;
+        while (record >> head) {
+            searchContent += head;
+            searchContent += " ";
+        }
         if(searchforWhat == "song") c = "select * from warehouse where song = '"+ searchContent +"'";
         if(searchforWhat == "singer") c = "select * from warehouse where singer = '"+ searchContent +"'";
         if(searchforWhat == "album") c = "select * from warehouse where album = '"+ searchContent +"'";
@@ -323,8 +342,9 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         std::string returnM;
         int i=0;
         while(r >> head) {
-            if(head != "||") {
+            if(head != "||" && head != "|||") {
                 t.push_back(head);
+                std::cout << head << std::endl;
                 i++;
             }
         }

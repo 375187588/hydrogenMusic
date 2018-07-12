@@ -19,6 +19,8 @@ App {
         onWantSearch: {
             visible = false
             searchfor.visible = true
+            searchfor.stext = ""
+            searchfor.sv = true
             songlist.visible = false
             mine.visible = false
         }
@@ -38,7 +40,7 @@ App {
         heigts: sp(30)
         visible: false
         onHeightcan: {
-            songlist.opacity = 0.6
+            songlist.opacity = 0.3
             heigts = sp(60)
         }
         onHeightrec: {
@@ -50,9 +52,13 @@ App {
             mainbar.visible = true
             personal.sendMessage("songListShow warehouse")
             songlist.visible = true
+            heigts = sp(30)
         }
         onSearching: songlist.visible = true
-        onSearchshow: songlist.visible = false
+        onSearchshow: {
+            sv = true
+            songlist.visible = false
+        }
     }
 
     Mine {
@@ -80,7 +86,8 @@ App {
 
     SongList {
         id: songlist
-        anchors.top: mainbar.bottom
+//        anchors.top: mainbar.bottom
+        y:searchfor.heigts
         width: parent.width
         height: parent.height - sp(30)
         onListenThis: {
@@ -106,6 +113,7 @@ App {
         onWantUpload: {
             load.sourceComponent = upload
         }
+        onSearchComing: searchfor.sv = false
     }
 
     Rectangle {
@@ -179,8 +187,6 @@ App {
         Upload {
             onUploadBack: {
                 load.sourceComponent = null
-                searchfor.visible = true
-                songlist.visible = true
             }
             onTextFieldAddressChanged: {
                 if (ttext == 1) {

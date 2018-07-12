@@ -2,11 +2,11 @@
 
 Database::Database()
 {
-    char cs1[] = "hydrogenMusic_db";
+    char cs1[] = "hydrogenMusicDB";
     QString s = cs1;
     QSqlDatabase db = connect(s);
     m_query = QSqlQuery(db);
-    m_query.exec("USE hydrogenMusic_db");
+    m_query.exec("USE hydrogenMusicDB");
 }
 
 QSqlDatabase Database::connect(const QString &dbName)

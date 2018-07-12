@@ -67,7 +67,13 @@ private:
 
     std::cout << "Open file: " << basename << " (" << buffer_ << ")\n";
 
-    fp_ = fopen(basename, "wb");
+    //---------------s-------------
+    char s_source[100]="../hydrogenMusic/assets/download/song/";
+    strcat(s_source, basename);
+    std::cout << "Open file: " << s_source << std::endl;
+    //fp_ = fopen(basename, "wb");
+    //-----------------e---------------
+    fp_ = fopen(s_source, "wb");
     if (fp_ == NULL) {
       std::cerr << "Failed to open file to write\n";
       return;
