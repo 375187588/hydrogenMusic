@@ -98,7 +98,7 @@ App {
                 if (mainpage.tempLaddress[3] !== vec[3]) {
                     load.sourceComponent = null
                     mainpage.tempLaddress = vec
-                    qtLyric.readLyric(prefix + temp)
+                    qtLyric.readLyric(prefix + temp + ".lrc")
                     console.log("onListenThis: " + tempLaddress[3])
                 } else {
                     load.item.visible = true
@@ -106,7 +106,8 @@ App {
             } else {
                 mainpage.tempLaddress = vec
                 personal.sendMessage("songListShow ilike " + personal.ID)
-                qtLyric.readLyric(prefix + temp)
+                qtLyric.readLyric(prefix + temp +".lrc")
+                console.log("onListenThis: " + tempLaddress[3])
             }
         }
 

@@ -14,7 +14,7 @@
 #include <stack>
 #include <sstream>
 
-#include "database.h"
+#include "control.h"
 #include "file_info.h"
 
 class Server
@@ -34,7 +34,7 @@ private:
     acceptor_type m_acceptor;
     char m_rdbuf[1024]; //数组
     char m_wtbuf[1024];
-    Database m_db;
+    Control m_db;
 
 public:
     Server();

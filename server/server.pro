@@ -7,15 +7,15 @@ CONFIG += v-play
 QT       += core gui sql
 
 SOURCES += main.cpp \
-    server.cpp \
-    database.cpp
+    sever.cpp \
+    control.cpp
 LIBS += -lpthread -lboost_system -lboost_thread
 
 HEADERS += \
     server.h \
-    database.h \
     file_info.h \
-    receiver.h
+    receiver.h \
+    control.h
 QMAKE_LFLAGS += -Wl,-rpath,/opt/Qt/5.4/gcc_64/plugins/sqldrivers
 
 
