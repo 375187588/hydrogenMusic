@@ -75,7 +75,7 @@ Server::Server() : m_acceptor(m_ser,endpoint_type(boost::asio::ip::tcp::v4(), 66
 
 void Server::run(){
 //删除四个表:
-//    QString b = "drop table warehouse;";
+   // QString b = "drop table warehouse;";
 //    m_db.changeDatabase(b);
 //    b = "drop table ilike;";
 //    m_db.changeDatabase(b);
@@ -86,6 +86,12 @@ void Server::run(){
 
 
     QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50) primary key,downloads BIGINT);";
+    m_db.changeDatabase(a);
+    a = "CREATE TABLE IF NOT EXISTS singer(name TINYTEXT,album TINYTEXT,info TEXT);";
+    m_db.changeDatabase(a);
+//    a = "CREATE TABLE IF NOT EXISTS album(name TINYTEXT,singer TINYTEXT,songlist TEXT,ID CHAR(100)  primary key);";
+//    m_db.changeDatabase(a);
+    a = "CREATE TABLE IF NOT EXISTS songsheet(name TINYTEXT,song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(100)  primary key);";
     m_db.changeDatabase(a);
     a = "CREATE TABLE IF NOT EXISTS download(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(100)  primary key);";
     m_db.changeDatabase(a);
@@ -238,16 +244,22 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         std::string searchContent;
         std::string searchforWhat;
         std::string c;
-        record >> searchforWhat;
         while (record >> head) {
             searchContent += head;
             searchContent += " ";
         }
-        if(searchforWhat == "song") c = "select * from warehouse where song = '"+ searchContent +"'";
-        if(searchforWhat == "singer") c = "select * from warehouse where singer = '"+ searchContent +"'";
-        if(searchforWhat == "album") c = "select * from warehouse where album = '"+ searchContent +"'";
+        searchforWhat = "song";
+        c = "select * from warehouse where song = '"+ searchContent +"'";
         QString cmd = QString::fromStdString(c);
-        std::string returnM = "search "+ m_db.selectDatabase(cmd,6);
+        std::string returnM = "search "+ m_db.selectDatabase(cmd,4);
+        searchforWhat = "singer";
+        c = "select * from warehouse where singer = '"+ searchContent +"'";
+        cmd = QString::fromStdString(c);
+        returnM += m_db.selectDatabase(cmd,4);
+        searchforWhat = "album";
+        c = "select * from warehouse where album = '"+ searchContent +"'";
+        cmd = QString::fromStdString(c);
+        returnM += m_db.selectDatabase(cmd,4);
         do_write(sock,returnM);
     }else if(head == "register") {
         std::string ID;

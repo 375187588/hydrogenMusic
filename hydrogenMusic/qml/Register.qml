@@ -109,7 +109,7 @@ Page {
                     onClicked: {
                         if (pasfield == surepasfield) {
                             var e = "register " + idfield + " " + pasfield
-                            personal.sendMessage(e)
+                            control.sendMessage(e)
                         } else if (pasfield != surepasfield) {
                             message.text = "your two password aren't the same."
                             messageRet.visible = true
@@ -128,7 +128,7 @@ Page {
         }
     }
     Connections {
-        target: personal
+        target: control
         onRegisterOk: {
             message.text = "registerpage OK."
             messageRet.visible = true

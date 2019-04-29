@@ -4,7 +4,7 @@ import "../qml/myscript.js" as Logic
 
 Page {
     id: playlistlis
-    property var listVec: personal.playlist
+    property var listVec: control.playlist
     signal listen(var vec)
 
     Rectangle {
@@ -43,7 +43,7 @@ Page {
                             anchors.right: deletethis.left
                             anchors.bottom: parent.bottom
                             onClicked: {
-                                personal.upList(index)
+                                control.upList(index)
                             }
                         }
 
@@ -53,7 +53,7 @@ Page {
                             anchors.right: parent.right
                             anchors.bottom: parent.bottom
                             onClicked: {
-                                personal.deleteInPlaylist(index)
+                                control.deleteInPlaylist(index)
                             }
                         }
 
@@ -80,10 +80,10 @@ Page {
     }
 
     Connections {
-        target: personal
+        target: control
         onPlaylistChange: {
             console.log("nvoisdnvdoislvnol" + listVec.length)
-            listVec = personal.playlist
+            listVec = control.playlist
         }
     }
 }

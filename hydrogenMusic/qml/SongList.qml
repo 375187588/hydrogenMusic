@@ -1,6 +1,8 @@
 import QtQuick 2.0
 import VPlayApps 1.0
 import "../qml/myscript.js" as Logic
+import Song 1.0
+import PersonalInfo 1.0
 
 Page {
     id: songlis
@@ -8,6 +10,7 @@ Page {
     signal listenThis(var vec)
     signal wantUpload
     signal searchComing
+    signal adverReset
     property string sState: "warehouse"
     property bool isIlike: false
     property var preSongVec: [] //for search
@@ -19,27 +22,37 @@ Page {
             anchors.fill: parent
             contentHeight: Loader.height * 2
             Column {
+                spacing: 2
                 Repeater {
                     id: rep1
-                    model: songVec.length / 4
+                    model: songVec.length
 
                     Rectangle {
                         id: rec
                         color: "#CCCCCC"
-                        border.color: "grey"
-                        //        border.width: sp(1)
                         height: dp(40)
                         width: songlis.width
-                        radius: 20
+                        radius: 10
                         focus: true
                         Text {
-                            anchors.verticalCenter: parent.verticalCenter
+                            anchors.top: parent.top
+                            anchors.topMargin: 8
                             anchors.left: parent.left
                             anchors.leftMargin: 30
                             color: "black"
                             font.pixelSize: sp(12)
                             font.bold: sp(5)
-                            text: songVec[index * 4 + 3]
+                            text: songVec[index].songName
+                        }
+                        Text {
+                            anchors.top: parent.top
+                            anchors.topMargin: 28
+                            anchors.left: parent.left
+                            anchors.leftMargin: 30
+                            color: "grey"
+                            font.pixelSize: sp(7)
+                            font.bold: sp(1)
+                            text: songVec[index].singer + ' - ' + songVec[index].album
                         }
                         IconButton {
                             id: addToList
@@ -47,12 +60,12 @@ Page {
                             anchors.right: deletethis.visible ? deletethis.left : parent.right
                             anchors.bottom: parent.bottom
                             onClicked: {
-                                var temp = []
-                                for (var i = 0; i < 4; i++) {
-                                    temp.push(Logic.transToString(
-                                                  songVec[index * 4 + i]))
-                                }
-                                personal.addToL(temp)
+                                //                                var temp = []
+                                //                                for (var i = 0; i < 4; i++) {
+                                //                                    temp.push(Logic.transToString(
+                                //                                                  songVec[index * 4 + i]))
+                                //                                }
+                                control.addToL(songVec[index])
                                 message.text = "已加入播放列表"
                                 messageRet.visible = true
                                 showTime.restart()
@@ -66,8 +79,8 @@ Page {
                             anchors.right: parent.right
                             anchors.bottom: parent.bottom
                             onClicked: {
-                                var a = "delete " + sState + " " + songVec[3] + " - " + personal.ID
-                                personal.sendMessage(a)
+                                var a = "delete " + sState + " " + songVec[index].key + " - " + control.ID
+                                control.sendMessage(a)
                             }
                         }
 
@@ -80,11 +93,11 @@ Page {
                             onReleased: {
                                 parent.opacity = 1
                                 var temvec = []
-                                for (var i = 0; i < 4; i++) {
-                                    temvec.push(Logic.transToString(
-                                                    songVec[index * 4 + i]))
-                                }
-                                personal.addToL(temvec)
+                                temvec.push(songVec[index].songName)
+                                temvec.push(songVec[index].singer)
+                                temvec.push(songVec[index].album)
+                                temvec.push(songVec[index].key)
+                                control.addToL(songVec[index])
                                 listenThis(temvec)
                             }
                         }
@@ -124,19 +137,20 @@ Page {
     }
 
     Connections {
-        target: personal
+        target: control
         onSongList: {
             newAdd.visible = true
-            if (personal.songlis.length !== 1) {
-                songVec = personal.songlis
+            adverReset()
+            if (control.songlis.length !== 0) {
+                songVec = control.songlis
                 sState = "warehouse"
                 songListLoa.sourceComponent = list
             }
         }
         onIlikeShow: {
             newAdd.visible = false
-            if (personal.ilik.length !== 1) {
-                songVec = personal.ilik
+            if (control.ilik.length !== 0) {
+                songVec = control.ilik
                 if (isIlike) {
                     sState = "ilike"
                     isIlike = false
@@ -148,8 +162,8 @@ Page {
         }
         onDownloadShow: {
             newAdd.visible = false
-            if (personal.downloa.length !== 1) {
-                songVec = personal.downloa
+            if (control.downloa.length !== 0) {
+                songVec = control.downloa
                 sState = "download"
                 searchComing()
                 songListLoa.sourceComponent = list
@@ -159,15 +173,18 @@ Page {
         }
 
         onSearchOk: {
-            newAdd.visible = false
-            searchComing()
-            if (personal.searc.length !== 1) {
-                songVec = personal.searc
-                sState = "search"
-                preSongVec = songVec
-                songListLoa.sourceComponent = list
-            } else {
-                songListLoa.sourceComponent = noList
+            if(songlis.visible) {
+                newAdd.visible = false
+                searchComing()
+                songVec = []
+                if (control.searc.length !== 0) {
+                    songVec = control.searc
+                    sState = "search"
+                    preSongVec = songVec
+                    songListLoa.sourceComponent = list
+                } else {
+                    songListLoa.sourceComponent = noList
+                }
             }
         }
     }

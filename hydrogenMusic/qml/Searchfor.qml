@@ -27,20 +27,30 @@ Page {
         id: s
         height: parent.height
         width: parent.width
-        Item {
+        Rectangle {
             id: searchBar
             height: sp(30)
             width: parent.width
+            color: "#DBDBDB"
+            IconButton {
+                id: retPictrue
+                icon: IconType.backward
+                anchors.verticalCenter: parent.verticalCenter
+                onClicked: {
+                    searchforpageBack()
+                }
+            }
             SearchBar {
                 id: searchbarr
                 width: parent.width * 0.8
-                height: parent.height
+                height: parent.height *0.8
                 anchors.verticalCenter: parent.verticalCenter
-                onAccepted: {
+                anchors.horizontalCenter: parent.horizontalCenter
+                onTextChanged: {
                     searching()
                     if (text.length != 0) {
-                        var t = "search " + searchforWhat[sfw] + " " + text
-                        personal.sendMessage(t)
+                        var t = "search " + text
+                        control.sendMessage(t)
                     } else
                         searchshow()
                 }
@@ -50,7 +60,8 @@ Page {
                 id: mutiselectButton
                 icon: IconType.spinner
                 anchors.verticalCenter: parent.verticalCenter
-                anchors.right: ret.left
+                anchors.right: parent.right
+                anchors.rightMargin: sp(6)
                 onClicked: {
                     if (!mutiIsClick) {
                         heightcan()
@@ -64,22 +75,22 @@ Page {
                 }
             }
 
-            Rectangle {
-                id: ret
-                anchors.right: parent.right
-                anchors.rightMargin: sp(6)
-                width: parent.width * 0.05
-                height: parent.height
-                Text {
-                    text: qsTr("取消")
-                    font.pixelSize: 20
-                    anchors.centerIn: parent
-                }
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: searchforpageBack()
-                }
-            }
+//            Rectangle {
+//                id: ret
+//                anchors.right: parent.right
+//                anchors.rightMargin: sp(6)
+//                width: parent.width * 0.05
+//                height: parent.height
+//                Text {
+//                    text: qsTr("取消")
+//                    font.pixelSize: 20
+//                    anchors.centerIn: parent
+//                }
+//                MouseArea {
+//                    anchors.fill: parent
+//                    onClicked: searchforpageBack()
+//                }
+//            }
         }
 
         Loader {

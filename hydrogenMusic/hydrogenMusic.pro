@@ -25,8 +25,11 @@ RESOURCES += #    resources.qrc # uncomment for publishing
 SOURCES += main.cpp \
     lyrics.cpp \
     client.cpp \
-    personal.cpp \
-    multimedia.cpp
+    multimedia.cpp \
+    personalinfo.cpp \
+    song.cpp \
+    control.cpp \
+    simpleplayer.cpp
 
 android {
     ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
@@ -51,10 +54,13 @@ HEADERS += \
     lyrics.h \
     client.h \
     myerror.h \
-    personal.h \
     multimedia.h \
     file_info.h \
-    receiver.h
+    receiver.h \
+    personalinfo.h \
+    song.h \
+    control.h \
+    simpleplayer.h
 
 QMAKE_LFLAGS += -lboost_system -lpthread -lboost_thread -lavcodec -lavformat -lswresample -lavutil -lSDL
 
@@ -67,4 +73,16 @@ DISTFILES += \
     qml/Searchfor.qml \
     qml/Mainbar.qml \
     qml/Mine.qml \
-    qml/Playlist.qml
+    qml/Playlist.qml \
+    qml/MusicCycle.qml \
+    qml/Advertisement.qml \
+    qml/OrdinarySearchfor.qml
+
+#-------xiaoyao------s----
+
+LIBS       += -L/usr/local/lib64 -lVLCQtCore -lVLCQtWidgets
+#LIBS       += -L/usr/local/qml -lVLCQt
+INCLUDEPATH += /usr/local/include
+
+
+#-------xiaoyao------e-------

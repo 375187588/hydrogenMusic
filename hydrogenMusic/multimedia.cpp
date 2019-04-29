@@ -632,7 +632,7 @@ std::vector<std::string> Multimediaa::get_song_infos(char *url)
                     //如果这是最后一个
                     if(j == 0 && k == len)
                     {
-                        std::string p = "";
+                        std::string p = " ";
                         infos.push_back(p);
                         j++;
                     }
@@ -646,7 +646,7 @@ std::vector<std::string> Multimediaa::get_song_infos(char *url)
                 }else{
                     if(j == 0 && k == len)
                     {
-                        std::string p = "";
+                        std::string p = " ";
                         infos.push_back(p);
                         j++;
                     }
@@ -662,7 +662,7 @@ std::vector<std::string> Multimediaa::get_song_infos(char *url)
                 }else{
                     if(j == 0 && k == len)
                     {
-                        std::string p = "";
+                        std::string p = " ";
                         infos.push_back(p);
                         j++;
                     }
@@ -676,7 +676,7 @@ std::vector<std::string> Multimediaa::get_song_infos(char *url)
                 }else{
                     if(j == 0 && k == len)
                     {
-                        std::string p = "";
+                        std::string p = " ";
                         infos.push_back(p);
                         j++;
                     }

@@ -83,7 +83,7 @@ Page {
                     text: "Login"
                     onClicked: {
                         var e = "login " + idfield + " " + pasfield
-                        personal.sendMessage(e)
+                        control.sendMessage(e)
                     }
                 }
                 AppButton {
@@ -106,7 +106,7 @@ Page {
         MouseArea {
             anchors.fill: parent
             onClicked: {
-                personal.sendMessage("tourists")
+                control.sendMessage("tourists")
             }
         }
     }
@@ -121,7 +121,7 @@ Page {
     }
 
     Connections {
-        target: personal
+        target: control
         onLoginOk: {
             message.text = "login OK."
             messageRet.visible = true

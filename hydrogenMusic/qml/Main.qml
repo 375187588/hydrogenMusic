@@ -10,12 +10,12 @@ App {
     property string temp
     property string prefix: "../hydrogenMusic/assets/music/"
 
-    Component.onCompleted: personal.run()
+    Component.onCompleted: control.run()
 
     Mainbar {
         id: mainbar
         width: parent.width
-        height: sp(30)
+        height: sp(50)
         onWantSearch: {
             visible = false
             searchfor.visible = true
@@ -23,14 +23,29 @@ App {
             searchfor.sv = true
             songlist.visible = false
             mine.visible = false
+            cycle.visible = false
         }
         onRecomand: {
-            personal.sendMessage("songListShow warehouse")
+            control.sendMessage("songListShow warehouse")
             songlist.visible = true
+            cycle.visible = false
+            mine.visible = false
         }
         onMine: {
             mine.visible = true
             songlist.visible = false
+            cycle.visible = false
+        }
+        onCycle: {
+            cycle.visible = true
+            mine.visible = false
+            songlist.visible = false
+        }
+        onWantSendTreat: {
+            mainbar.visible = false
+            cycle.visible = true
+            cycle.y = 0
+            cycle.selectMusicCycleDisplay.sourceComponent = cycle.sendtreatCom
         }
     }
     Searchfor {
@@ -50,7 +65,7 @@ App {
         onSearchforpageBack: {
             visible = false
             mainbar.visible = true
-            personal.sendMessage("songListShow warehouse")
+            control.sendMessage("songListShow warehouse")
             songlist.visible = true
             heigts = sp(30)
         }
@@ -69,7 +84,7 @@ App {
         onIlikeshow: {
             visible = false
             songlist.isIlike = true
-            personal.sendMessage("songListShow ilike " + personal.ID)
+            control.sendMessage("songListShow ilike " + control.ID)
             songlist.visible = true
             ret.visible = true
             mainbar.visible = false
@@ -77,24 +92,54 @@ App {
 
         onDownloadshow: {
             visible = false
-            personal.sendMessage("songListShow download " + personal.ID)
+            control.sendMessage("songListShow download " + control.ID)
             songlist.visible = true
             ret.visible = true
             mainbar.visible = false
         }
     }
 
+    MusicCycle{
+        id:cycle
+        y:mainbar.height
+        width: parent.width
+        visible: false
+        onSendtreatBack: {
+            mainbar.visible = true
+            visible = false
+            y = mainbar.height
+            selectMusicCycleDisplay.sourceComponent = treatDisCom
+        }
+        onAddASong: {
+            selectMusicCycleDisplay.visible = false
+            selectDisplay.sourceComponent = searchSongCom
+        }
+        onSearchBack: {
+            selectDisplay.sourceComponent = null
+            selectMusicCycleDisplay.visible = true
+
+        }
+    }
+
+    Advertisement{
+        id:advertise
+        anchors.top: mainbar.bottom
+        width: parent.width
+        height: sp(100)
+        visible: mainbar.isRecommand
+    }
+
     SongList {
         id: songlist
 //        anchors.top: mainbar.bottom
-        y:searchfor.heigts
+        y:mainbar.isRecommand ? sp(150):sp(50)
         width: parent.width
-        height: parent.height - sp(30)
+        height: parent.height - sp(150)
         onListenThis: {
-            temp = vec[3]
-            temp = temp.substring(0, temp.length - 4)
+            temp = vec[0]
+            temp = temp.substring(0, temp.length - 5)
             console.log(temp)
-            if (mainpage.tempLaddress) {
+            if (mainpage.tempLaddress) {//正在播放
                 if (mainpage.tempLaddress[3] !== vec[3]) {
                     load.sourceComponent = null
                     mainpage.tempLaddress = vec
@@ -103,11 +148,11 @@ App {
                 } else {
                     load.item.visible = true
                 }
-            } else {
+            } else { //当前没有播放任何歌曲
                 mainpage.tempLaddress = vec
-                personal.sendMessage("songListShow ilike " + personal.ID)
+                control.sendMessage("songListShow ilike " + control.ID)
                 qtLyric.readLyric(prefix + temp +".lrc")
-                console.log("onListenThis: " + tempLaddress[3])
+                console.log("onListenThis: " + tempLaddress[0])
             }
         }
 
@@ -115,6 +160,7 @@ App {
             load.sourceComponent = upload
         }
         onSearchComing: searchfor.sv = false
+        onAdverReset: advertise.currentAdver = 2
     }
 
     Rectangle {
@@ -145,9 +191,9 @@ App {
         id: login
         anchors.fill: parent
         onLoginBack: {
-            personal.sendMessage("songListShow warehouse")
+            control.sendMessage("songListShow warehouse")
             login.visible = false
-            mainbar.myid = personal.ID
+            mainbar.myid = control.ID
         }
     }
 
@@ -159,11 +205,11 @@ App {
                 songlist.songVec = prefix
             else if (songlist.sState == "warehouse") {
                 console.log("songListShow " + songlist.sState)
-                personal.sendMessage("songListShow " + songlist.sState)
+                control.sendMessage("songListShow " + songlist.sState)
             } else {
-                console.log("songListShow " + songlist.sState + " " + personal.ID)
-                personal.sendMessage(
-                            "songListShow " + songlist.sState + " " + personal.ID)
+                console.log("songListShow " + songlist.sState + " " + control.ID)
+                control.sendMessage(
+                            "songListShow " + songlist.sState + " " + control.ID)
             }
         }
     }
@@ -199,4 +245,5 @@ App {
             }
         }
     }
+
 }

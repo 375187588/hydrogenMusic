@@ -63,15 +63,14 @@ Page {
                     radius: 5
                     text: "upload"
                     onClicked: {
-                        var info = personal.returnInfo(sOAField.text)
-                        console.log("llllllllll" + info[0] + "   " + info[1]
-                                    + "   " + info[2] + "llllllllll")
-                        var a = info[0] + " - " + info[1]
+                        var info = control.returnInfo(uploadpage.temp)
+                        var a = uploadpage.textFieldAddress + " - " + info[0] + info[2]
 
-                        var e = "upload " + info[1] + " || " + info[0] + " || "
-                                + info[2] + " || " + a + ".mp3"
-                        personal.sendMessage(e)
-                        personal.send(sOAField.text)
+                        var e = "upload " + uploadpage.textFieldAddress + " || " + info[0] + " || "
+                                + info[2] + " || " + a
+                        console.log(e)
+                        control.sendMessage(e)
+                        control.send(sOAField.text)
                     }
                 }
                 AppButton {
@@ -85,7 +84,7 @@ Page {
         }
     }
     Connections {
-        target: personal
+        target: control
         onUploadOk: {
             message.text = "upload OK."
             list.opacity = 0.3
@@ -99,9 +98,9 @@ Page {
         title: "Please choose a file"
         folder: ".."
         onAccepted: {
-            console.log("You chose: " + fileDialog.fileUrls[0].toString())
-            uploadpage.temp = fileDialog.fileUrls[0].toString()
-            uploadpage.textFieldAddress = uploadpage.temp.substring(7)
+            console.log("You chose: " + fileDialog.fileUrl.toString())
+            uploadpage.temp = fileDialog.fileUrl.toString()
+            uploadpage.textFieldAddress = control.getSongName(uploadpage.temp)
             fileDialog.close()
         }
         onRejected: {
