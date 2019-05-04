@@ -29,6 +29,7 @@ SOURCES += main.cpp \
     personalinfo.cpp \
     song.cpp \
     control.cpp \
+    treat.cpp \
     simpleplayer.cpp
 
 android {
@@ -60,6 +61,7 @@ HEADERS += \
     personalinfo.h \
     song.h \
     control.h \
+    treat.h \
     simpleplayer.h
 
 QMAKE_LFLAGS += -lboost_system -lpthread -lboost_thread -lavcodec -lavformat -lswresample -lavutil -lSDL
@@ -76,8 +78,8 @@ DISTFILES += \
     qml/Playlist.qml \
     qml/MusicCycle.qml \
     qml/Advertisement.qml \
-    qml/OrdinarySearchfor.qml
-
+    qml/OrdinarySearchfor.qml \
+    qml/treat.qml
 #-------xiaoyao------s----
 
 LIBS       += -L/usr/local/lib64 -lVLCQtCore -lVLCQtWidgets

@@ -10,12 +10,22 @@ QString PersonalInfo::ID()
     return m_ID;
 }
 
-QList<Song *> PersonalInfo::ilik()
+QQmlListProperty<Song> PersonalInfo::ilik()
 {
-    return m_ilik;
+    return QQmlListProperty<Song>(this,m_ilik);
 }
 
-QList<Song *> PersonalInfo::downloa()
+QQmlListProperty<Song> PersonalInfo::downloa()
 {
-    return m_downloa;
+    return QQmlListProperty<Song>(this,m_downloa);
+}
+
+QList<QString> PersonalInfo::songSheet()
+{
+    return m_songSheet;
+}
+
+QQmlListProperty<Song> PersonalInfo::tempSheet()
+{
+    QQmlListProperty<Song>(this,m_tempSheet);
 }

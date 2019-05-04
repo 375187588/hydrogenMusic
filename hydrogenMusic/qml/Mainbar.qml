@@ -126,7 +126,6 @@ Page {
                 anchors.fill: parent
                 onClicked: {
                     wantSearch()
-                    isRecommand = false
                 }
             }
         }

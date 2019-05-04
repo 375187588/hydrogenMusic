@@ -24,15 +24,19 @@ using namespace boost::asio;
 
 class PersonalInfo;
 class Song;
+class Treat;
 class Control:public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QString ID READ ID WRITE setID NOTIFY IDChanged)
-    Q_PROPERTY(QQmlListProperty<Song> songlis READ songlis)
-    Q_PROPERTY(QQmlListProperty<Song> downloa READ downloa)
+    Q_PROPERTY(QQmlListProperty<Song> songlis READ songlis CONSTANT)
+    Q_PROPERTY(QQmlListProperty<Song> downloa READ downloa CONSTANT)
     Q_PROPERTY(QQmlListProperty<Song> searc READ searc CONSTANT)
-    Q_PROPERTY(QQmlListProperty<Song> ilik READ ilik)
-    Q_PROPERTY(QQmlListProperty<Song> playlist READ playlist)
+    Q_PROPERTY(QQmlListProperty<Song> ilik READ ilik CONSTANT)
+    Q_PROPERTY(QQmlListProperty<Song> playlist READ playlist CONSTANT)
+    Q_PROPERTY(QList<QString> songSheet READ songSheet CONSTANT)
+    Q_PROPERTY(QQmlListProperty<Song> tempSheet READ tempSheet CONSTANT)
+    Q_PROPERTY(QQmlListProperty<Treat> treat READ treat CONSTANT)
 
 public:
     Control(QObject *parent = 0):QObject(parent), m_client(m_io){}
@@ -40,13 +44,17 @@ public:
     Q_INVOKABLE void sendMessage(QString m);
     Q_INVOKABLE QList<QString> returnInfo(QString url);
     Q_INVOKABLE bool isIlike(QString nameAr);
-    Q_INVOKABLE bool addToL(Song * l);
+    Q_INVOKABLE bool addToL(QString songName, QString singer, QString album, QString key);
     Q_INVOKABLE void deleteInPlaylist(int index);
     Q_INVOKABLE void upList(int index);
     Q_INVOKABLE int currentSong(QString nameArID);
     Q_INVOKABLE void send(QString file);
     Q_INVOKABLE QString getSongName(QString songName); //get name from address of the song.
-    QList<Song *> detach(std::string ret);
+    QList<Song *> detach(std::string ret); //datach to song*
+    QList<QString> detachToQstring(std::string ret);
+    QList<Treat *> detachToTreat(std::string ret);
+    QString timeTransf(QString time);
+
     QString ID();
     void setID(QString n); //have not use the func
     QQmlListProperty<Song> songlis();
@@ -59,6 +67,9 @@ public:
     void setIlik(QList<Song *> i);//have not use the func
     QQmlListProperty<Song> playlist(void);
     void setPlaylist(QList<Song *> l);//have not use the func
+    QList<QString> songSheet();
+    QQmlListProperty<Song> tempSheet();
+    QQmlListProperty<Treat> treat();
     ~Control();
 
 signals:
@@ -82,7 +93,13 @@ signals:
     void ilikeOk();
     void ilikeShow();
     void downloadShow();
+    void sheetListShow(QString sheetname);
+    void songsheetAddSongOk(QString sheetname);
     void dislike();
+    void songsheetAll();//已将所有歌单名存在personalInfo的m_songSheet中
+    void songsheetAddOk();
+    void sendtreatOk(QString isOK);
+    void treatShow();
 private:
     std::string m_receiveMessage;
     QString m_sendMessage;
@@ -93,6 +110,7 @@ private:
     QList<Song *> m_searc;
     Multimediaa *media = new Multimediaa();
     QList<Song *> m_playlist;
+    QList<Treat *>m_treat;
 
 };
 #endif // Control_H

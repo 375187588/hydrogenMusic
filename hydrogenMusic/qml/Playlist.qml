@@ -17,7 +17,7 @@ Page {
             Column {
                 Repeater {
                     id: rep1
-                    model: listVec.length / 4
+                    model: listVec.length
 
                     Rectangle {
                         id: rec
@@ -35,7 +35,7 @@ Page {
                             color: "black"
                             font.pixelSize: sp(12)
                             font.bold: sp(5)
-                            text: listVec[index * 4 + 3]
+                            text: listVec[index].songName
                         }
                         IconButton {
                             id: addToList
@@ -66,10 +66,10 @@ Page {
                             onReleased: {
                                 parent.opacity = 1
                                 var temvec = []
-                                for (var i = 0; i < 4; i++) {
-                                    temvec.push(Logic.transToString(
-                                                    listVec[index * 4 + i]))
-                                }
+                                temvec.push(listVec[index].songName)
+                                temvec.push(listVec[index].singer)
+                                temvec.push(listVec[index].album)
+                                temvec.push(listVec[index].key)
                                 listen(temvec)
                             }
                         }

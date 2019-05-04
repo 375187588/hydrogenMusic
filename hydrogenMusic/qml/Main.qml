@@ -17,13 +17,9 @@ App {
         width: parent.width
         height: sp(50)
         onWantSearch: {
-            visible = false
             searchfor.visible = true
             searchfor.stext = ""
             searchfor.sv = true
-            songlist.visible = false
-            mine.visible = false
-            cycle.visible = false
         }
         onRecomand: {
             control.sendMessage("songListShow warehouse")
@@ -32,6 +28,8 @@ App {
             mine.visible = false
         }
         onMine: {
+            control.sendMessage("songsheet all "+control.ID)
+            control.sendMessage("treat somebody "+control.ID)
             mine.visible = true
             songlist.visible = false
             cycle.visible = false
@@ -40,11 +38,13 @@ App {
             cycle.visible = true
             mine.visible = false
             songlist.visible = false
+            control.sendMessage("treat all")
         }
         onWantSendTreat: {
             mainbar.visible = false
             cycle.visible = true
             cycle.y = 0
+            cycle.selectMusicCycleDisplay.source = ""
             cycle.selectMusicCycleDisplay.sourceComponent = cycle.sendtreatCom
         }
     }
@@ -54,6 +54,7 @@ App {
         height: parent.height
         heigts: sp(30)
         visible: false
+        z:1
         onHeightcan: {
             songlist.opacity = 0.3
             heigts = sp(60)
@@ -64,9 +65,6 @@ App {
         }
         onSearchforpageBack: {
             visible = false
-            mainbar.visible = true
-            control.sendMessage("songListShow warehouse")
-            songlist.visible = true
             heigts = sp(30)
         }
         onSearching: songlist.visible = true
@@ -81,21 +79,20 @@ App {
         anchors.top: mainbar.bottom
         width: parent.width
         visible: false
-        onIlikeshow: {
+        onShowlist: {
             visible = false
-            songlist.isIlike = true
-            control.sendMessage("songListShow ilike " + control.ID)
+            if(sheetName === "ilike") control.sendMessage("songListShow ilike " + control.ID)
+            else if(sheetName === "download") control.sendMessage("songListShow download " + control.ID)
+            else control.sendMessage("songListShow " + sheetName + " "+ control.ID)
             songlist.visible = true
             ret.visible = true
             mainbar.visible = false
         }
-
-        onDownloadshow: {
-            visible = false
-            control.sendMessage("songListShow download " + control.ID)
-            songlist.visible = true
-            ret.visible = true
-            mainbar.visible = false
+        onAddSongsheetpageBack: {
+            createSongsheetLoader.sourceComponent = null
+        }
+        onSubmit: {
+            control.sendMessage("songsheet add "+ control.ID + " " +songsheetName)
         }
     }
 
@@ -106,9 +103,9 @@ App {
         visible: false
         onSendtreatBack: {
             mainbar.visible = true
-            visible = false
             y = mainbar.height
-            selectMusicCycleDisplay.sourceComponent = treatDisCom
+            selectMusicCycleDisplay.sourceComponent = null
+            selectMusicCycleDisplay.source = "treat.qml"
         }
         onAddASong: {
             selectMusicCycleDisplay.visible = false
@@ -119,6 +116,7 @@ App {
             selectMusicCycleDisplay.visible = true
 
         }
+        Component.onCompleted: listenn.connect(songlist.listenThis)
     }
 
     Advertisement{
@@ -132,12 +130,12 @@ App {
     SongList {
         id: songlist
 //        anchors.top: mainbar.bottom
-        y:mainbar.isRecommand ? sp(150):sp(50)
+        y:mainbar.isRecommand? sp(150):sp(50)
         width: parent.width
         height: parent.height - sp(150)
         onListenThis: {
             temp = vec[0]
-            temp = temp.substring(0, temp.length - 5)
+            temp = temp.substring(0, temp.length - 4)
             console.log(temp)
             if (mainpage.tempLaddress) {//正在播放
                 if (mainpage.tempLaddress[3] !== vec[3]) {
@@ -166,15 +164,16 @@ App {
     Rectangle {
         id: ret
         width: parent.width
-        height: sp(30)
+        height: sp(50)
         anchors.top: parent.top
         visible: false
-        color: "grey"
+        color: "red"
         IconButton {
             id: retPictrue
-            icon: IconType.backward
-            anchors.top: parent.top
+            icon: IconType.arrowleft
+            anchors.verticalCenter: parent.verticalCenter
             anchors.left: parent.left
+            size: parent.height/2
             onClicked: {
                 ret.visible = false
                 mine.visible = true

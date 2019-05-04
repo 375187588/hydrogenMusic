@@ -12,7 +12,6 @@ Page {
     signal searchComing
     signal adverReset
     property string sState: "warehouse"
-    property bool isIlike: false
     property var preSongVec: [] //for search
 
     Component {
@@ -65,7 +64,7 @@ Page {
                                 //                                    temp.push(Logic.transToString(
                                 //                                                  songVec[index * 4 + i]))
                                 //                                }
-                                control.addToL(songVec[index])
+                                control.addToL(songVec[index].songName,songVec[index].singer,songVec[index].album,songVec[index].key)
                                 message.text = "已加入播放列表"
                                 messageRet.visible = true
                                 showTime.restart()
@@ -97,7 +96,7 @@ Page {
                                 temvec.push(songVec[index].singer)
                                 temvec.push(songVec[index].album)
                                 temvec.push(songVec[index].key)
-                                control.addToL(songVec[index])
+                                control.addToL(songVec[index].songName,songVec[index].singer,songVec[index].album,songVec[index].key)
                                 listenThis(temvec)
                             }
                         }
@@ -120,6 +119,8 @@ Page {
         anchors.right: parent.right
         height: dp(50)
         width: dp(50)
+        visible: sState === "warehouse"? true:false
+        enabled: sState === "warehouse"? true:false
         onClicked: {
             wantUpload()
         }
@@ -139,7 +140,6 @@ Page {
     Connections {
         target: control
         onSongList: {
-            newAdd.visible = true
             adverReset()
             if (control.songlis.length !== 0) {
                 songVec = control.songlis
@@ -148,24 +148,27 @@ Page {
             }
         }
         onIlikeShow: {
-            newAdd.visible = false
             if (control.ilik.length !== 0) {
                 songVec = control.ilik
-                if (isIlike) {
-                    sState = "ilike"
-                    isIlike = false
-                }
+                sState = "ilike"
                 songListLoa.sourceComponent = list
             } else {
                 songListLoa.sourceComponent = noList
             }
         }
         onDownloadShow: {
-            newAdd.visible = false
             if (control.downloa.length !== 0) {
                 songVec = control.downloa
                 sState = "download"
-                searchComing()
+                songListLoa.sourceComponent = list
+            } else {
+                songListLoa.sourceComponent = noList
+            }
+        }
+        onSheetListShow: {
+            if (control.tempSheet.length !== 0) {
+                songVec = control.tempSheet
+                sState = sheetname
                 songListLoa.sourceComponent = list
             } else {
                 songListLoa.sourceComponent = noList
@@ -174,7 +177,6 @@ Page {
 
         onSearchOk: {
             if(songlis.visible) {
-                newAdd.visible = false
                 searchComing()
                 songVec = []
                 if (control.searc.length !== 0) {

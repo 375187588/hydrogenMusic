@@ -6,38 +6,41 @@ import "../qml/myscript.js" as Logic
 Page {
     id: lyricspage
     title: qsTr("Lyrics")
-    //    property alias lyricsTime: time
+    property bool isTimerChange: false
 
-        Timer {
-            id: time
-            interval: 100
-            running: true
-            repeat: true
-            property var at: highLightLyric(current)
-            property int current: music.position //hyMediaPlayer.get_current_schedule()
-            onTriggered: {
-                listView.currentIndex = highLightLyric(current)
-            }
+    Timer {
+        id: time
+        interval: 100
+        running: true
+        repeat: true
+        property var at: highLightLyric(current)
+        property int current: music.position //hyMediaPlayer.get_current_schedule()
+        onTriggered: {
+            isTimerChange = true
+            listView.currentIndex = at
         }
+    }
+
+    //Repeater virsion:
 
     //    Column {
     //        id: lyricContent
 
     //        width: parent.width
     //        height: parent.height
-    //        Repeater {
-    //            id: rep1
-    //            model: qtLyric.lheader.length
+//            Repeater {
+//                id: rep1
+//                model: qtLyric.lheader.length
 
-    //            Text {
-    //                id: t1
-    //                anchors.horizontalCenter: lyricContent.horizontalCenter
-    //                font.pixelSize: sp(12)
-    //                wrapMode: Text.WordWrap
-    //                color: Theme.secondaryTextColor
-    //                text: qtLyric.lheader[index]
-    //            }
-    //        }
+//                Text {
+//                    id: t1
+//                    anchors.horizontalCenter: lyricContent.horizontalCenter
+//                    font.pixelSize: sp(12)
+//                    wrapMode: Text.WordWrap
+//                    color: Theme.secondaryTextColor
+//                    text: qtLyric.lheader[index]
+//                }
+//            }
 
     //        Repeater {
     //            id: rep2
@@ -68,10 +71,11 @@ Page {
         ListView{
             id:listView
             anchors.fill: parent
-            model: qtLyric.lyricContent.length
+            model: qtLyric.lyricContent.length+qtLyric.lheader.length
             highlightRangeMode: ListView.StrictlyEnforceRange
             spacing: sp(2)
-            preferredHighlightBegin:parent.height/4 //开始时候高光的位置
+            currentIndex: qtLyric.lheader.length
+            preferredHighlightBegin:parent.y+parent.height/2 //开始时候高光的位置
             preferredHighlightEnd: preferredHighlightBegin + sp(30)
             delegate: Rectangle{
                 width: parent.width
@@ -82,22 +86,27 @@ Page {
 
                 Text {
                     anchors.centerIn: parent
-                    font.pixelSize: sp(12)
+                    font.pixelSize: listView.currentIndex === index? sp(14):sp(10)
                     wrapMode: Text.WordWrap
                     color: listView.currentIndex === index? "red" :Theme.secondaryTextColor
-                    text: qtLyric.lyricContent[index]
+                    text: index <qtLyric.lheader.length ?qtLyric.lheader[index] :qtLyric.lyricContent[index-qtLyric.lheader.length]
                 }
 
                 MouseArea{
                     anchors.fill: parent
                     onClicked: {
                         listView.currentIndex = index
+                        music.seek(qtLyric.startTime[listView.currentIndex])
                     }
                 }
             }
             onCurrentIndexChanged: {
-                music.seek(qtLyric.startTime[currentIndex])
+                if(!isTimerChange) {
+                    music.seek(qtLyric.startTime[listView.currentIndex])
+                }
+                isTimerChange = false
             }
+
         }
     }
 
@@ -116,7 +125,7 @@ Page {
                 continue
             } else {
                 if (i > 0)
-                    return i - 1
+                    return i-1
             }
         }
     }

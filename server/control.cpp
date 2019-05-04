@@ -33,10 +33,10 @@ QSqlQuery Control::query() const
     return m_query;
 }
 
-std::string Control::selectDatabase(QString s,int i){
+std::string Control::selectDatabase(QString s, int i, int begin){
     m_query.exec(s);
     std::string ss = "";
-    ss = output_database(i);
+    ss = output_database(i,begin);
     return ss;
 }
 
@@ -48,12 +48,12 @@ bool Control::changeDatabase(QString s)
     else return false;
 }
 
-std::string Control::output_database(int i)
+std::string Control::output_database(int end, int begin)
 {
     std::string str = "";
     std::cout << "output " << std::endl;
     while(m_query.next()){
-        for(int a = 0;a != i;a++) {
+        for(int a = begin;a != end;a++) {
             std::cout << m_query.value(a).toString().toStdString() << " ";
             str += m_query.value(a).toString().toStdString() + " || ";
         }

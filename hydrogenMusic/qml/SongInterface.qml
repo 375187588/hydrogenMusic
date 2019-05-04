@@ -7,60 +7,144 @@ Page {
     id: songinterfacepage
     title: qsTr("Hydrogen music")
     property var thisSong
-    //-----xiaoyao--s--------
-    property string add: "rtsp://0.0.0.0/"+thisSong[0].substring(0, thisSong[0].length - 1)
-    //-----xiaoyao--s--------
     property string prefixx: "../assets/music/"
-
+    opacity: messageRet.visible ? 0.3 : 1
     signal songinterfaceBack
 
     onThisSongChanged: {
         pausePictrue.paused = false
         pausePictrue.icon = IconType.pause
-        //-----xiaoyao--s--------------
-        //var addhead = "rtsp://0.0.0.0/"+thisSong
-        simplePlayer.openUrl(add)
-        console.log("kkkkkkkkkkkk"+thisSong[0].substring(0, thisSong[0].length - 1)+"jjj")
-        //-----xiaoyao-----e------------
     }
 
     MediaPlayer {
         //可以播放音频和视频
         id: music
         autoPlay: true
-        source: prefixx + thisSong[0].substring(0,thisSong[0].length - 1)
+        source: prefixx + thisSong[0]
     }
-    Rectangle {
+
+    IconButton {
         id: ret
-        width: parent.width
-        height: parent.height * 0.05
+        icon: IconType.arrowleft
+        anchors.verticalCenter: l.verticalCenter
+        anchors.left: parent.left
+        onClicked: {
+            songinterfaceBack()
+        }
+    }
+
+    Label{
+        id:l
         anchors.top: parent.top
-        color: "grey"
-        IconButton {
-            id: retPictrue
-            icon: IconType.arrowleft
-            anchors.top: parent.top
-            anchors.left: parent.left
-            onClicked: {
-                songinterfaceBack()
+        anchors.topMargin: sp(10)
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pointSize: sp(10)
+        text: thisSong[0]
+    }
+    Label{
+        anchors.top: l.bottom
+        anchors.horizontalCenter: parent.horizontalCenter
+        font.pointSize: sp(6)
+        text: thisSong[1]
+    }
+
+
+
+    Item
+    {
+        id:mainpart
+        y:parent.height*0.2
+        width: parent.width
+        height: parent.height*0.5
+        opacity: loa.sourceComponent ? 0.5 : 1
+        enabled: loa.sourceComponent ? false : true
+        ListView{
+            id:listView
+            anchors.fill: parent
+            model: 2
+            snapMode: ListView.SnapOneItem
+            orientation:ListView.Horizontal
+            highlightRangeMode: ListView.StrictlyEnforceRange
+            delegate: Rectangle{
+                width: listView.width
+                height: listView.height
+                //color: index%2 ? "red":"yellow"
+
+                Loader{
+                    visible: listView.currentIndex === 0 ? true : false
+                    width: parent.width
+                    height: parent.height
+                    sourceComponent: one
+                }
+
+                Lyrics {
+                    id: lyrics
+                    visible: listView.currentIndex === 1 ? true : false
+                    enabled: visible ? true : false
+                    anchors.fill:parent
+                    width: parent.width
+                    height: parent.height
+                }
+
+            }
+        }
+
+
+    }
+
+    Component{
+        id:one
+        Item {
+            width: parent.width
+            height: parent.height
+            Row{
+                width: parent.width
+                height: parent.height
+                x:parent.x+sp(10)
+                spacing: sp(13)
+                Rectangle{
+                    width: parent.width/5
+                    height: width
+                    radius: height/2
+                    border.width: sp(1.5)
+                    anchors.verticalCenter: parent.verticalCenter
+                    border.color: Theme.secondaryTextColor
+                    Label{
+                        anchors.centerIn: parent
+                        font.pointSize: 15
+                        text: "专"
+                    }
+                }
+                Rectangle{
+                    width: parent.width/2
+                    height: width
+                    radius: height/2
+                    border.width: sp(1.5)
+                    anchors.verticalCenter: parent.verticalCenter
+                    border.color: Theme.secondaryTextColor
+                    Label{
+                        anchors.centerIn: parent
+                        font.pointSize: 25
+                        text: "专辑图"
+                    }
+                }
+                Rectangle{
+                    width: parent.width/5
+                    height: width
+                    radius: height/2
+                    border.width: sp(1.5)
+                    anchors.verticalCenter: parent.verticalCenter
+                    border.color: Theme.secondaryTextColor
+                    Label{
+                        anchors.centerIn: parent
+                        font.pointSize: 15
+                        text: "辑"
+                    }
+                }
             }
         }
     }
 
-    AppFlickable {
-        id: appflickable
-        anchors.top: ret.bottom
-        contentWidth: parent.width
-        contentHeight: parent.height * 1.5
-        width: parent.width
-        height: parent.height * 0.8
-
-        Lyrics {
-            id: lyrics
-            height: parent.height
-            width: parent.width
-        }
-    }
 
     Rectangle {
         id: re
@@ -93,79 +177,16 @@ Page {
         //            }
 
         //        }
-//        Slider {
-//            id: progressbar
-//            width: parent.width * 0.85
-//            height: sp(2)
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            maximumValue: music.duration //hyMediaPlayer.get_all_schedule()
-//            value: music.position //hyMediaPlayer.get_current_schedule()
-//            onValueChanged: music.seek(value)
-//        }
-//        Slider {
-//            id: slider
-//                              //width: parent.width * 0.85
-//            //height: sp(2)
-//            anchors.horizontalCenter: parent.horizontalCenter
-//            //maximumValue:simplePlayer.getlength()  //hyMediaPlayer.get_all_schedule()
-//            maximumValue:200000
-//            //value: simplePlayer.getpositon() //hyMediaPlayer.get_current_schedule()
-//            property bool sync: false
-//            onValueChanged: {
-//                if(!sync)
-//                    simplePlayer.setposition(value)
-//            }
-//            Timer{
-//                id:t
-//                running: true
-//                interval: 300
-//                repeat: true
-//                onTriggered:
-//                {
-
-//                    //console.log("timer")
-//                    slider.sync=true
-
-//                    slider.value=simplePlayer.getpositon()
-//                    slider.maximumValue=simplePlayer.getlength()
-//                    slider.sync=false
-//                    //console.log(slider.maximumValue)
-//                }
-//            }
-//        }
-        //----xiaoyao-----s----
         Slider {
             id: progressbar
             width: parent.width * 0.85
             height: sp(2)
             anchors.horizontalCenter: parent.horizontalCenter
-            //maximumValue: music.duration //hyMediaPlayer.get_all_schedule()
-            //value: music.position //hyMediaPlayer.get_current_schedule()
-            //onValueChanged: music.seek(value)
-            property bool sync: false
-            onValueChanged: {
-                if(!sync)
-                    simplePlayer.setposition(value)
-            }
-            Timer{
-                id:t
-                running: true
-                interval: 300
-                repeat: true
-                onTriggered:
-                {
-
-                    //console.log("timer")
-                    progressbar.sync=true
-
-                    progressbar.value=simplePlayer.getpositon()
-                    progressbar.maximumValue=simplePlayer.getlength()
-                    progressbar.sync=false
-                    //console.log(slider.maximumValue)
-                }
-            }
+            maximumValue: music.duration //hyMediaPlayer.get_all_schedule()
+            value: music.position //hyMediaPlayer.get_current_schedule()
+            onValueChanged: music.seek(value)
         }
-        //-----xiaoyao----e----
+
         IconButton {
             id: pre
             icon: IconType.stepbackward
@@ -176,42 +197,19 @@ Page {
                 var index = control.currentSong(
                             thisSong[3] + " - " + control.ID)
                 if (index !== 0) {
-                    for (var i = 0; i < 4; i++) {
-                        temp.push(control.playlist[(index - 1) * 4 + i])
-                    }
+                    temvec.push(control.playlist[index].songName)
+                    temvec.push(control.playlist[index].singer)
+                    temvec.push(control.playlist[index].album)
+                    temvec.push(control.playlist[index].key)
                     //lyrics.cleanHightLight()
                     thisSong = temp
                 }
             }
         }
 
-//                IconButton {
-//                    id: pausePictrue
-//                    property bool paused: false
-//                    icon: IconType.pause
-//                    anchors.horizontalCenter: parent.horizontalCenter
-//                    anchors.top: musicPictrue.bottom
-//                    onClicked: {
-//                        //play state
-//                        if (paused) {
-//                            icon = IconType.pause
-//                            music.play()
-//                            //lyrics.lyricsTime.start()
-//                            paused = false
-//                            //                    hyMediaPlayer.play_multimedia()
-//                        } else {
-//                            icon = IconType.play
-//                            paused = true
-//                            //lyrics.lyricsTime.running = false
-//                            //                    hyMediaPlayer.pause_mulitimedia()
-//                            music.pause()
-//                        }
-//                    }
-//                }
-        //xiaoyao----s----------
         IconButton {
             id: pausePictrue
-            property bool paused: true
+            property bool paused: false
             icon: IconType.pause
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: musicPictrue.bottom
@@ -219,21 +217,20 @@ Page {
                 //play state
                 if (paused) {
                     icon = IconType.pause
-                    //music.play()
-                    simplePlayer.openUrl(add)
+                    music.play()
                     //lyrics.lyricsTime.start()
                     paused = false
                     //                    hyMediaPlayer.play_multimedia()
                 } else {
                     icon = IconType.play
                     paused = true
-
-                    //music.pause()
-                    //simplePlayer.
+                    //lyrics.lyricsTime.running = false
+                    //                    hyMediaPlayer.pause_mulitimedia()
+                    music.pause()
                 }
             }
         }
-        //xiaoyao------e-------
+
         IconButton {
             id: next
             icon: IconType.stepforward
@@ -243,10 +240,11 @@ Page {
                 var temp = []
                 var index = control.currentSong(
                             thisSong[3] + " - " + control.ID)
-                if (index !== control.playlist.length / 4 - 1) {
-                    for (var i = 0; i < 4; i++) {
-                        temp.push(control.playlist[(index + 1) * 4 + i])
-                    }
+                if (index !== control.playlist.length - 1) {
+                    temvec.push(control.playlist[index].songName)
+                    temvec.push(control.playlist[index].singer)
+                    temvec.push(control.playlist[index].album)
+                    temvec.push(control.playlist[index].key)
                     //lyrics.cleanHightLight()
                     thisSong = temp
                 }
@@ -261,14 +259,10 @@ Page {
             property bool clickthis: false
             onClicked: {
                 if (!clickthis) {
-                    appflickable.opacity = 0.4
-                    re.opacity = 0.4
-                    playlists.sourceComponent = plalistshow
+                    loa.sourceComponent = plalistshow
                     clickthis = true
                 } else {
-                    appflickable.opacity = 1
-                    re.opacity = 1
-                    playlists.sourceComponent = null
+                    loa.sourceComponent = null
                     clickthis = false
                 }
             }
@@ -282,7 +276,7 @@ Page {
             onClicked: {
                 var a = thisSong[3] + " - " + control.ID
                 var e = "download " + thisSong[0] + " || " + thisSong[1] + " || " + thisSong[2]
-                        + " || " + thisSong[3] + " || " + control.ID + " || " + a
+                        + " || " + thisSong[3] + " || "  + control.ID + " || " + a
                 control.sendMessage(e)
             }
         }
@@ -304,12 +298,30 @@ Page {
                 control.sendMessage(e)
             }
         }
+
+        IconButton {
+            id: collect
+            icon: IconType.plus
+            anchors.left: ilike.right
+            anchors.bottom: re.bottom
+            property bool clickthis:false
+            onClicked: {
+                if (!clickthis || !loa.sourceComponent) {
+                    control.sendMessage("songsheet all "+control.ID)
+                    clickthis = true
+                } else {
+                    loa.sourceComponent = null
+                    clickthis = false
+                }
+            }
+        }
     }
     Loader {
-        id: playlists
+        id: loa
         width: parent.width
         height: parent.height * 0.5
         anchors.bottom: re.top
+
     }
 
     Component {
@@ -319,23 +331,58 @@ Page {
     }
 
     Connections {
-        target: playlists.item
+        target: loa.item
         onListen: {
             //lyrics.cleanHightLight()
             thisSong = vec
+        }
+        onCollect: {
+            var a = thisSong[3] + " - " + control.ID
+            var e
+            if(sheetName === "ilike "){
+                e = "ilike " + thisSong[0] + " || " + thisSong[1] + " || " + thisSong[2]
+                        + " || " + thisSong[3] + " || " + control.ID + " || " + a
+            }else if(sheetName === "download "){
+                e = "download " + thisSong[0] + " || " + thisSong[1] + " || " + thisSong[2]
+                        + " || " + thisSong[3] + " || "  + control.ID + " || " + a
+            }else{
+                a = sheetName + " - " +thisSong[3] + " - " + control.ID
+                e = "songsheet addsong " + sheetName  + " || " + thisSong[0] + " || " + thisSong[1] + " || " + thisSong[2]
+                        + " || " + thisSong[3] + " || " + control.ID + " || " + a
+            }
+            control.sendMessage(e)
         }
     }
 
     Connections {
         target: control
         onDownloadOk: {
+            loa.sourceComponent = null
             message.text = "download OK."
-            appflickable.opacity = 0.5
             messageRet.visible = true
             showTime.restart()
         }
-        onIlikeOk: ilike.icon = IconType.heartbeat
+        onIlikeOk: {
+            loa.sourceComponent = null
+            ilike.icon = IconType.heartbeat
+        }
         onDislike: ilike.icon = IconType.heart
+        onSongsheetAll: {
+            if(songinterfacepage.visible) {
+                loa.sourceComponent = selectsheet
+            }
+        }
+        onSongsheetAddSongOk: {
+            if(songinterfacepage.visible)
+            {
+                if(sheetname === "ok") message.text = "collect OK."
+                else message.text = sheetname +" had this song already"
+                messageRet.visible = true
+                showTime.restart()
+                loa.sourceComponent = null
+            }
+
+        }
     }
 
     Rectangle {
@@ -364,9 +411,68 @@ Page {
     Timer {
         id: showTime
         interval: 1000
+        repeat: false
         onTriggered: {
-            appflickable.opacity = 1
             messageRet.visible = false
         }
+    }
+
+    Component{
+        id:selectsheet
+        Rectangle {
+            width: parent.width*0.25
+            height: parent.height*0.3
+            border.color: "grey"
+            border.width: 1
+            signal collect(var sheetName)
+            Text {
+                text: qsTr("收藏到歌单")
+                anchors.left: parent.left
+                anchors.leftMargin: sp(10)
+                font.pixelSize: 25
+                height: parent.height * 0.15
+            }
+
+            ListView{
+                id:listView
+                anchors.fill: parent
+                model: control.songSheet.length
+                highlightRangeMode: ListView.StrictlyEnforceRange //currentIndex随着一起变化
+                spacing: sp(3)
+                delegate: Rectangle{
+                    color: mouse_area.containsMouse ?"#EDEDED":"#CCCCCC"
+                    height: dp(40)
+                    width: parent.width
+                    Rectangle{
+                        id:image
+                        width: parent.height
+                        height: parent.height
+                        radius: 5
+                        color: "yellow"
+                        anchors.left: parent.left
+                    }
+
+                    Text {
+                        anchors.left: image.right
+                        anchors.leftMargin: sp(3)
+                        color: "black"
+                        font.pixelSize: sp(12)
+                        font.bold: sp(5)
+                        text: control.songSheet[index]
+                    }
+                    MouseArea{
+                        id:mouse_area
+                        anchors.fill: parent
+                        hoverEnabled:true
+                        onClicked: {
+                            collect(control.songSheet[index])
+                        }
+                    }
+                }
+            }
+
+        }
+
+
     }
 }

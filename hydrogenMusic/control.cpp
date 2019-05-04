@@ -4,8 +4,10 @@
 #include <QJSValue>
 #include <QUrl>
 #include <vector>
+#include <time.h>
 #include "personalinfo.h"
 #include "song.h"
+#include "treat.h"
 void Control::run()
 {
     m_io.run();
@@ -29,13 +31,41 @@ void Control::sendMessage(QString m)
             m_songlis = detach(ret);
             emit songList();
         }
-        if(head1 == "ilike") {
+        else if(head1 == "ilike") {
             personalInfo->m_ilik = detach(ret);
             emit ilikeShow();
         }
-        if(head1 == "download") {
+        else if(head1 == "download") {
             personalInfo->m_downloa = detach(ret);
             emit downloadShow();
+        }else{
+            personalInfo->m_tempSheet = detach(ret);
+            emit sheetListShow(QString::fromStdString(head1));
+        }
+    }else if(head == "songsheet") {
+        std::string head1;
+        record >> head1;
+        std::string ret;
+        ret = m_receiveMessage.substr(head.length() + head1.length() +2);
+        if(head1 == "all"){
+            personalInfo->m_songSheet = detachToQstring(ret);
+            emit songsheetAll();
+        }else if(head1 == "add"){
+            if(ret == "ok") emit songsheetAddOk();
+            sendMessage("songsheet all "+personalInfo->m_ID);
+        }else if(head1 == "addsong"){
+            emit songsheetAddSongOk(QString::fromStdString(ret));
+        }
+    }else if(head == "treat") {
+        record >> head;
+        std::string ret;
+        if(head == "send"){
+            record >> ret;
+            emit sendtreatOk(QString::fromStdString(ret));
+        }else if(head == "all"){
+            ret = m_receiveMessage.substr(10);
+            m_treat = detachToTreat(ret);
+            emit treatShow();
         }
     }
     else if(head == "download") {
@@ -92,6 +122,10 @@ void Control::sendMessage(QString m)
         }else if(ret == "download") {
             record >> ret;
             if(ret == "ok") sendMessage("songListShow download " + personalInfo-> m_ID);
+        }else{
+            std::string ret1;
+            record >> ret1;
+            if(ret1 == "ok") sendMessage("songListShow " + QString::fromStdString(ret) +" "+ personalInfo-> m_ID);
         }
     }else if(head == "tourists") {
 
@@ -172,7 +206,6 @@ QList<Song *> Control::detach(std::string ret)
     std::istringstream rec(ret);
     std::string temp1;
     std::string temp2;
-    int t = 1;
 
     while(rec >> temp1) {
         if(temp1 != "||" && temp1 != "|||" ) {
@@ -180,9 +213,8 @@ QList<Song *> Control::detach(std::string ret)
             temp2 +=" ";
         }else {
             if(!temp2.empty()) {
-                if(t%4 == 0) temp2 = temp2.substr(0,temp2.length()-1);
+                temp2 = temp2.substr(0,temp2.length()-1);
                 vec.append(QString::fromStdString(temp2));
-                t++;
                 temp2.clear();
             }
         }
@@ -206,9 +238,94 @@ QList<Song *> Control::detach(std::string ret)
     return v;
 }
 
-bool Control::addToL(Song * l)
+QList<QString> Control::detachToQstring(std::string ret)
 {
+    QList<QString> vec;
+        if(ret.empty()) {
+            return vec;
+        }
+        std::istringstream rec(ret);
+        std::string temp1;
+        std::string temp2;
 
+        while(rec >> temp1) {
+            if(temp1 != "||" && temp1 != "|||" ) {
+                temp2 +=temp1;
+                temp2 +=" ";
+            }else {
+                if(!temp2.empty()) {
+                    temp2 = temp2.substr(0,temp2.length()-1);
+                    vec.append(QString::fromStdString(temp2));
+                    temp2.clear();
+                }
+            }
+        }
+        return vec;
+}
+
+QList<Treat *> Control::detachToTreat(std::string ret)
+{
+    QList<QString> vec;
+    QList<Treat *> v;
+    if(ret.empty()) return v;
+
+    std::istringstream rec(ret);
+    std::string temp1;
+    std::string temp2;
+
+    while(rec >> temp1) {
+        if(temp1 != "||" && temp1 != "|||" ) {
+            temp2 +=temp1;
+            temp2 +=" ";
+        }else {
+            if(!temp2.empty()) {
+                temp2 = temp2.substr(0,temp2.length()-1);
+                vec.append(QString::fromStdString(temp2));
+                temp2.clear();
+            }
+        }
+    }
+    int n = vec.length()/7;
+    for(int i=0;i<n;i++)
+    {
+        if(!vec.empty())
+        {
+            QString id = vec.front();
+            vec.pop_front();
+            QList<QString> song;
+            song.append(vec.front());
+            vec.pop_front();
+            song.append(vec.front());
+            vec.pop_front();
+            song.append(vec.front());
+            vec.pop_front();
+            song.append(vec.front());
+            vec.pop_front();
+
+            QString text = vec.front();
+            vec.pop_front();
+            QString time = vec.front();
+            vec.pop_front();
+            v.append(new Treat(id,text,song,timeTransf(time)));
+        }
+    }
+    return v;
+}
+
+QString Control::timeTransf(QString time)
+{
+    time_t ti;               //声明time_t类型变量
+    std::istringstream is(time.toStdString());
+    is >> ti;
+
+    tm *t =localtime(&ti);
+    std::string s = std::to_string(t->tm_mon) + "月"+std::to_string(t->tm_mday)+"日";
+    return QString::fromStdString(s);
+}
+
+bool Control::addToL(QString songName,QString singer,QString album,QString key)
+{
+    Song *l = new Song(songName,singer,album,key);
     for(int i = 0;i<m_playlist.length();i++)
         if(m_playlist[i]->m_key == l->m_key) return false;
     m_playlist.push_back(l);
@@ -416,6 +533,21 @@ void Control::setPlaylist(QList<Song *> l)
 {
     m_playlist = l;
     emit playlistChange();
+}
+
+QList<QString> Control::songSheet()
+{
+    return personalInfo->m_songSheet;
+}
+
+QQmlListProperty<Song> Control::tempSheet()
+{
+    return QQmlListProperty<Song>(this, personalInfo->m_tempSheet);
+}
+
+QQmlListProperty<Treat> Control::treat()
+{
+    return QQmlListProperty<Treat>(this, m_treat);
 }
 
 Control::~Control()

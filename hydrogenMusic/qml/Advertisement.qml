@@ -91,7 +91,6 @@ Item {
         onTriggered: {
             if(listView.currentIndex == listView.count-1)
             {
-                console.log("listView.count:" + listView.count)
                 listView.currentIndex = 1
             }else{
                 listView.currentIndex++

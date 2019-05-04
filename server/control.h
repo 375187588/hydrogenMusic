@@ -14,9 +14,9 @@ class Control
 {
 public:
     Control();
-    std::string selectDatabase(QString s, int i);
+    std::string selectDatabase(QString s, int i,int begin =0);
     bool changeDatabase(QString s);
-    std::string output_database(int i);
+    std::string output_database(int end,int begin = 0);
     QSqlDatabase connect(const QString &dbName);
     QSqlQuery query() const;
 

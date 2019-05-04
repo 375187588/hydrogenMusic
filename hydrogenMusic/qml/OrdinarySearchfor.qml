@@ -51,7 +51,7 @@ Page {
                 delegate: Rectangle{
                     color: mouse_area.containsMouse ?"#EDEDED":"#CCCCCC"
                     height: dp(40)
-                    width: songlis.width
+                    width: parent.width
                     radius: 10
                     Text {
                         anchors.top: parent.top
@@ -76,8 +76,15 @@ Page {
                     MouseArea{
                         id:mouse_area
                         anchors.fill: parent
+                        hoverEnabled:true
+
                         onClicked: {
-                            ordinarySearchforpageBack(songName)
+                            var temvec = []
+                            temvec.push(songName)
+                            temvec.push(singer)
+                            temvec.push(album)
+                            temvec.push(key)
+                            ordinarySearchforpageBack(temvec)
                         }
                     }
                 }
