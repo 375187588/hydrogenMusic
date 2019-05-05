@@ -241,6 +241,7 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
                 temp.clear();
             }
             time_t t = time(NULL);
+
             long time = (long)t;
             std::ostringstream os;
             os<<time;

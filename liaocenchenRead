@@ -1,0 +1,32 @@
+mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+systemctl start mysqld
+mysql_secure_installation 
+systemctl restart mysqld
+mysql -u root -p 
+
+ 进入mysql后 密码是12345 输入
+show databases;   查看数据库
+create database hydrogenMusicDB; 创建一个数据库
+use hydrogenMusicDB;  进入hydrogenMusicDB数据库
+
+
+程序报错目录  #include <QApplication>           找不到文件
+在 .pro文件里面添加 QT += widgets
+#include <QJSValue>  找不到文件
+在 .pro文件里面添加 QT += qml
+
+在server里面的 control.cpp的 db.setPassword("")改为
+db.setPassword("12345")(你自己设的密码)
+
+安装VLC-qt
+把文件解压后打开终端
+
+$ mkdir build
+$ cd build
+$ cmake .. -DCMAKE_BUILD_TYPE=Debug
+$ make -j8
+$ make install
+
+在设置了mysql之后，再次运行服务器需要命令如下
+systemctl start mysqld
+mysql -u root -p

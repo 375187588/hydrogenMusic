@@ -319,7 +319,8 @@ QString Control::timeTransf(QString time)
     is >> ti;
 
     tm *t =localtime(&ti);
-    std::string s = std::to_string(t->tm_mon) + "月"+std::to_string(t->tm_mday)+"日";
+    int month = t->tm_mon + 1;
+    std::string s = std::to_string(month) + "月"+std::to_string(t->tm_mday)+"日";
     return QString::fromStdString(s);
 }
 
