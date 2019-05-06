@@ -6,17 +6,25 @@ Page {
     id: loginpage
     width: mainpage.width
     height: mainpage.height
+
     signal loginBack
     property alias idfield: idField.text
     property alias pasfield: pasField.text
 
+    Image {
+        id: cover
+        source: "../../hydrogenMusic/assets/img/head.jpg"
+        anchors.fill: parent
+        z:-1
+    }
     Rectangle {
         id: regi
         width: loginpage.width * 0.7
         height: loginpage.height * 0.4
-        border.color: "grey"
-        border.width: 2
+        color: "transparent"
+        //        border.width: 2
         anchors.centerIn: parent
+
 
         Column {
             y: 20
@@ -30,6 +38,7 @@ Page {
                     x: 10
                     width: parent.width
                     height: parent.height * 0.5
+
                     AppText {
                         id: id
                         width: parent.width * 0.3
@@ -44,6 +53,7 @@ Page {
                         anchors.verticalCenter: parent.verticalCenter
                         borderColor: "grey"
                         borderWidth: 2
+                        backgroundColor: "transparent"
                         width: parent.width * 0.65
                     }
                 }
@@ -67,6 +77,7 @@ Page {
                         anchors.verticalCenter: parent.verticalCenter
                         borderColor: "grey"
                         borderWidth: 2
+                        backgroundColor: "transparent"
                         width: parent.width * 0.65
                         echoMode: TextInput.Password
                     }
@@ -81,6 +92,11 @@ Page {
                 AppButton {
                     radius: 5
                     text: "Login"
+                    textColor: "#215E21"
+                    backgroundColor: "transparent"
+                    borderColor: "#EEE8AA"
+                    borderWidth: 0.5
+
                     onClicked: {
                         var e = "login " + idfield + " " + pasfield
                         control.sendMessage(e)
@@ -89,6 +105,11 @@ Page {
                 AppButton {
                     radius: 5
                     text: "go to register"
+                     textColor: "#215E21"
+                     backgroundColor: "transparent"
+                     borderColor: "#EEE8AA"
+//                     borderColor: "white"
+                     borderWidth: 0.5
                     onClicked: {
                         regis.visible = true
                         regi.visible = false

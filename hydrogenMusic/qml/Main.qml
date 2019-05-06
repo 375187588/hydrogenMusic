@@ -8,7 +8,7 @@ App {
     screenHeight: 900
     property var tempLaddress
     property string temp
-    property string prefix: "../hydrogenMusic/assets/music/"
+    property string prefix: "../hydrogenMusic/assets/Lyric/"
 
     Component.onCompleted: control.run()
 

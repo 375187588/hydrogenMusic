@@ -16,18 +16,27 @@ void Lyric::readLyric(QString addr)
     std::ifstream fin(addr.toStdString());
 
     std::string str;
-    getline(fin, str);
+    getline(fin, str,'[');
     while(fin)
     {
         if(str != "")
         {
             analysisOneLine(str);
         }
-        getline(fin, str);
+        getline(fin, str,'\n');
     }
 
     emit ok();
     fin.close();
+}
+
+bool isHuanhang(const char &c)
+{
+    if(c == '\n' || c == '\r')
+    {
+        return true;
+    }
+    return false;
 }
 
 void Lyric::analysisOneLine(std::string str)

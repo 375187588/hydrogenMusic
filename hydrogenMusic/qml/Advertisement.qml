@@ -4,7 +4,7 @@ Item {
     property alias currentAdver: listView.currentIndex
     property var imageurls:["../../hydrogenMusic/assets/advertise/0.jpg","../../hydrogenMusic/assets/advertise/1.jpg","../../hydrogenMusic/assets/advertise/2.jpg","../../hydrogenMusic/assets/advertise/3.jpg","../../hydrogenMusic/assets/advertise/4.jpg"]
 
-    //shenme shihou diaoyong ?
+
 
 
     Rectangle{
@@ -24,7 +24,7 @@ Item {
             preferredHighlightEnd: preferredHighlightBegin + listView.width/2
             delegate: Rectangle{
                 width: listView.currentIndex === index ? listView.width/2 : listView.width/4
-                height: listView.currentIndex === index ? listView.height * 0.9 : listView.height * 0.7
+                height: listView.currentIndex === index ? listView.height  : listView.height * 0.8        //origin is 0.9  0.7 now  is 1 0.8
                 //color: listView.currentIndex === index ? "#CDCD00":"#DEB887"
                 anchors.verticalCenter: parent.verticalCenter
                 visible: (listView.currentIndex === index || listView.currentIndex === index-1 ||
