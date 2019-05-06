@@ -79,7 +79,9 @@ DISTFILES += \
     qml/MusicCycle.qml \
     qml/Advertisement.qml \
     qml/OrdinarySearchfor.qml \
-    qml/treat.qml
+    qml/treat.qml \
+    qml/songsheet.qml \
+    qml/Songshow.qml
 #-------xiaoyao------s----
 
 LIBS       += -L/usr/local/lib64 -lVLCQtCore -lVLCQtWidgets

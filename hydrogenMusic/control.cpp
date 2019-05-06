@@ -51,12 +51,19 @@ void Control::sendMessage(QString m)
             personalInfo->m_songSheet = detachToQstring(ret);
             emit songsheetAll();
         }else if(head1 == "add"){
-            if(ret == "ok") emit songsheetAddOk();
+            emit songsheetAddOk(QString::fromStdString(ret));
             sendMessage("songsheet all "+personalInfo->m_ID);
         }else if(head1 == "addsong"){
             emit songsheetAddSongOk(QString::fromStdString(ret));
         }
-    }else if(head == "treat") {
+    }else if(head == "songsheet") {
+
+    }else if(head == "sheetinfo") {
+        std::string ret;
+        ret = m_receiveMessage.substr(head.length()+1);
+        emit sheetInfo(detachToQstring(ret));
+    }
+    else if(head == "treat") {
         record >> head;
         std::string ret;
         if(head == "send"){
@@ -66,6 +73,7 @@ void Control::sendMessage(QString m)
             ret = m_receiveMessage.substr(10);
             m_treat = detachToTreat(ret);
             emit treatShow();
+            emit uploadOk();
         }
     }
     else if(head == "download") {
@@ -241,26 +249,26 @@ QList<Song *> Control::detach(std::string ret)
 QList<QString> Control::detachToQstring(std::string ret)
 {
     QList<QString> vec;
-        if(ret.empty()) {
-            return vec;
-        }
-        std::istringstream rec(ret);
-        std::string temp1;
-        std::string temp2;
+    if(ret.empty()) {
+        return vec;
+    }
+    std::istringstream rec(ret);
+    std::string temp1;
+    std::string temp2;
 
-        while(rec >> temp1) {
-            if(temp1 != "||" && temp1 != "|||" ) {
-                temp2 +=temp1;
-                temp2 +=" ";
-            }else {
-                if(!temp2.empty()) {
-                    temp2 = temp2.substr(0,temp2.length()-1);
-                    vec.append(QString::fromStdString(temp2));
-                    temp2.clear();
-                }
+    while(rec >> temp1) {
+        if(temp1 != "||" && temp1 != "|||" ) {
+            temp2 +=temp1;
+            temp2 +=" ";
+        }else {
+            if(!temp2.empty()) {
+                temp2 = temp2.substr(0,temp2.length()-1);
+                vec.append(QString::fromStdString(temp2));
+                temp2.clear();
             }
         }
-        return vec;
+    }
+    return vec;
 }
 
 QList<Treat *> Control::detachToTreat(std::string ret)
@@ -337,17 +345,12 @@ bool Control::addToL(QString songName,QString singer,QString album,QString key)
 
 void Control::deleteInPlaylist(int index)
 {
-    for(int j = index;j!=m_playlist.length()/4-1;j++) {
-        if(j!=m_playlist.length()/4-1) {
-            for(int i=0;i<4;i++) {
-                m_playlist[4*j+ i] = m_playlist[4*(j+1)+ i];
-            }
+    for(int j = index;j!=m_playlist.length()-1;j++) {
+        if(j!=m_playlist.length()-1) {
+                m_playlist[j] = m_playlist[j+1];
         }
     }
-
-    for(int i=0;i<4;i++) {
         m_playlist.pop_back();
-    }
     emit playlistChange();
 }
 
@@ -366,11 +369,38 @@ void Control::upList(int index)
 
 }
 
+QList<QString> Control::nextSong(int model, int index)
+{
+
+    QList<QString> l;
+    int returnIndex=0;
+    switch (model) {
+    case 0: //shun xu
+        if(index != m_playlist.length()-1) returnIndex = index+1;
+        break;
+    case 1://sui ji
+        srand((unsigned int)time(0));
+        returnIndex = rand() % (m_playlist.length());
+        break;
+    case 2://dan qu xun huan
+        returnIndex =  index;
+        break;
+    }
+
+    if(m_playlist[returnIndex]) {
+        l.append(m_playlist[returnIndex]->songName());
+        l.append(m_playlist[returnIndex]->singer());
+        l.append(m_playlist[returnIndex]->album());
+        l.append(m_playlist[returnIndex]->key());
+        return l;
+    }else return l;
+}
+
 int Control::currentSong(QString nameArID)
 {
     if(m_playlist.length() > 0) {
         for (int i = 0;i<m_playlist.length();i++) {
-            QString temp = m_playlist[i]->m_key + " - " + personalInfo-> m_ID;
+            QString temp = m_playlist[i]->m_key ;
             if(temp == nameArID) {
                 return i;
             }

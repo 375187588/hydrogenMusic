@@ -11,6 +11,7 @@ Page {
     property string add: "rtsp://0.0.0.0/"+thisSong[0].substring(0, thisSong[0].length)
     //-----xiaoyao--s--------
     property string prefixx: "../assets/music/"
+    property var model:[IconType.arrowcircledown,IconType.arrowcircleoup,IconType.arrowcircleleft]
     opacity: messageRet.visible ? 0.3 : 1
     signal songinterfaceBack
 
@@ -242,15 +243,16 @@ Page {
             anchors.top: pausePictrue.top
             onClicked: {
                 var temp = []
-                var index = control.currentSong(
-                            thisSong[3] + " - " + control.ID)
+                var index = control.currentSong(thisSong[3])
                 if (index !== 0) {
-                    temvec.push(control.playlist[index].songName)
-                    temvec.push(control.playlist[index].singer)
-                    temvec.push(control.playlist[index].album)
-                    temvec.push(control.playlist[index].key)
-                    //lyrics.cleanHightLight()
+                    temp.push(control.playlist[index-1].songName)
+                    temp.push(control.playlist[index-1].singer)
+                    temp.push(control.playlist[index-1].album)
+                    temp.push(control.playlist[index-1].key)
                     thisSong = temp
+                    var songname = temp[0]
+                    songname = songname.substring(0, songname.length - 4)
+                    qtLyric.readLyric(songinterfacepage.prefix + songname + ".lrc")
                 }
             }
         }
@@ -315,17 +317,24 @@ Page {
             anchors.left: pausePictrue.right
             anchors.top: pausePictrue.top
             onClicked: {
-                var temp = []
-                var index = control.currentSong(
-                            thisSong[3] + " - " + control.ID)
-                if (index !== control.playlist.length - 1) {
-                    temvec.push(control.playlist[index].songName)
-                    temvec.push(control.playlist[index].singer)
-                    temvec.push(control.playlist[index].album)
-                    temvec.push(control.playlist[index].key)
-                    //lyrics.cleanHightLight()
-                    thisSong = temp
+                var nextsong = control.nextSong(modelchange.modelNum,control.currentSong(thisSong[3]))
+                thisSong = nextsong
+                var temp = nextsong[0]
+                temp = temp.substring(0, temp.length - 4)
+                qtLyric.readLyric(songinterfacepage.prefix + temp + ".lrc")
                 }
+        }
+
+        IconButton { //-----------------------
+            id: modelchange
+            icon: model[0]
+            anchors.bottom: re.bottom
+            anchors.right: playlist.left
+            property int modelNum: 0
+            onClicked: {
+                if(modelNum === 2) modelNum = 0
+                else modelNum++
+                icon = model[modelNum]
             }
         }
 
@@ -411,7 +420,9 @@ Page {
     Connections {
         target: loa.item
         onListen: {
-            //lyrics.cleanHightLight()
+            var temp = vec[0]
+            temp = temp.substring(0, temp.length - 4)
+            qtLyric.readLyric(songinterfacepage.prefix + temp + ".lrc")
             thisSong = vec
         }
         onCollect: {

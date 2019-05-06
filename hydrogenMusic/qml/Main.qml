@@ -81,12 +81,14 @@ App {
         visible: false
         onShowlist: {
             visible = false
+            songlist.visible = true
+            mainbar.visible = false
+            load.source = "songsheet.qml"
+            load.height = mainpage.height * 0.3
             if(sheetName === "ilike") control.sendMessage("songListShow ilike " + control.ID)
             else if(sheetName === "download") control.sendMessage("songListShow download " + control.ID)
             else control.sendMessage("songListShow " + sheetName + " "+ control.ID)
-            songlist.visible = true
-            ret.visible = true
-            mainbar.visible = false
+            control.sendMessage("sheetinfo " + sheetName + " "+ control.ID)
         }
         onAddSongsheetpageBack: {
             createSongsheetLoader.sourceComponent = null
@@ -127,10 +129,19 @@ App {
         visible: mainbar.isRecommand
     }
 
+    Songshow{
+        id:songshow
+        anchors.top: advertise.bottom
+        anchors.topMargin: sp(30)
+        width: parent.width
+        height: songshow.loadShow ?parent.height/3 :parent.height/3 *0.15
+        visible: mainbar.isRecommand
+    }
     SongList {
         id: songlist
 //        anchors.top: mainbar.bottom
-        y:mainbar.isRecommand? sp(150):sp(50)
+        y:mainbar.isRecommand && !searchfor.visible? (sp(180) + songshow.height):(load.source ? load.height:sp(50))
+        z:searchfor.stext? 2:0
         width: parent.width
         height: parent.height - sp(150)
         onListenThis: {
@@ -144,7 +155,7 @@ App {
                     qtLyric.readLyric(prefix + temp + ".lrc")
                     console.log("onListenThis: " + tempLaddress[3])
                 } else {
-                    load.item.visible = true
+                    load.visible = true
                 }
             } else { //当前没有播放任何歌曲
                 mainpage.tempLaddress = vec
@@ -167,7 +178,6 @@ App {
         height: sp(50)
         anchors.top: parent.top
         visible: false
-        color: "red"
         IconButton {
             id: retPictrue
             icon: IconType.arrowleft
@@ -184,7 +194,8 @@ App {
     }
     Loader {
         id: load
-        anchors.fill: parent
+        width: parent.width
+        height: parent.height
     }
     Login {
         id: login
@@ -199,7 +210,7 @@ App {
     Connections {
         target: load.item
         onSonginterfaceBack: {
-            load.item.visible = false
+            load.visible = false
             if (songlist.sState == "search")
                 songlist.songVec = prefix
             else if (songlist.sState == "warehouse") {
@@ -210,6 +221,13 @@ App {
                 control.sendMessage(
                             "songListShow " + songlist.sState + " " + control.ID)
             }
+        }
+        onSongsheetBack: {
+            songlist.visible = false
+            mainbar.visible = true
+            mine.visible = true
+            load.height = mainpage.height
+            load.source = ""
         }
     }
 

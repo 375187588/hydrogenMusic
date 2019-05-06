@@ -17,7 +17,7 @@ QSqlDatabase Control::connect(const QString &dbName)
     else db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("localhost");
     db.setUserName("root");
-    db.setPassword("12345");
+    db.setPassword("");
     db.setDatabaseName(dbName);
     if (!db.open()) {
         QMessageBox::critical(0, QObject::tr("Database Error"),

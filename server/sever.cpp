@@ -90,23 +90,27 @@ void Server::run(){
     m_db.changeDatabase(b);
     b = "drop table treat;";
     m_db.changeDatabase(b);
+    b = "drop table sheetinfo;";
+    m_db.changeDatabase(b);
 
 
-    QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50) primary key,downloads BIGINT,picture TEXT);";
+    QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,nameAr CHAR(150) primary key,downloads BIGINT,picture TEXT);";
     m_db.changeDatabase(a);
     a = "CREATE TABLE IF NOT EXISTS singer(name TINYTEXT,album TINYTEXT,info TEXT);";
     m_db.changeDatabase(a);
     //    a = "CREATE TABLE IF NOT EXISTS album(name TINYTEXT,singer TINYTEXT,songlist TEXT,ID CHAR(100)  primary key);";
     //    m_db.changeDatabase(a);
-    a = "CREATE TABLE IF NOT EXISTS songsheet(name TEXT,song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(100)  primary key);";
+    a = "CREATE TABLE IF NOT EXISTS songsheet(name TEXT,song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(150)  primary key);";
     m_db.changeDatabase(a);
-    a = "CREATE TABLE IF NOT EXISTS download(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(100)  primary key);";
+    a = "CREATE TABLE IF NOT EXISTS sheetinfo(name TEXT,personalID TEXT,cover TEXT,info TEXT,ID CHAR(50)  primary key);";
     m_db.changeDatabase(a);
-    a = "CREATE TABLE IF NOT EXISTS ilike(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(100)  primary key);";
+    a = "CREATE TABLE IF NOT EXISTS download(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(150)  primary key);";
+    m_db.changeDatabase(a);
+    a = "CREATE TABLE IF NOT EXISTS ilike(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(150)  primary key);";
     m_db.changeDatabase(a);
     a = "CREATE TABLE IF NOT EXISTS personal(ID CHAR(20) primary key,password TEXT,songsheet TEXT);";
     m_db.changeDatabase(a);
-    a = "CREATE TABLE IF NOT EXISTS treat(ID CHAR(20),song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),text TEXT,time CHAR(50) primary key);";
+    a = "CREATE TABLE IF NOT EXISTS treat(ID CHAR(20),song TEXT,singer TEXT,album TEXT,nameAr CHAR(200),text TEXT,time CHAR(50) primary key);";
     m_db.changeDatabase(a);
     m_ser.run();
 }
@@ -167,21 +171,34 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
             std::string c = "select * from ilike where personalID = '"+ head +"';" ;
             cmd = QString::fromStdString(c);
             returnM = "songListShow ilike " +m_db.selectDatabase(cmd,4);
+
         }else if(head == "download"){
             record >> head;
             std::string c = "select * from download where personalID = '"+ head +"';" ;
             cmd = QString::fromStdString(c);
             returnM = "songListShow download " +m_db.selectDatabase(cmd,4);
+
         }else{
             std::string id;
             record >> id;
             std::string c = "select * from songsheet where personalID = '"+ id +"' and name = '"+ head +"'" ;
             cmd = QString::fromStdString(c);
             returnM = "songListShow "+head+" " +m_db.selectDatabase(cmd,5,1);
+
         }
         do_write(sock,returnM);
 
-    }else if(head == "songsheet") {
+    }else if(head == "sheetinfo") {
+        record >> head;
+        std::string id;
+        record >> id;
+        std::string key = head+" - "+id;
+        std::string c = "select * from sheetinfo where ID = '"+ key +"';" ;
+        QString cmd = QString::fromStdString(c);
+        std::string returnM = "sheetinfo " +m_db.selectDatabase(cmd,4);
+        do_write(sock,returnM);
+    }
+    else if(head == "songsheet") {
         record >> head;
         std::string returnM;
         if(head == "all"){
@@ -194,14 +211,20 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
             std::string id;
             record >> id;
             std::string name = m.substr(9 + head.length() +id.length()+3);
-            std::string c = "select songsheet from personal where ID = '"+ id +"';" ;
+
+            std::string key =name + " - " + id ;
+            std::string c = "INSERT INTO sheetinfo VALUES('" + name + "','" + id + "','nopicture','noinfo','" + key + "');";
             QString cmd = QString::fromStdString(c);
-            returnM = m_db.selectDatabase(cmd,1);
-            returnM = returnM.substr(0,returnM.length()-5)+ name + " || ";
-            c= "update personal set songsheet='"+ returnM +"' where ID='"+ id +"';" ;
-            cmd = QString::fromStdString(c);
-            m_db.changeDatabase(cmd);
-            returnM = "songsheet add ok";
+            if(m_db.changeDatabase(cmd)) {
+                c = "select songsheet from personal where ID = '"+ id +"';" ;
+                cmd = QString::fromStdString(c);
+                returnM = m_db.selectDatabase(cmd,1);
+                returnM = returnM.substr(0,returnM.length()-5)+ name;
+                c= "update personal set songsheet='"+ returnM +"' where ID='"+ id +"';" ;
+                cmd = QString::fromStdString(c);
+                m_db.changeDatabase(cmd);
+                returnM = "songsheet add ok";
+            }else returnM = "songsheet add failed";
         }else if(head == "addsong"){
             std::vector<std::string> songM;
             std::string temp;
@@ -241,7 +264,6 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
                 temp.clear();
             }
             time_t t = time(NULL);
-
             long time = (long)t;
             std::ostringstream os;
             os<<time;
@@ -369,9 +391,17 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         std::string c = "INSERT INTO personal VALUES('" + ID + "','" + password + "','ilike || download');";;
         QString cmd = QString::fromStdString(c);
         std::string returnM;
-        if(m_db.changeDatabase(cmd))
+        if(m_db.changeDatabase(cmd)){
+            std::string key = "ilike - "+ID;
+            c = "INSERT INTO sheetinfo VALUES('ilike','" + ID + "','nopicture','noinfo','" + key + "');";
+            m_db.changeDatabase(cmd);
+            key = "download - "+ID;
+            c = "INSERT INTO sheetinfo VALUES('download','" + ID + "','nopicture','noinfo','" + key + "');";
+            m_db.changeDatabase(cmd);
             returnM = "register ok";
-        else
+
+
+        }else
             returnM = "register failed";
         do_write(sock,returnM);
     }else if(head == "login") {
@@ -448,7 +478,7 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
                 returnM = "delete download failed";
         }else{
             head1 += head;
-            head1 +=' - ';
+            head1 +=" - ";
             while (record >> head2) {
                 head1 += head2;
                 head1 += " ";

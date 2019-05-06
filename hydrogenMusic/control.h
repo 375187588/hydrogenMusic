@@ -47,6 +47,7 @@ public:
     Q_INVOKABLE bool addToL(QString songName, QString singer, QString album, QString key);
     Q_INVOKABLE void deleteInPlaylist(int index);
     Q_INVOKABLE void upList(int index);
+    Q_INVOKABLE QList<QString> nextSong(int model,int index);
     Q_INVOKABLE int currentSong(QString nameArID);
     Q_INVOKABLE void send(QString file);
     Q_INVOKABLE QString getSongName(QString songName); //get name from address of the song.
@@ -97,9 +98,10 @@ signals:
     void songsheetAddSongOk(QString sheetname);
     void dislike();
     void songsheetAll();//已将所有歌单名存在personalInfo的m_songSheet中
-    void songsheetAddOk();
+    void songsheetAddOk(QString isOK);
     void sendtreatOk(QString isOK);
     void treatShow();
+    void sheetInfo(QList<QString> info);
 private:
     std::string m_receiveMessage;
     QString m_sendMessage;

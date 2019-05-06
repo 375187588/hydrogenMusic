@@ -245,7 +245,7 @@ Page {
                 songsheetVec = control.songSheet
             }
         }
-        onSongsheetAddOk: createSongsheet.sourceComponent = null
+        onSongsheetAddOk: if(isOK == "ok") createSongsheet.sourceComponent = null
     }
 
     //    Column {
