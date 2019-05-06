@@ -1,0 +1,151 @@
+import QtQuick 2.0
+import VPlayApps 1.0
+import QtMultimedia 5.5
+import qt.Lyric 1.0
+import QtQuick.Dialogs 1.0
+Page {
+    id: page
+    title: qsTr("Hydrogen music")
+
+    MediaPlayer {
+        //可以播放音频和视频
+        id: music
+        source: "../assets/music/薛之谦 - 动物世界.mp3"
+        //             autoPlay: true
+    }
+
+    AppFlickable {
+        id: appflickable
+        anchors.fill: parent
+        anchors.centerIn: parent
+        contentWidth: width
+        contentHeight: lyricContent.height
+
+        Rectangle {
+            id: rec
+            border.color: "gray"
+            width: parent.width
+            height: 55
+            Image {
+                id: musicPictrue
+                source: "../assets/img/audio-x-mpeg.svg"
+            }
+            IconButton {
+                id: playPictrue
+                icon: IconType.play
+                anchors.top: musicPictrue.bottom
+                anchors.left: musicPictrue.left
+                onClicked: {
+                    music.play()
+                    lyrics.lyricsTime.start()
+                }
+            }
+            IconButton {
+                id: pausePictrue
+                property bool paused: false
+                icon: IconType.pause
+                anchors.left: playPictrue.right
+                anchors.top: musicPictrue.bottom
+                onClicked: {
+                    if (!paused) {
+                        paused = true
+                        lyrics.lyricsTime.running = false
+                        music.pause()
+                    } else {
+                        music.play()
+                        lyrics.lyricsTime.start()
+                        paused = false
+                    }
+                }
+            }
+            IconButton {
+                id: stopPictrue
+                icon: IconType.stop
+                anchors.left: pausePictrue.right
+                anchors.top: musicPictrue.bottom
+                onClicked: {
+                    lyrics.cleanHightLight()
+                    music.stop()
+                }
+            }
+
+            IconButton {
+                id: newAdd
+                icon: IconType.adjust
+                anchors.top: musicPictrue.bottom
+                anchors.right: download.left
+                onClicked: {
+                    fileDialog.open()
+                }
+            }
+            IconButton {
+                id: download
+                icon: IconType.download
+                anchors.top: musicPictrue.bottom
+                anchors.right: rec.right
+                onClicked: {
+                    var e = "INSERT INTO DOWNLOAD VALUES('../hydrogenMusic/a');"
+                    if (db.changeDatabase(e)) {
+                        message.text = "download OK."
+                        appflickable.opacity = 0.5
+                        messageRet.visible = true
+                        showTime.restart()
+                    }
+
+                    var r = "SELECT * FROM DOWNLOAD"
+                    db.selectDatabase(r, 1)
+                }
+            }
+        }
+
+        Lyrics {
+            id: lyrics
+            anchors.top: rec.bottom
+        }
+    }
+    Rectangle {
+        id: messageRet
+        color: "white"
+        border.color: "black"
+        //        border.width: sp(1)
+        height: dp(30)
+        width: dp(100)
+        anchors.centerIn: parent
+        radius: 20
+        visible: false
+        AppText {
+            id: message
+            anchors.fill: parent
+            anchors.left: parent.left
+            anchors.leftMargin: 30
+            anchors.horizontalCenter: parent.horizontalCenter
+            color: "black"
+            visible: true
+            font.pixelSize: sp(12)
+            font.bold: sp(5)
+        }
+    }
+
+    FileDialog {
+        id: fileDialog
+        title: "Please choose a file"
+        folder: ".."
+        onAccepted: {
+            console.log("You chose: " + fileDialog.fileUrls)
+            visible = false
+        }
+        onRejected: {
+            console.log("Canceled")
+            visible = false
+        }
+    }
+
+    Timer {
+        id: showTime
+        interval: 1000
+        onTriggered: {
+            appflickable.opacity = 1
+            messageRet.visible = false
+        }
+    }
+}

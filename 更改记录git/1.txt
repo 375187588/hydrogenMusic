@@ -1,0 +1,887 @@
+diff --git a/hydrogenMusic/hydrogenMusic.pro b/hydrogenMusic/hydrogenMusic.pro
+index 1632eb5..6beb535 100644
+--- a/hydrogenMusic/hydrogenMusic.pro
++++ b/hydrogenMusic/hydrogenMusic.pro
+@@ -85,6 +85,6 @@ DISTFILES += \
+ LIBS       += -L/usr/local/lib64 -lVLCQtCore -lVLCQtWidgets
+ #LIBS       += -L/usr/local/qml -lVLCQt
+ INCLUDEPATH += /usr/local/include
+-
++QT += core
+ 
+ #-------xiaoyao------e-------
+diff --git a/hydrogenMusic/hydrogenMusic.pro.user b/hydrogenMusic/hydrogenMusic.pro.user
+index 83eb299..dcceaf8 100644
+--- a/hydrogenMusic/hydrogenMusic.pro.user
++++ b/hydrogenMusic/hydrogenMusic.pro.user
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE QtCreatorProject>
+-<!-- Written by QtCreator 4.7.0, 2019-05-04T19:17:36. -->
++<!-- Written by QtCreator 4.5.1, 2019-05-05T21:16:58. -->
+ <qtcreator>
+  <data>
+   <variable>EnvironmentId</variable>
+@@ -62,14 +62,14 @@
+  <data>
+   <variable>ProjectExplorer.Project.Target.0</variable>
+   <valuemap type="QVariantMap">
+-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Desktop (Qt 5.11.1 GCC)</value>
+-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Desktop (Qt 5.11.1 GCC)</value>
+-   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">{f2f731ce-85e8-436b-a516-bcdcb8d5d673}</value>
++   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">V-Play Desktop (Qt 5.11.1 GCC)</value>
++   <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">V-Play Desktop (Qt 5.11.1 GCC)</value>
++   <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">vplayengine.2.qt.gcc_64_kit</value>
+    <value type="int" key="ProjectExplorer.Target.ActiveBuildConfiguration">0</value>
+    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
+    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
+    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
+-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/root/wode/push/hydrogenMusic/build-hydrogenMusic-Desktop_Qt_5_11_1_GCC-Debug</value>
++    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/XIAOYAO/罗/5.4push/hydrogenMusic/build-hydrogenMusic-V_Play_Desktop_Qt_5_11_1_GCC-Debug</value>
+     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
+      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
+       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
+@@ -96,7 +96,7 @@
+       <value type="QString" key="Qt4ProjectManager.MakeStep.MakeCommand"></value>
+      </valuemap>
+      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">2</value>
+-     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Build</value>
++     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">构建</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.BuildSteps.Build</value>
+     </valuemap>
+@@ -115,7 +115,7 @@
+       <value type="QString" key="Qt4ProjectManager.MakeStep.MakeCommand"></value>
+      </valuemap>
+      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">1</value>
+-     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Clean</value>
++     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">清理</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.BuildSteps.Clean</value>
+     </valuemap>
+@@ -123,13 +123,13 @@
+     <value type="bool" key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment">false</value>
+     <valuelist type="QVariantList" key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges"/>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Debug</value>
+-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Debug</value>
++    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
+     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">2</value>
+     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
+    </valuemap>
+    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
+-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/root/wode/push/hydrogenMusic/build-hydrogenMusic-Desktop_Qt_5_11_1_GCC-Release</value>
++    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/XIAOYAO/罗/5.4push/hydrogenMusic/build-hydrogenMusic-V_Play_Desktop_Qt_5_11_1_GCC-Release</value>
+     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
+      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
+       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
+@@ -140,7 +140,7 @@
+       <value type="QString" key="QtProjectManager.QMakeBuildStep.QMakeArguments"></value>
+       <value type="bool" key="QtProjectManager.QMakeBuildStep.QMakeForced">false</value>
+       <value type="bool" key="QtProjectManager.QMakeBuildStep.SeparateDebugInfo">false</value>
+-      <value type="bool" key="QtProjectManager.QMakeBuildStep.UseQtQuickCompiler">true</value>
++      <value type="bool" key="QtProjectManager.QMakeBuildStep.UseQtQuickCompiler">false</value>
+      </valuemap>
+      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.1">
+       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
+@@ -156,7 +156,7 @@
+       <value type="QString" key="Qt4ProjectManager.MakeStep.MakeCommand"></value>
+      </valuemap>
+      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">2</value>
+-     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Build</value>
++     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">构建</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.BuildSteps.Build</value>
+     </valuemap>
+@@ -175,7 +175,7 @@
+       <value type="QString" key="Qt4ProjectManager.MakeStep.MakeCommand"></value>
+      </valuemap>
+      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">1</value>
+-     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Clean</value>
++     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">清理</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.BuildSteps.Clean</value>
+     </valuemap>
+@@ -183,13 +183,13 @@
+     <value type="bool" key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment">false</value>
+     <valuelist type="QVariantList" key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges"/>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Release</value>
+-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Release</value>
++    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
+     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">0</value>
+     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
+    </valuemap>
+    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.2">
+-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/root/wode/push/hydrogenMusic/build-hydrogenMusic-Desktop_Qt_5_11_1_GCC-Profile</value>
++    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/XIAOYAO/罗/5.4push/hydrogenMusic/build-hydrogenMusic-V_Play_Desktop_Qt_5_11_1_GCC-Profile</value>
+     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
+      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
+       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
+@@ -200,7 +200,7 @@
+       <value type="QString" key="QtProjectManager.QMakeBuildStep.QMakeArguments"></value>
+       <value type="bool" key="QtProjectManager.QMakeBuildStep.QMakeForced">false</value>
+       <value type="bool" key="QtProjectManager.QMakeBuildStep.SeparateDebugInfo">true</value>
+-      <value type="bool" key="QtProjectManager.QMakeBuildStep.UseQtQuickCompiler">true</value>
++      <value type="bool" key="QtProjectManager.QMakeBuildStep.UseQtQuickCompiler">false</value>
+      </valuemap>
+      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.1">
+       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
+@@ -216,7 +216,7 @@
+       <value type="QString" key="Qt4ProjectManager.MakeStep.MakeCommand"></value>
+      </valuemap>
+      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">2</value>
+-     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Build</value>
++     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">构建</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.BuildSteps.Build</value>
+     </valuemap>
+@@ -235,7 +235,7 @@
+       <value type="QString" key="Qt4ProjectManager.MakeStep.MakeCommand"></value>
+      </valuemap>
+      <value type="int" key="ProjectExplorer.BuildStepList.StepsCount">1</value>
+-     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Clean</value>
++     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">清理</value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.BuildSteps.Clean</value>
+     </valuemap>
+@@ -243,7 +243,7 @@
+     <value type="bool" key="ProjectExplorer.BuildConfiguration.ClearSystemEnvironment">false</value>
+     <valuelist type="QVariantList" key="ProjectExplorer.BuildConfiguration.UserEnvironmentChanges"/>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Profile</value>
+-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Profile</value>
++    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4BuildConfiguration</value>
+     <value type="int" key="Qt4ProjectManager.Qt4BuildConfiguration.BuildConfiguration">0</value>
+     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
+@@ -257,7 +257,7 @@
+      <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.BuildSteps.Deploy</value>
+     </valuemap>
+     <value type="int" key="ProjectExplorer.BuildConfiguration.BuildStepListCount">1</value>
+-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Deploy Configuration</value>
++    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">在本地部署</value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.DefaultDeployConfiguration</value>
+    </valuemap>
+@@ -307,12 +307,13 @@
+     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">hydrogenMusic</value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/root/wode/push/hydrogenMusic/hydrogenMusic/hydrogenMusic.pro</value>
++    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/XIAOYAO/罗/5.4push/hydrogenMusic/hydrogenMusic/hydrogenMusic.pro</value>
+     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
+     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
+     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">hydrogenMusic.pro</value>
++    <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
+     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
+-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/root/wode/push/hydrogenMusic/build-hydrogenMusic-Desktop_Qt_5_11_1_GCC-Debug</value>
++    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/XIAOYAO/罗/5.4push/hydrogenMusic/build-hydrogenMusic-V_Play_Desktop_Qt_5_11_1_GCC-Debug</value>
+     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
+     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+diff --git a/hydrogenMusic/qml/Main.qml b/hydrogenMusic/qml/Main.qml
+index bed88dc..683f652 100644
+--- a/hydrogenMusic/qml/Main.qml
++++ b/hydrogenMusic/qml/Main.qml
+@@ -234,14 +234,14 @@ App {
+             onUploadBack: {
+                 load.sourceComponent = null
+             }
+-            onTextFieldAddressChanged: {
++            onTextFieldSongNameChanged: {
+                 if (ttext == 1) {
+-                    soaField = textFieldAddress
++                    soaField = textFieldSongName
+                 }
+-                if (ttext == 2)
+-                    loaField = textFieldAddress
++
+                 ttext = 0
+             }
++            onPictureNameChanged: sapField=pictureName
+         }
+     }
+ 
+diff --git a/hydrogenMusic/qml/SongInterface.qml b/hydrogenMusic/qml/SongInterface.qml
+index d1ee772..62fa365 100644
+--- a/hydrogenMusic/qml/SongInterface.qml
++++ b/hydrogenMusic/qml/SongInterface.qml
+@@ -7,6 +7,9 @@ Page {
+     id: songinterfacepage
+     title: qsTr("Hydrogen music")
+     property var thisSong
++    //-----xiaoyao--s--------
++    property string add: "rtsp://0.0.0.0/"+thisSong[0].substring(0, thisSong[0].length)
++    //-----xiaoyao--s--------
+     property string prefixx: "../assets/music/"
+     opacity: messageRet.visible ? 0.3 : 1
+     signal songinterfaceBack
+@@ -14,6 +17,11 @@ Page {
+     onThisSongChanged: {
+         pausePictrue.paused = false
+         pausePictrue.icon = IconType.pause
++        //-----xiaoyao--s--------------
++        //var addhead = "rtsp://0.0.0.0/"+thisSong
++        simplePlayer.openUrl(add)
++        console.log("kkkkkkkkkkkk"+thisSong[0].substring(0, thisSong[0].length - 1)+"jjj")
++        //-----xiaoyao-----e------------
+     }
+ 
+     MediaPlayer {
+@@ -21,6 +29,7 @@ Page {
+         id: music
+         autoPlay: true
+         source: prefixx + thisSong[0]
++
+     }
+ 
+     IconButton {
+@@ -48,7 +57,12 @@ Page {
+         text: thisSong[1]
+     }
+ 
+-
++    Connections {
++        target: simplePlayer
++        onEnd:{
++            console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjkskkks")
++        }
++    }
+ 
+     Item
+     {
+@@ -177,15 +191,49 @@ Page {
+         //            }
+ 
+         //        }
++        //xiaoyao--------s-----------
++//        Slider {
++//            id: progressbar
++//            width: parent.width * 0.85
++//            height: sp(2)
++//            anchors.horizontalCenter: parent.horizontalCenter
++//            maximumValue: music.duration //hyMediaPlayer.get_all_schedule()
++//            value: music.position //hyMediaPlayer.get_current_schedule()
++//            onValueChanged: music.seek(value)
++//        }
++         //xiaoyao--------s-----------
+         Slider {
+             id: progressbar
+             width: parent.width * 0.85
+             height: sp(2)
+             anchors.horizontalCenter: parent.horizontalCenter
+-            maximumValue: music.duration //hyMediaPlayer.get_all_schedule()
+-            value: music.position //hyMediaPlayer.get_current_schedule()
+-            onValueChanged: music.seek(value)
++            //maximumValue: music.duration //hyMediaPlayer.get_all_schedule()
++            //value: music.position //hyMediaPlayer.get_current_schedule()
++            //onValueChanged: music.seek(value)
++            property bool sync: false
++            onValueChanged: {
++                if(!sync)
++                    simplePlayer.setposition(value)
++            }
++            Timer{
++                id:t
++                running: true
++                interval: 300
++                repeat: true
++                onTriggered:
++                {
++
++                    //console.log("timer")
++                    progressbar.sync=true
++
++                    progressbar.value=simplePlayer.getpositon()
++                    progressbar.maximumValue=simplePlayer.getlength()
++                    progressbar.sync=false
++                    //console.log(slider.maximumValue)
++                }
++            }
+         }
++        //-----xiaoyao----e----
+ 
+         IconButton {
+             id: pre
+@@ -207,9 +255,34 @@ Page {
+             }
+         }
+ 
++
++//        IconButton {
++//            id: pausePictrue
++//            property bool paused: false
++//            icon: IconType.pause
++//            anchors.horizontalCenter: parent.horizontalCenter
++//            anchors.top: musicPictrue.bottom
++//            onClicked: {
++//                //play state
++//                if (paused) {
++//                    icon = IconType.pause
++//                    music.play()
++//                    //lyrics.lyricsTime.start()
++//                    paused = false
++//                    //                    hyMediaPlayer.play_multimedia()
++//                } else {
++//                    icon = IconType.play
++//                    paused = true
++//                    //lyrics.lyricsTime.running = false
++//                    //                    hyMediaPlayer.pause_mulitimedia()
++//                    music.pause()
++//                }
++//            }
++//        }
++        //xiaoyao----s----------
+         IconButton {
+             id: pausePictrue
+-            property bool paused: false
++            property bool paused: true
+             icon: IconType.pause
+             anchors.horizontalCenter: parent.horizontalCenter
+             anchors.top: musicPictrue.bottom
+@@ -217,19 +290,24 @@ Page {
+                 //play state
+                 if (paused) {
+                     icon = IconType.pause
+-                    music.play()
++                    //music.play()
++                    console.log(add)
++                    //simplePlayer.openUrl(add)
++                    simplePlayer.play()
+                     //lyrics.lyricsTime.start()
+                     paused = false
+                     //                    hyMediaPlayer.play_multimedia()
+                 } else {
+                     icon = IconType.play
+                     paused = true
+-                    //lyrics.lyricsTime.running = false
+-                    //                    hyMediaPlayer.pause_mulitimedia()
+-                    music.pause()
++
++                    simplePlayer.pause()
++                    //music.pause()
++                    //simplePlayer.
+                 }
+             }
+         }
++        //xiaoyao------e-------
+ 
+         IconButton {
+             id: next
+diff --git a/hydrogenMusic/qml/Upload.qml b/hydrogenMusic/qml/Upload.qml
+index df85e9e..3e5a062 100644
+--- a/hydrogenMusic/qml/Upload.qml
++++ b/hydrogenMusic/qml/Upload.qml
+@@ -7,10 +7,32 @@ Page {
+     width: mainpage.width
+     height: mainpage.height
+     signal uploadBack
+-    property string textFieldAddress
++    property string textFieldSongName
+     property int ttext
+     property string temp
++    property string picturetemp
+     property alias soaField: sOAField.text
++    property alias sapField: selectalbumpicture.text
++    property bool ifselectmp3: false
++    property bool ifselectedpicture:false
++    property var pictureName
++
++
++    AppText{
++        id:head
++        text: "添加歌曲与专辑封面"
++        color: "gray"
++        anchors.horizontalCenter: parent.horizontalCenter
++    }
++
++    IconButton{
++        id:return_
++        icon:IconType.arrowleft
++        onClicked: {
++            uploadBack()
++        }
++
++    }
+ 
+     AppListView {
+         id: list
+@@ -22,34 +44,76 @@ Page {
+             height: parent.height
+             anchors.horizontalCenter: parent.horizontalCenter
+             Row {
+-                x: sp(10)
++                x: sp(50)
+                 width: parent.width
+                 height: parent.height * 0.3
+-                AppText {
+-                    id: sOA
+-                    anchors.verticalCenter: parent.verticalCenter
+-                    x: 20
+-                    text: "song of address:"
+-                    color: "black"
+-                }
++                //anchors.horizontalCenter: parent.horizontalCenter
+                 AppTextField {
+                     id: sOAField
+-                    radius: 5
++                    radius: 25
+                     //                        anchors.right: a1.left
+                     anchors.verticalCenter: parent.verticalCenter
+                     borderColor: "grey"
+                     borderWidth: 2
+                     width: dp(200)
++                    onTextChanged: {
++                        a1.backgroundColor="blue"
++                        upload.backgroundColor="blue"
++                    }
++
+                     // height: dp()
+                 }
+                 AppButton {
+                     id: a1
+-                    radius: 5
++                    radius: 25
++                    backgroundColor: "gray"
++
+                     //                        anchors.right: parent.right
+                     anchors.verticalCenter: parent.verticalCenter
+-                    text: "select"
++                    text: "选择歌曲"
++
++
++
+                     onClicked: {
+                         uploadpage.ttext = 1
++                        uploadpage.ifselectmp3=true
++                        fileDialog.open()
++
++                    }
++                }
++            }
++
++            Row {
++                x: sp(50)
++                width: parent.width
++                height: parent.height * 0.3
++
++                //anchors.horizontalCenter: parent.horizontalCenter
++                AppTextField {
++                    id: selectalbumpicture
++                    radius: 25
++                    //                        anchors.right: a1.left
++                    anchors.verticalCenter: parent.verticalCenter
++                    borderColor: "grey"
++                    borderWidth: 2
++                    width: dp(200)
++                    onTextChanged: {
++                        sapb.backgroundColor="blue"
++                        upload.backgroundColor="blue"
++                    }
++
++                }
++                AppButton {
++                    id: sapb
++                    radius: 25
++                    backgroundColor: "gray"
++                    //                        anchors.right: parent.right
++                    anchors.verticalCenter: parent.verticalCenter
++                    text: "选择图片"
++                    onClicked: {
++                        uploadpage.ttext = 2
++                        uploadpage.ifselectmp3=false
++                        uploadpage.ifselectedpicture=true
+                         fileDialog.open()
+                     }
+                 }
+@@ -60,22 +124,36 @@ Page {
+                 height: parent.height * 0.3
+                 x: sp(100)
+                 AppButton {
+-                    radius: 5
+-                    text: "upload"
++                    id:upload
++                    radius: 25
++                    text: "上传"
++                    backgroundColor: "gray"
+                     onClicked: {
+                         var info = control.returnInfo(uploadpage.temp)
+-                        var a = uploadpage.textFieldAddress + " - " + info[0] + info[2]
++                        var a = uploadpage.textFieldSongName + " - " + info[0] + info[2]
++                        if(!ifselectedpicture) pictureName = "nopicture"
+ 
+-                        var e = "upload " + uploadpage.textFieldAddress + " || " + info[0] + " || "
+-                                + info[2] + " || " + a
++                        var e = "upload " + uploadpage.textFieldSongName + " || " + info[0] + " || "
++                                + info[2] + " || " + a + " || " +pictureName
+                         console.log(e)
++                        console.log("start")
+                         control.sendMessage(e)
+-                        control.send(sOAField.text)
++                        console.log(uploadpage.temp)
++                        control.send(uploadpage.temp.substring(7))
++                        console.log("end")
++
++                        if(ifselectedpicture)
++                        {
++                            console.log(uploadpage.temp.substring(7))
++                            console.log("upload143")
++                            control.send(uploadpage.picturetemp.substring(7)) ///
++                        }
+                     }
+                 }
+                 AppButton {
+-                    radius: 5
+-                    text: "cancel"
++                    radius: 25
++                    text: "取消"
++                    backgroundColor: "gray"
+                     onClicked: {
+                         uploadBack()
+                     }
+@@ -98,10 +176,21 @@ Page {
+         title: "Please choose a file"
+         folder: ".."
+         onAccepted: {
+-            console.log("You chose: " + fileDialog.fileUrl.toString())
+-            uploadpage.temp = fileDialog.fileUrl.toString()
+-            uploadpage.textFieldAddress = control.getSongName(uploadpage.temp)
+-            fileDialog.close()
++            if(uploadpage.ifselectmp3)
++            {
++                console.log("You chose: " + fileDialog.fileUrl.toString())
++                uploadpage.temp = fileDialog.fileUrl.toString()
++                uploadpage.textFieldSongName = control.getSongName(uploadpage.temp)
++                fileDialog.close()
++            }
++            else{
++                uploadpage.picturetemp=fileDialog.fileUrl.toString()
++                uploadpage.pictureName=control.getSongName(uploadpage.picturetemp)
++                //console.log(uploadpage.temp)
++                //console.log(uploadpage.pictureName)
++                fileDialog.close()
++
++            }
+         }
+         onRejected: {
+             console.log("Canceled")
+@@ -142,3 +231,144 @@ Page {
+         }
+     }
+ }
++//Page {
++//    id: uploadpage
++//    width: mainpage.width
++//    height: mainpage.height
++//    signal uploadBack
++//    property string textFieldSongName
++//    property int ttext
++//    property string temp
++//    property alias soaField: sOAField.text
++
++
++//    AppListView {
++//        id: list
++//        anchors.fill: parent
++//        anchors.horizontalCenter: parent.horizontalCenter
++
++//        Column {
++//            width: parent.width
++//            height: parent.height
++//            anchors.horizontalCenter: parent.horizontalCenter
++//            Row {
++//                x: sp(10)
++//                width: parent.width
++//                height: parent.height * 0.3
++//                AppText {
++//                    id: sOA
++//                    anchors.verticalCenter: parent.verticalCenter
++//                    x: 20
++//                    text: "song of address:"
++//                    color: "black"
++//                }
++//                AppTextField {
++//                    id: sOAField
++//                    radius: 5
++//                    //                        anchors.right: a1.left
++//                    anchors.verticalCenter: parent.verticalCenter
++//                    borderColor: "grey"
++//                    borderWidth: 2
++//                    width: dp(200)
++//                    // height: dp()
++//                }
++//                AppButton {
++//                    id: a1
++//                    radius: 5
++//                    //                        anchors.right: parent.right
++//                    anchors.verticalCenter: parent.verticalCenter
++//                    text: "select"
++//                    onClicked: {
++//                        uploadpage.ttext = 1
++//                        fileDialog.open()
++//                    }
++//                }
++//            }
++
++//            Row {
++//                width: parent.width
++//                height: parent.height * 0.3
++//                x: sp(100)
++//                AppButton {
++//                    radius: 5
++//                    text: "upload"
++//                    onClicked: {
++//                        var info = control.returnInfo(uploadpage.temp)
++//                        var a = uploadpage.textFieldSongName + " - " + info[0] + info[2]
++
++//                        var e = "upload " + uploadpage.textFieldSongName + " || " + info[0] + " || "
++//                                + info[2] + " || " + a
++//                        console.log(e)
++//                        control.sendMessage(e)
++//                        control.send(sOAField.text)
++//                    }
++//                }
++//                AppButton {
++//                    radius: 5
++//                    text: "cancel"
++//                    onClicked: {
++//                        uploadBack()
++//                    }
++//                }
++//            }
++//        }
++//    }
++//    Connections {
++//        target: control
++//        onUploadOk: {
++//            message.text = "upload OK."
++//            list.opacity = 0.3
++//            messageRet.visible = true
++//            showTime.restart()
++//        }
++//    }
++
++//    FileDialog {
++//        id: fileDialog
++//        title: "Please choose a file"
++//        folder: ".."
++//        onAccepted: {
++//            console.log("You chose: " + fileDialog.fileUrl.toString())
++//            uploadpage.temp = fileDialog.fileUrl.toString()
++//            uploadpage.textFieldSongName = control.getSongName(uploadpage.temp)
++//            fileDialog.close()
++//        }
++//        onRejected: {
++//            console.log("Canceled")
++//            fileDialog.close()
++//        }
++//    }
++
++//    Rectangle {
++//        id: messageRet
++//        color: "white"
++//        border.color: "black"
++//        //        border.width: sp(1)
++//        height: dp(30)
++//        width: dp(150)
++//        anchors.centerIn: parent
++//        radius: 20
++//        visible: false
++//        AppText {
++//            id: message
++//            anchors.fill: parent
++//            anchors.left: parent.left
++//            anchors.leftMargin: 30
++//            anchors.horizontalCenter: parent.horizontalCenter
++//            color: "black"
++//            visible: true
++//            font.pixelSize: sp(12)
++//            font.bold: sp(5)
++//        }
++//    }
++
++//    Timer {
++//        id: showTime
++//        interval: 1000
++//        onTriggered: {
++//            list.opacity = 1
++//            messageRet.visible = false
++//            uploadBack()
++//        }
++//    }
++//}
+diff --git a/hydrogenMusic/simpleplayer.cpp b/hydrogenMusic/simpleplayer.cpp
+index 9b3b41c..60388fc 100644
+--- a/hydrogenMusic/simpleplayer.cpp
++++ b/hydrogenMusic/simpleplayer.cpp
+@@ -17,6 +17,7 @@ SimplePlayer::SimplePlayer():_media(0)
+ 
+     _instance = new VlcInstance(VlcCommon::args(), NULL);
+     _player = new VlcMediaPlayer(_instance);
++    connect(_player,SIGNAL(end()),this,SLOT(onEnd()));
+ 
+ }
+ 
+diff --git a/hydrogenMusic/simpleplayer.h b/hydrogenMusic/simpleplayer.h
+index 5f816d3..a1c477c 100644
+--- a/hydrogenMusic/simpleplayer.h
++++ b/hydrogenMusic/simpleplayer.h
+@@ -5,6 +5,7 @@
+ #include <QObject>
+ 
+ 
++
+ class VlcInstance;
+ class VlcMedia;
+ class VlcMediaPlayer;
+@@ -28,7 +29,15 @@ public:
+     Q_INVOKABLE float getlength();
+     Q_INVOKABLE void setposition(int position);
+ 
++    QString nextSongAddr;
++
+ 
++public slots:
++    void onEnd(){
++        delete _media;
++        this->openUrl(nextSongAddr);
++        //qDebug("onEnd");
++    }
+ private:
+ 
+     VlcInstance *_instance;
+diff --git a/server/server.pro.user b/server/server.pro.user
+index e76e762..e8d89e1 100644
+--- a/server/server.pro.user
++++ b/server/server.pro.user
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE QtCreatorProject>
+-<!-- Written by QtCreator 4.5.1, 2019-04-29T15:20:23. -->
++<!-- Written by QtCreator 4.5.1, 2019-05-05T21:16:58. -->
+ <qtcreator>
+  <data>
+   <variable>EnvironmentId</variable>
+@@ -66,7 +66,7 @@
+    <value type="int" key="ProjectExplorer.Target.ActiveDeployConfiguration">0</value>
+    <value type="int" key="ProjectExplorer.Target.ActiveRunConfiguration">0</value>
+    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.0">
+-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/root/wode/build-server-V_Play_Desktop_Qt_5_11_1_GCC-Debug</value>
++    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/XIAOYAO/罗/5.4push/hydrogenMusic/build-server-V_Play_Desktop_Qt_5_11_1_GCC-Debug</value>
+     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
+      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
+       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
+@@ -126,7 +126,7 @@
+     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
+    </valuemap>
+    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.1">
+-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/root/wode/build-server-V_Play_Desktop_Qt_5_11_1_GCC-Release</value>
++    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/XIAOYAO/罗/5.4push/hydrogenMusic/build-server-V_Play_Desktop_Qt_5_11_1_GCC-Release</value>
+     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
+      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
+       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
+@@ -186,7 +186,7 @@
+     <value type="bool" key="Qt4ProjectManager.Qt4BuildConfiguration.UseShadowBuild">true</value>
+    </valuemap>
+    <valuemap type="QVariantMap" key="ProjectExplorer.Target.BuildConfiguration.2">
+-    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/root/wode/build-server-V_Play_Desktop_Qt_5_11_1_GCC-Profile</value>
++    <value type="QString" key="ProjectExplorer.BuildConfiguration.BuildDirectory">/XIAOYAO/罗/5.4push/hydrogenMusic/build-server-V_Play_Desktop_Qt_5_11_1_GCC-Profile</value>
+     <valuemap type="QVariantMap" key="ProjectExplorer.BuildConfiguration.BuildStepList.0">
+      <valuemap type="QVariantMap" key="ProjectExplorer.BuildStepList.Step.0">
+       <value type="bool" key="ProjectExplorer.BuildStep.Enabled">true</value>
+@@ -304,13 +304,13 @@
+     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">server</value>
+     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
+-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/root/wode/server/server.pro</value>
++    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/XIAOYAO/罗/5.4push/hydrogenMusic/server/server.pro</value>
+     <value type="bool" key="QmakeProjectManager.QmakeRunConfiguration.UseLibrarySearchPath">true</value>
+     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.CommandLineArguments"></value>
+     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.ProFile">server.pro</value>
+     <value type="bool" key="Qt4ProjectManager.Qt4RunConfiguration.UseDyldImageSuffix">false</value>
+     <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory"></value>
+-    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/root/wode/build-server-V_Play_Desktop_Qt_5_11_1_GCC-Debug</value>
++    <value type="QString" key="Qt4ProjectManager.Qt4RunConfiguration.UserWorkingDirectory.default">/XIAOYAO/罗/5.4push/hydrogenMusic/build-server-V_Play_Desktop_Qt_5_11_1_GCC-Debug</value>
+     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
+     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>
+     <value type="bool" key="RunConfiguration.UseCppDebuggerAuto">true</value>
+diff --git a/server/sever.cpp b/server/sever.cpp
+index ac251fd..c979265 100644
+--- a/server/sever.cpp
++++ b/server/sever.cpp
+@@ -92,7 +92,7 @@ void Server::run(){
+     m_db.changeDatabase(b);
+ 
+ 
+-    QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50) primary key,downloads BIGINT);";
++    QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50) primary key,downloads BIGINT,picture TEXT);";
+     m_db.changeDatabase(a);
+     a = "CREATE TABLE IF NOT EXISTS singer(name TINYTEXT,album TINYTEXT,info TEXT);";
+     m_db.changeDatabase(a);
+@@ -320,7 +320,7 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
+ 
+         std::vector<std::string> songM;
+         std::string temp;
+-        for(int i=0;i<4;i++) {
++        for(int i=0;i<5;i++) {
+             while (record >> head) {
+                 if(head != "||") {
+                     temp += head;
+@@ -331,8 +331,8 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
+             temp.clear();
+         }
+ 
+-        std::cout << songM[0] << songM[1]<< songM[2]<< songM[3]<< std::endl;
+-        std::string c = "INSERT INTO warehouse VALUES('" + songM[0] + "','" + songM[1] + "','" + songM[2] + "','" + songM[3] + "','0');";
++        std::cout << songM[0] << songM[1]<< songM[2]<< songM[3]<< songM[4]<< std::endl;
++        std::string c = "INSERT INTO warehouse VALUES('" + songM[0] + "','" + songM[1] + "','" + songM[2] + "','" + songM[3] + "','0' ,'" + songM[4] + "');";
+         QString cmd = QString::fromStdString(c);
+         std::string returnM;
+         if(m_db.changeDatabase(cmd))
+diff --git a/server/source/song/Taylor Swift - Love Story.mp3 b/server/source/song/Taylor Swift - Love Story.mp3
+deleted file mode 100644
+index 9b9ab9f..0000000
+Binary files a/server/source/song/Taylor Swift - Love Story.mp3 and /dev/null differ
+diff --git "a/server/source/song/\344\270\201\347\202\234 - \344\270\215\347\237\245.mp3" "b/server/source/song/\344\270\201\347\202\234 - \344\270\215\347\237\245.mp3"
+deleted file mode 100644
+index fe8d33b..0000000
+Binary files "a/server/source/song/\344\270\201\347\202\234 - \344\270\215\347\237\245.mp3" and /dev/null differ
+diff --git "a/server/source/song/\345\274\240\345\260\217\344\271\235 - \351\233\276.mp3" "b/server/source/song/\345\274\240\345\260\217\344\271\235 - \351\233\276.mp3"
+deleted file mode 100644
+index b72db43..0000000
+Binary files "a/server/source/song/\345\274\240\345\260\217\344\271\235 - \351\233\276.mp3" and /dev/null differ
+diff --git "a/server/source/song/\345\274\240\346\235\260,\345\274\240\347\242\247\346\231\250 - \345\217\252\350\246\201\345\271\263\345\207\241.mp3" "b/server/source/song/\345\274\240\346\235\260,\345\274\240\347\242\247\346\231\250 - \345\217\252\350\246\201\345\271\263\345\207\241.mp3"
+deleted file mode 100644
+index 0572691..0000000
+Binary files "a/server/source/song/\345\274\240\346\235\260,\345\274\240\347\242\247\346\231\250 - \345\217\252\350\246\201\345\271\263\345\207\241.mp3" and /dev/null differ
+diff --git "a/server/source/song/\345\276\220\344\275\263\350\216\271 - \346\265\252\350\264\271.mp3" "b/server/source/song/\345\276\220\344\275\263\350\216\271 - \346\265\252\350\264\271.mp3"
+deleted file mode 100644
+index 7d2ccb0..0000000
+Binary files "a/server/source/song/\345\276\220\344\275\263\350\216\271 - \346\265\252\350\264\271.mp3" and /dev/null differ
+diff --git "a/server/source/song/\346\262\210\344\273\245\350\257\232 - \345\270\246\346\210\221\350\265\260 (Live).mp3" "b/server/source/song/\346\262\210\344\273\245\350\257\232 - \345\270\246\346\210\221\350\265\260 (Live).mp3"
+deleted file mode 100644
+index ecb852d..0000000
+Binary files "a/server/source/song/\346\262\210\344\273\245\350\257\232 - \345\270\246\346\210\221\350\265\260 (Live).mp3" and /dev/null differ
+diff --git "a/server/source/song/\347\207\225\346\261\240 - \344\272\272\346\265\267 - 2015\347\211\210.mp3" "b/server/source/song/\347\207\225\346\261\240 - \344\272\272\346\265\267 - 2015\347\211\210.mp3"
+deleted file mode 100644
+index 1d5e621..0000000
+Binary files "a/server/source/song/\347\207\225\346\261\240 - \344\272\272\346\265\267 - 2015\347\211\210.mp3" and /dev/null differ
+diff --git "a/server/source/song/\347\210\261\347\232\204\344\273\243\344\273\267.mp3" "b/server/source/song/\347\210\261\347\232\204\344\273\243\344\273\267.mp3"
+deleted file mode 100644
+index db2b0b6..0000000
+Binary files "a/server/source/song/\347\210\261\347\232\204\344\273\243\344\273\267.mp3" and /dev/null differ
+diff --git "a/server/source/song/\350\204\270\347\272\242\347\232\204\346\200\235\346\230\245\346\234\237 - You(=I).mp3" "b/server/source/song/\350\204\270\347\272\242\347\232\204\346\200\235\346\230\245\346\234\237 - You(=I).mp3"
+deleted file mode 100644
+index c1201bc..0000000
+Binary files "a/server/source/song/\350\204\270\347\272\242\347\232\204\346\200\235\346\230\245\346\234\237 - You(=I).mp3" and /dev/null differ
+diff --git "a/\346\233\264\346\224\271\350\256\260\345\275\225" "b/\346\233\264\346\224\271\350\256\260\345\275\225"
+index b6586a9..2f19019 100644
+--- "a/\346\233\264\346\224\271\350\256\260\345\275\225"
++++ "b/\346\233\264\346\224\271\350\256\260\345\275\225"
+@@ -6,3 +6,6 @@ main.cpp
+ 5-4
+ 这个版本不是在线传输，去除了songinterface.qml这个文件在上一个版本中更改的语句，待逍遥加入,所以这个版本运行不用启动live555,上传之后还是需要手动将歌曲放到hydrogenMusic/assets/music/目录下。
+ 
++
++5.6
++更改了main.qml\upload.qml\songinterface.qml,simplayer.cpp/h添加上传图片、连续播放

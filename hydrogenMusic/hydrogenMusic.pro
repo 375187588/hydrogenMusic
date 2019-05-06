@@ -86,5 +86,4 @@ LIBS       += -L/usr/local/lib64 -lVLCQtCore -lVLCQtWidgets
 #LIBS       += -L/usr/local/qml -lVLCQt
 INCLUDEPATH += /usr/local/include
 
-
 #-------xiaoyao------e-------
