@@ -5,6 +5,7 @@
 #include <QObject>
 
 
+
 class VlcInstance;
 class VlcMedia;
 class VlcMediaPlayer;
@@ -28,7 +29,15 @@ public:
     Q_INVOKABLE float getlength();
     Q_INVOKABLE void setposition(int position);
 
+    QString nextSongAddr;
 
+
+public slots:
+    void onEnd(){
+        delete _media;
+        this->openUrl(nextSongAddr);
+        //qDebug("onEnd");
+    }
 private:
 
     VlcInstance *_instance;

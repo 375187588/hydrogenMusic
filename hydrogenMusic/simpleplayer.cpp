@@ -17,6 +17,7 @@ SimplePlayer::SimplePlayer():_media(0)
 
     _instance = new VlcInstance(VlcCommon::args(), NULL);
     _player = new VlcMediaPlayer(_instance);
+    connect(_player,SIGNAL(end()),this,SLOT(onEnd()));
 
 }
 

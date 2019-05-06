@@ -234,14 +234,14 @@ App {
             onUploadBack: {
                 load.sourceComponent = null
             }
-            onTextFieldAddressChanged: {
+            onTextFieldSongNameChanged: {
                 if (ttext == 1) {
-                    soaField = textFieldAddress
+                    soaField = textFieldSongName
                 }
-                if (ttext == 2)
-                    loaField = textFieldAddress
+
                 ttext = 0
             }
+            onPictureNameChanged: sapField=pictureName
         }
     }
 

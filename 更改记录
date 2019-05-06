@@ -6,3 +6,6 @@ main.cpp
 5-4
 这个版本不是在线传输，去除了songinterface.qml这个文件在上一个版本中更改的语句，待逍遥加入,所以这个版本运行不用启动live555,上传之后还是需要手动将歌曲放到hydrogenMusic/assets/music/目录下。
 
+
+5.6
+更改了main.qml\upload.qml\songinterface.qml,simplayer.cpp/h添加上传图片、连续播放

@@ -7,6 +7,9 @@ Page {
     id: songinterfacepage
     title: qsTr("Hydrogen music")
     property var thisSong
+    //-----xiaoyao--s--------
+    property string add: "rtsp://0.0.0.0/"+thisSong[0].substring(0, thisSong[0].length)
+    //-----xiaoyao--s--------
     property string prefixx: "../assets/music/"
     opacity: messageRet.visible ? 0.3 : 1
     signal songinterfaceBack
@@ -14,6 +17,11 @@ Page {
     onThisSongChanged: {
         pausePictrue.paused = false
         pausePictrue.icon = IconType.pause
+        //-----xiaoyao--s--------------
+        //var addhead = "rtsp://0.0.0.0/"+thisSong
+        simplePlayer.openUrl(add)
+        console.log("kkkkkkkkkkkk"+thisSong[0].substring(0, thisSong[0].length - 1)+"jjj")
+        //-----xiaoyao-----e------------
     }
 
     MediaPlayer {
@@ -21,6 +29,7 @@ Page {
         id: music
         autoPlay: true
         source: prefixx + thisSong[0]
+
     }
 
     IconButton {
@@ -48,7 +57,12 @@ Page {
         text: thisSong[1]
     }
 
-
+    Connections {
+        target: simplePlayer
+        onEnd:{
+            console.log("jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjkskkks")
+        }
+    }
 
     Item
     {
@@ -177,15 +191,49 @@ Page {
         //            }
 
         //        }
+        //xiaoyao--------s-----------
+//        Slider {
+//            id: progressbar
+//            width: parent.width * 0.85
+//            height: sp(2)
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            maximumValue: music.duration //hyMediaPlayer.get_all_schedule()
+//            value: music.position //hyMediaPlayer.get_current_schedule()
+//            onValueChanged: music.seek(value)
+//        }
+         //xiaoyao--------s-----------
         Slider {
             id: progressbar
             width: parent.width * 0.85
             height: sp(2)
             anchors.horizontalCenter: parent.horizontalCenter
-            maximumValue: music.duration //hyMediaPlayer.get_all_schedule()
-            value: music.position //hyMediaPlayer.get_current_schedule()
-            onValueChanged: music.seek(value)
+            //maximumValue: music.duration //hyMediaPlayer.get_all_schedule()
+            //value: music.position //hyMediaPlayer.get_current_schedule()
+            //onValueChanged: music.seek(value)
+            property bool sync: false
+            onValueChanged: {
+                if(!sync)
+                    simplePlayer.setposition(value)
+            }
+            Timer{
+                id:t
+                running: true
+                interval: 300
+                repeat: true
+                onTriggered:
+                {
+
+                    //console.log("timer")
+                    progressbar.sync=true
+
+                    progressbar.value=simplePlayer.getpositon()
+                    progressbar.maximumValue=simplePlayer.getlength()
+                    progressbar.sync=false
+                    //console.log(slider.maximumValue)
+                }
+            }
         }
+        //-----xiaoyao----e----
 
         IconButton {
             id: pre
@@ -207,9 +255,34 @@ Page {
             }
         }
 
+
+//        IconButton {
+//            id: pausePictrue
+//            property bool paused: false
+//            icon: IconType.pause
+//            anchors.horizontalCenter: parent.horizontalCenter
+//            anchors.top: musicPictrue.bottom
+//            onClicked: {
+//                //play state
+//                if (paused) {
+//                    icon = IconType.pause
+//                    music.play()
+//                    //lyrics.lyricsTime.start()
+//                    paused = false
+//                    //                    hyMediaPlayer.play_multimedia()
+//                } else {
+//                    icon = IconType.play
+//                    paused = true
+//                    //lyrics.lyricsTime.running = false
+//                    //                    hyMediaPlayer.pause_mulitimedia()
+//                    music.pause()
+//                }
+//            }
+//        }
+        //xiaoyao----s----------
         IconButton {
             id: pausePictrue
-            property bool paused: false
+            property bool paused: true
             icon: IconType.pause
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: musicPictrue.bottom
@@ -217,19 +290,24 @@ Page {
                 //play state
                 if (paused) {
                     icon = IconType.pause
-                    music.play()
+                    //music.play()
+                    console.log(add)
+                    //simplePlayer.openUrl(add)
+                    simplePlayer.play()
                     //lyrics.lyricsTime.start()
                     paused = false
                     //                    hyMediaPlayer.play_multimedia()
                 } else {
                     icon = IconType.play
                     paused = true
-                    //lyrics.lyricsTime.running = false
-                    //                    hyMediaPlayer.pause_mulitimedia()
-                    music.pause()
+
+                    simplePlayer.pause()
+                    //music.pause()
+                    //simplePlayer.
                 }
             }
         }
+        //xiaoyao------e-------
 
         IconButton {
             id: next

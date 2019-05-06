@@ -92,7 +92,7 @@ void Server::run(){
     m_db.changeDatabase(b);
 
 
-    QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50) primary key,downloads BIGINT);";
+    QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50) primary key,downloads BIGINT,picture TEXT);";
     m_db.changeDatabase(a);
     a = "CREATE TABLE IF NOT EXISTS singer(name TINYTEXT,album TINYTEXT,info TEXT);";
     m_db.changeDatabase(a);
@@ -320,7 +320,7 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
 
         std::vector<std::string> songM;
         std::string temp;
-        for(int i=0;i<4;i++) {
+        for(int i=0;i<5;i++) {
             while (record >> head) {
                 if(head != "||") {
                     temp += head;
@@ -331,8 +331,8 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
             temp.clear();
         }
 
-        std::cout << songM[0] << songM[1]<< songM[2]<< songM[3]<< std::endl;
-        std::string c = "INSERT INTO warehouse VALUES('" + songM[0] + "','" + songM[1] + "','" + songM[2] + "','" + songM[3] + "','0');";
+        std::cout << songM[0] << songM[1]<< songM[2]<< songM[3]<< songM[4]<< std::endl;
+        std::string c = "INSERT INTO warehouse VALUES('" + songM[0] + "','" + songM[1] + "','" + songM[2] + "','" + songM[3] + "','0' ,'" + songM[4] + "');";
         QString cmd = QString::fromStdString(c);
         std::string returnM;
         if(m_db.changeDatabase(cmd))
