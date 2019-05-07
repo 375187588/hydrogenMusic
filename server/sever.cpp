@@ -94,19 +94,19 @@ void Server::run(){
     m_db.changeDatabase(b);
 
 
-    QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,nameAr CHAR(150) primary key,downloads BIGINT,picture TEXT);";
+    QString a = "CREATE TABLE IF NOT EXISTS warehouse(song TEXT,singer TEXT,album TEXT,nameAr CHAR(170) primary key,picture TEXT,downloads BIGINT);";
     m_db.changeDatabase(a);
     a = "CREATE TABLE IF NOT EXISTS singer(name TINYTEXT,album TINYTEXT,info TEXT);";
     m_db.changeDatabase(a);
     //    a = "CREATE TABLE IF NOT EXISTS album(name TINYTEXT,singer TINYTEXT,songlist TEXT,ID CHAR(100)  primary key);";
     //    m_db.changeDatabase(a);
-    a = "CREATE TABLE IF NOT EXISTS songsheet(name TEXT,song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(150)  primary key);";
+    a = "CREATE TABLE IF NOT EXISTS songsheet(name TEXT,song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(170)  primary key);";
     m_db.changeDatabase(a);
     a = "CREATE TABLE IF NOT EXISTS sheetinfo(name TEXT,personalID TEXT,cover TEXT,info TEXT,ID CHAR(50)  primary key);";
     m_db.changeDatabase(a);
-    a = "CREATE TABLE IF NOT EXISTS download(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(150)  primary key);";
+    a = "CREATE TABLE IF NOT EXISTS download(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(170)  primary key);";
     m_db.changeDatabase(a);
-    a = "CREATE TABLE IF NOT EXISTS ilike(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(150)  primary key);";
+    a = "CREATE TABLE IF NOT EXISTS ilike(song TEXT,singer TEXT,album TEXT,nameAr CHAR(50),personalID TEXT,nameArID CHAR(170)  primary key);";
     m_db.changeDatabase(a);
     a = "CREATE TABLE IF NOT EXISTS personal(ID CHAR(20) primary key,password TEXT,songsheet TEXT);";
     m_db.changeDatabase(a);
@@ -355,7 +355,7 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         }
 
         std::cout << songM[0] << songM[1]<< songM[2]<< songM[3]<< songM[4]<< std::endl;
-        std::string c = "INSERT INTO warehouse VALUES('" + songM[0] + "','" + songM[1] + "','" + songM[2] + "','" + songM[3] + "','0' ,'" + songM[4] + "');";
+        std::string c = "INSERT INTO warehouse VALUES('" + songM[0] + "','" + songM[1] + "','" + songM[2] + "','" + songM[3] + "','" + songM[4] + "','0' );";
         QString cmd = QString::fromStdString(c);
         std::string returnM;
         if(m_db.changeDatabase(cmd))
@@ -384,7 +384,20 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         cmd = QString::fromStdString(c);
         returnM += m_db.selectDatabase(cmd,4);
         do_write(sock,returnM);
-    }else if(head == "register") {
+    }else if(head == "searchCover") {
+        std::string temp;
+        while (record >> head) {
+                temp += head;
+                temp += " ";
+        }
+
+        temp = temp.substr(0,temp.length()-1);
+        std::string c = "select picture from warehouse where nameAr = '"+ temp +"'";
+        QString cmd = QString::fromStdString(c);
+        std::string returnM = "searchCover "+ m_db.selectDatabase(cmd,1);
+        do_write(sock,returnM);
+    }
+    else if(head == "register") {
         std::string ID;
         std::string password;
         record >> ID >> password;

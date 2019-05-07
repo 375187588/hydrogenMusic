@@ -155,11 +155,14 @@ App {
                     qtLyric.readLyric(prefix + temp + ".lrc")
                     console.log("onListenThis: " + tempLaddress[3])
                 } else {
-                    load.visible = true
+                    if(load.sourceComponent) {
+                        load.item.visible = true
+                    }else {
+                        qtLyric.readLyric(prefix + temp + ".lrc")
+                    }
                 }
             } else { //当前没有播放任何歌曲
                 mainpage.tempLaddress = vec
-                control.sendMessage("songListShow ilike " + control.ID)
                 qtLyric.readLyric(prefix + temp +".lrc")
                 console.log("onListenThis: " + tempLaddress[0])
             }
@@ -210,7 +213,7 @@ App {
     Connections {
         target: load.item
         onSonginterfaceBack: {
-            load.visible = false
+            load.item.visible=false
             if (songlist.sState == "search")
                 songlist.songVec = prefix
             else if (songlist.sState == "warehouse") {
@@ -236,6 +239,7 @@ App {
         SongInterface {
             anchors.fill: parent
             thisSong: tempLaddress
+
         }
     }
 

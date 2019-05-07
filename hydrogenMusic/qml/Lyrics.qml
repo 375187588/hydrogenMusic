@@ -10,12 +10,13 @@ Page {
 
     Timer {
         id: time
-        interval: 100
+        interval: 1000
         running: true
         repeat: true
         property var at: highLightLyric(current)
-        property int current: music.position //hyMediaPlayer.get_current_schedule()
+        property int current: simplePlayer.getpositon() //hyMediaPlayer.get_current_schedule()
         onTriggered: {
+            current = simplePlayer.getpositon()
             isTimerChange = true
             listView.currentIndex = at
         }
@@ -96,13 +97,13 @@ Page {
                     anchors.fill: parent
                     onClicked: {
                         listView.currentIndex = index
-                        music.seek(qtLyric.startTime[listView.currentIndex])
+                        simplePlayer.setposition(qtLyric.startTime[listView.currentIndex])
                     }
                 }
             }
             onCurrentIndexChanged: {
                 if(!isTimerChange) {
-                    music.seek(qtLyric.startTime[listView.currentIndex])
+                    simplePlayer.setposition(qtLyric.startTime[listView.currentIndex])
                 }
                 isTimerChange = false
             }

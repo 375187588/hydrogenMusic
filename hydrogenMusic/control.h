@@ -102,6 +102,7 @@ signals:
     void sendtreatOk(QString isOK);
     void treatShow();
     void sheetInfo(QList<QString> info);
+    void searchCover(QString cover);
 private:
     std::string m_receiveMessage;
     QString m_sendMessage;

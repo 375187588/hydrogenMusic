@@ -17,3 +17,6 @@
 1、先启动数据库
 2、live555
 3、server client。
+
+
+如果上传歌曲未传封面，则加载本地"../assets/advertise/0.jpg"，所以这个目录下这张图片不要删

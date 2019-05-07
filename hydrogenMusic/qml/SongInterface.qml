@@ -7,12 +7,12 @@ Page {
     id: songinterfacepage
     title: qsTr("Hydrogen music")
     property var thisSong
+    property string bigCover :"../assets/advertise/0.jpg"
     //-----xiaoyao--s--------
-    property string add: "rtsp://0.0.0.0/"+thisSong[0].substring(0, thisSong[0].length)
+    property string add: "rtsp://10.253.97.108/"+thisSong[0].substring(0, thisSong[0].length)
     //-----xiaoyao--s--------
     property string prefixx: "../assets/music/"
     property var model:[IconType.arrowcircledown,IconType.arrowcircleoup,IconType.arrowcircleleft]
-    opacity: messageRet.visible ? 0.3 : 1
     signal songinterfaceBack
 
     onThisSongChanged: {
@@ -24,14 +24,15 @@ Page {
         console.log("kkkkkkkkkkkk"+thisSong[0].substring(0, thisSong[0].length - 1)+"jjj")
         //-----xiaoyao-----e------------
     }
+    Component.onCompleted: control.sendMessage("searchCover "+thisSong[3])
 
-    MediaPlayer {
-        //可以播放音频和视频
-        id: music
-        autoPlay: true
-        source: prefixx + thisSong[0]
+//    MediaPlayer {
+//        //可以播放音频和视频
+//        id: music
+//        autoPlay: true
+//        source: prefixx + thisSong[0]
 
-    }
+//    }
 
     IconButton {
         id: ret
@@ -137,10 +138,11 @@ Page {
                     border.width: sp(1.5)
                     anchors.verticalCenter: parent.verticalCenter
                     border.color: Theme.secondaryTextColor
-                    Label{
-                        anchors.centerIn: parent
-                        font.pointSize: 25
-                        text: "专辑图"
+
+                    Image {
+                        id:bigcoverr
+                        anchors.fill: parent
+                        source: bigCover
                     }
                 }
                 Rectangle{
@@ -212,6 +214,7 @@ Page {
             //value: music.position //hyMediaPlayer.get_current_schedule()
             //onValueChanged: music.seek(value)
             property bool sync: false
+            maximumValue:simplePlayer.getlength()
             onValueChanged: {
                 if(!sync)
                     simplePlayer.setposition(value)
@@ -219,7 +222,7 @@ Page {
             Timer{
                 id:t
                 running: true
-                interval: 300
+                interval: 3000
                 repeat: true
                 onTriggered:
                 {
@@ -471,6 +474,10 @@ Page {
                 loa.sourceComponent = null
             }
 
+        }
+        onSearchCover:{
+            if((cover == "nopicture"))
+                bigcover = "../assets/advertise/"+cover
         }
     }
 

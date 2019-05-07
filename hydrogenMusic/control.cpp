@@ -92,7 +92,11 @@ void Control::sendMessage(QString m)
         ret = m_receiveMessage.substr(head.length()+1);
         m_searc = detach(ret);
         emit searchOk();
-    }else if(head == "register") {
+    }else if(head == "searchCover") {
+        record >> head;
+        emit searchCover(QString::fromStdString(head));
+    }
+    else if(head == "register") {
         std::string ret;
         record >> ret;
         if(ret == "ok") emit registerOk();

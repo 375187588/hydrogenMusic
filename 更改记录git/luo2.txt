@@ -1,0 +1,396 @@
+diff --git a/hydrogenMusic/assets/Lyric/Taylor Swift - Love Story.lrc b/hydrogenMusic/assets/Lyric/Taylor Swift - Love Story.lrc
+deleted file mode 100644
+index 33da971..0000000
+--- a/hydrogenMusic/assets/Lyric/Taylor Swift - Love Story.lrc	
++++ /dev/null
+@@ -1,198 +0,0 @@
+-[ar:满汉全席音乐团队]
+-
+-[ti:樱花樱花想见你]
+-
+-[00:00.03]满汉全席音乐团队 -樱花樱花想见你
+-
+-[00:01.56]词：高野健一
+-
+-[00:02.65]曲：高野健一
+-
+-[00:03.87]编曲：pal@pop
+-
+-[00:06.79]『さくらさくら会いたいよ
+-
+-[00:09.28]いやだ君に今すぐ会いたいよ』
+-
+-[00:12.80]だいじょうぶもう泣かないで
+-
+-[00:15.23]私は風あなたを包んでいるよ
+-
+-[00:18.99]『さくらさくら会いたいよ
+-
+-[00:21.17]いやだ君に今すぐ会いたいよ』
+-
+-[00:24.71]ありがとうずっと大好き
+-
+-[00:27.24]私は星あなたを見守り続ける
+-
+-[00:31.91]あなたに出会えてよかった
+-
+-[00:36.74]本当に本当によかった
+-
+-[00:43.37]ここにもういれなくなっちゃった
+-
+-[00:45.90]もう行かなくちゃ
+-
+-[00:47.32]ホントゴメンね
+-
+-[00:48.76]私はもう一人で
+-
+-[00:50.96]遠いところに行かなくちゃ
+-
+-[00:55.28]どこへ?
+-
+-[00:56.01]って聞かないでなんで?
+-
+-[00:57.96]って聞かないでホントゴメンね
+-
+-[01:00.78]私はもうあなたの
+-
+-[01:02.76]そばにいられなくなったの
+-
+-[01:07.27]いつもの散歩道
+-
+-[01:09.45]桜並木を抜けてゆき
+-
+-[01:12.81]よく遊んだ川面の上の
+-
+-[01:15.86]空の光る方へと
+-
+-[01:18.76]もう会えなくなるけど
+-
+-[01:21.33]寂しいけど平気だよ
+-
+-[01:24.59]生まれてよかった
+-
+-[01:26.29]ホントよかった
+-
+-[01:27.63]あなたに出会ってよかった
+-
+-[01:30.94]『さくらさくら会いたいよ
+-
+-[01:33.18]いやだ
+-
+-[01:33.87]君に今すぐ会いたいよ』
+-
+-[01:36.58]だいじょうぶもう泣かないで
+-
+-[01:39.17]私は風あなたを包んでいるよ
+-
+-[01:43.02]『さくらさくら会いたいよ
+-
+-[01:45.19]いやだ
+-
+-[01:45.74]君に今すぐ会いたいよ』
+-
+-[01:48.66]ありがとうずっと大好き
+-
+-[01:51.15]私は星あなたを見守り続ける
+-
+-[01:55.83]あなたに出会えてよかった
+-
+-[02:00.89]本当に本当によかった
+-
+-[02:07.35]あなたの帰りを待つ午後
+-
+-[02:09.84]あなたの足音何げないこと
+-
+-[02:12.78]私はそう一番の喜びを知りました
+-
+-[02:19.23]あなたが話してくれたこと
+-
+-[02:21.79]一日のこといろいろなこと
+-
+-[02:24.86]私はそう
+-
+-[02:26.05]一番の悲しみも知りました
+-
+-[02:31.13]それはあなたの笑顔
+-
+-[02:33.29]あなたの涙その優しさ
+-
+-[02:37.14]私の名を呼ぶ声
+-
+-[02:39.19]抱き締める腕その温もり
+-
+-[02:43.23]もう触れられないけど
+-
+-[02:45.32]忘れないよ幸せだよ
+-
+-[02:48.50]生まれてよかった
+-
+-[02:50.17]ホントよかった
+-
+-[02:51.56]あなたに出会ってよかった
+-
+-[02:54.92]『さくらさくら会いたいよ
+-
+-[02:57.17]いやだ
+-
+-[02:57.76]君に今すぐ会いたいよ』
+-
+-[03:00.67]だいじょうぶだよここにいる
+-
+-[03:03.20]私は春あなたを抱く空
+-
+-[03:06.83]『さくらさくら会いたいよ
+-
+-[03:09.16]いやだ
+-
+-[03:09.72]君に今すぐ会いたいよ』
+-
+-[03:12.71]ありがとうずっと大好き
+-
+-[03:15.22]私は鳥あなたに歌い続ける
+-
+-[03:24.91]桜の舞う空の彼方
+-
+-[03:30.80]目を閉じれば心の中
+-
+-[03:42.96]『さくらさくら会いたいよ
+-
+-[03:45.22]いやだ
+-
+-[03:45.81]君に今すぐ会いたいよ』
+-
+-[03:48.71]いいんだよ微笑んでごらん
+-
+-[03:51.29]私は花あなたの指先の花
+-
+-[03:54.90]『さくらさくら会いたいよ
+-
+-[03:57.17]いやだ
+-
+-[03:57.83]君に今すぐ会いたいよ』
+-
+-[04:00.54]ありがとうずっと大好き
+-
+-[04:03.19]私は愛あなたの胸に
+-
+-[04:09.79]『さくらさくら会いたいよ
+-
+-[04:12.17]いやだ
+-
+-[04:12.75]君に今すぐ会いたいよ』
+-
+-[04:15.67]だいじょうぶもう泣かないで
+-
+-[04:18.15]私は風あなたを包んでいるよ
+-
+-[04:21.94]『さくらさくら会いたいよ
+-
+-[04:24.15]いやだ
+-
+-[04:24.73]君に今すぐ会いたいよ』
+-
+-[04:27.62]ありがとうずっと大好き
+-
+-[04:30.16]私は星
+-
+-[04:31.62]あなたを見守り続ける
+-
+-[04:36.34]あなたに出会えてよかった
+-
+-[04:41.26]本当に本当によかった
+-
+-[04:47.25]本当に本当によかった
+-
+diff --git a/hydrogenMusic/assets/music/Taylor Swift - Love Story.mp3 b/hydrogenMusic/assets/music/Taylor Swift - Love Story.mp3
+deleted file mode 100644
+index 9b9ab9f..0000000
+Binary files a/hydrogenMusic/assets/music/Taylor Swift - Love Story.mp3 and /dev/null differ
+diff --git a/hydrogenMusic/control.cpp b/hydrogenMusic/control.cpp
+index 7e463b3..c58d639 100644
+--- a/hydrogenMusic/control.cpp
++++ b/hydrogenMusic/control.cpp
+@@ -92,7 +92,11 @@ void Control::sendMessage(QString m)
+         ret = m_receiveMessage.substr(head.length()+1);
+         m_searc = detach(ret);
+         emit searchOk();
+-    }else if(head == "register") {
++    }else if(head == "searchCover") {
++        record >> head;
++        emit searchCover(QString::fromStdString(head));
++    }
++    else if(head == "register") {
+         std::string ret;
+         record >> ret;
+         if(ret == "ok") emit registerOk();
+diff --git a/hydrogenMusic/control.h b/hydrogenMusic/control.h
+index 23b0950..d329ea3 100644
+--- a/hydrogenMusic/control.h
++++ b/hydrogenMusic/control.h
+@@ -102,6 +102,7 @@ signals:
+     void sendtreatOk(QString isOK);
+     void treatShow();
+     void sheetInfo(QList<QString> info);
++    void searchCover(QString cover);
+ private:
+     std::string m_receiveMessage;
+     QString m_sendMessage;
+diff --git a/hydrogenMusic/qml/Lyrics.qml b/hydrogenMusic/qml/Lyrics.qml
+index faa25de..5f7f102 100644
+--- a/hydrogenMusic/qml/Lyrics.qml
++++ b/hydrogenMusic/qml/Lyrics.qml
+@@ -10,12 +10,13 @@ Page {
+ 
+     Timer {
+         id: time
+-        interval: 100
++        interval: 1000
+         running: true
+         repeat: true
+         property var at: highLightLyric(current)
+-        property int current: music.position //hyMediaPlayer.get_current_schedule()
++        property int current: simplePlayer.getpositon() //hyMediaPlayer.get_current_schedule()
+         onTriggered: {
++            current = simplePlayer.getpositon()
+             isTimerChange = true
+             listView.currentIndex = at
+         }
+@@ -96,13 +97,13 @@ Page {
+                     anchors.fill: parent
+                     onClicked: {
+                         listView.currentIndex = index
+-                        music.seek(qtLyric.startTime[listView.currentIndex])
++                        simplePlayer.setposition(qtLyric.startTime[listView.currentIndex])
+                     }
+                 }
+             }
+             onCurrentIndexChanged: {
+                 if(!isTimerChange) {
+-                    music.seek(qtLyric.startTime[listView.currentIndex])
++                    simplePlayer.setposition(qtLyric.startTime[listView.currentIndex])
+                 }
+                 isTimerChange = false
+             }
+diff --git a/hydrogenMusic/qml/Main.qml b/hydrogenMusic/qml/Main.qml
+index 9e492c3..76f4a33 100644
+--- a/hydrogenMusic/qml/Main.qml
++++ b/hydrogenMusic/qml/Main.qml
+@@ -155,11 +155,14 @@ App {
+                     qtLyric.readLyric(prefix + temp + ".lrc")
+                     console.log("onListenThis: " + tempLaddress[3])
+                 } else {
+-                    load.visible = true
++                    if(load.sourceComponent) {
++                        load.item.visible = true
++                    }else {
++                        qtLyric.readLyric(prefix + temp + ".lrc")
++                    }
+                 }
+             } else { //当前没有播放任何歌曲
+                 mainpage.tempLaddress = vec
+-                control.sendMessage("songListShow ilike " + control.ID)
+                 qtLyric.readLyric(prefix + temp +".lrc")
+                 console.log("onListenThis: " + tempLaddress[0])
+             }
+@@ -210,7 +213,7 @@ App {
+     Connections {
+         target: load.item
+         onSonginterfaceBack: {
+-            load.visible = false
++            load.item.visible=false
+             if (songlist.sState == "search")
+                 songlist.songVec = prefix
+             else if (songlist.sState == "warehouse") {
+@@ -236,6 +239,7 @@ App {
+         SongInterface {
+             anchors.fill: parent
+             thisSong: tempLaddress
++
+         }
+     }
+ 
+diff --git a/hydrogenMusic/qml/SongInterface.qml b/hydrogenMusic/qml/SongInterface.qml
+index bf60529..001f3e9 100644
+--- a/hydrogenMusic/qml/SongInterface.qml
++++ b/hydrogenMusic/qml/SongInterface.qml
+@@ -7,12 +7,12 @@ Page {
+     id: songinterfacepage
+     title: qsTr("Hydrogen music")
+     property var thisSong
++    property string bigCover :"../assets/advertise/0.jpg"
+     //-----xiaoyao--s--------
+-    property string add: "rtsp://0.0.0.0/"+thisSong[0].substring(0, thisSong[0].length)
++    property string add: "rtsp://10.253.97.108/"+thisSong[0].substring(0, thisSong[0].length)
+     //-----xiaoyao--s--------
+     property string prefixx: "../assets/music/"
+     property var model:[IconType.arrowcircledown,IconType.arrowcircleoup,IconType.arrowcircleleft]
+-    opacity: messageRet.visible ? 0.3 : 1
+     signal songinterfaceBack
+ 
+     onThisSongChanged: {
+@@ -24,14 +24,15 @@ Page {
+         console.log("kkkkkkkkkkkk"+thisSong[0].substring(0, thisSong[0].length - 1)+"jjj")
+         //-----xiaoyao-----e------------
+     }
++    Component.onCompleted: control.sendMessage("searchCover "+thisSong[3])
+ 
+-    MediaPlayer {
+-        //可以播放音频和视频
+-        id: music
+-        autoPlay: true
+-        source: prefixx + thisSong[0]
++//    MediaPlayer {
++//        //可以播放音频和视频
++//        id: music
++//        autoPlay: true
++//        source: prefixx + thisSong[0]
+ 
+-    }
++//    }
+ 
+     IconButton {
+         id: ret
+@@ -137,10 +138,11 @@ Page {
+                     border.width: sp(1.5)
+                     anchors.verticalCenter: parent.verticalCenter
+                     border.color: Theme.secondaryTextColor
+-                    Label{
+-                        anchors.centerIn: parent
+-                        font.pointSize: 25
+-                        text: "专辑图"
++
++                    Image {
++                        id:bigcoverr
++                        anchors.fill: parent
++                        source: bigCover
+                     }
+                 }
+                 Rectangle{
+@@ -212,6 +214,7 @@ Page {
+             //value: music.position //hyMediaPlayer.get_current_schedule()
+             //onValueChanged: music.seek(value)
+             property bool sync: false
++            maximumValue:simplePlayer.getlength()
+             onValueChanged: {
+                 if(!sync)
+                     simplePlayer.setposition(value)
+@@ -219,7 +222,7 @@ Page {
+             Timer{
+                 id:t
+                 running: true
+-                interval: 300
++                interval: 3000
+                 repeat: true
+                 onTriggered:
+                 {
+@@ -472,6 +475,10 @@ Page {
+             }
+ 
+         }
++        onSearchCover:{
++            if((cover == "nopicture"))
++                bigcover = "../assets/advertise/"+cover
++        }
+     }
+ 
+     Rectangle {
