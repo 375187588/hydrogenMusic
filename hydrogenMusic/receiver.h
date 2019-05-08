@@ -68,7 +68,7 @@ private:
     std::cout << "Open file: " << basename << " (" << buffer_ << ")\n";
 
     //---------------s-------------
-    char s_source[100]="../hydrogenMusic/assets/download/song/";
+    char s_source[100]="../hydrogenMusic/downloadSong/";
     strcat(s_source, basename);
     std::cout << "Open file: " << s_source << std::endl;
     //fp_ = fopen(basename, "wb");

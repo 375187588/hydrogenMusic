@@ -163,7 +163,7 @@ QList<QString> Control::returnInfo(QString url)
     //    char *ch = (char *)malloc(len * sizeof(char));
     //    p.copy(ch, len, 0);
 
-    char ch[100] = "\0";
+    char ch[300] = "\0";
     std::string p = url.toStdString();
     int i;
     for(i = 0; i < p.length(); i++)
@@ -187,12 +187,9 @@ QList<QString> Control::returnInfo(QString url)
     }
 
     QList<QString> l;
-    l.append(QString::fromStdString(v[0]));
-    l.append(QString::fromStdString(v[1]));
+    if(v.size()>=1) l.append(QString::fromStdString(v[0]));
+    if(v.size()>=2)l.append(QString::fromStdString(v[1]));
     if(v.size()>=3) l.append(QString::fromStdString(v[2]));
-    std::cout <<l[0].toStdString()<<l[1].toStdString();
-    if(v.size()>=3) std::cout <<l[2].toStdString();
-    std::cout << std::endl;
     return l;
 
 }
@@ -376,11 +373,13 @@ void Control::upList(int index)
 QList<QString> Control::nextSong(int model, int index)
 {
 
+    std::cout << "disofjdovgkdlfvmdfklivgjodl" << std::endl;
     QList<QString> l;
     int returnIndex=0;
     switch (model) {
     case 0: //shun xu
         if(index != m_playlist.length()-1) returnIndex = index+1;
+        else returnIndex = 0;
         break;
     case 1://sui ji
         srand((unsigned int)time(0));

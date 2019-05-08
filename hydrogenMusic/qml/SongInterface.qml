@@ -16,6 +16,16 @@ Page {
     signal songinterfaceBack
     property var realaddr;
 
+    Connections {
+        target: simplePlayer
+        onCurrentSongEnd: {
+            var nextsong = control.nextSong(modelchange.modelNum,control.currentSong(thisSong[3]))
+            thisSong = nextsong
+            var temp = nextsong[0]
+            temp = temp.substring(0, temp.length - 4)
+            qtLyric.readLyric(songinterfacepage.prefix + temp + ".lrc")
+        }
+    }
     onThisSongChanged: {
         pausePictrue.paused = false
         pausePictrue.icon = IconType.pause
@@ -23,8 +33,11 @@ Page {
         //var addhead = "rtsp://0.0.0.0/"+thisSong
 
         realaddr="rtsp://0.0.0.0/"+control.switchname(thisSong[0].substring(0, thisSong[0].length))
+
         simplePlayer.openUrl(realaddr)
         console.log("kkkkkkkkkkkk"+thisSong[0].substring(0, thisSong[0].length - 1)+"jjj")
+
+
         //-----xiaoyao-----e------------
     }
     Component.onCompleted: control.sendMessage("searchCover "+thisSong[3])

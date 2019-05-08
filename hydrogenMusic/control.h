@@ -59,12 +59,21 @@ public:
         else if(songname=="陈奕迅 - 好久不见.mp3")
             return "haojiubujian.mp3";
         else if(songname=="Rocky - 那就这样吧.mp3")
-            return "najiuzheyangba.mp3";
-        else if(songname=="李雪莱 - 好想你.mp3")
-            return "lihaoxiangni.mp3";
+            return "najiuzheyangba.mp3";        
+        else if(songname=="爱的代价.mp3")
+            return "aidedaijia.mp3";
+        else if(songname=="排骨教主 - 清明上河图.mp3")
+            return "qingmingshanghetu.mp3";
+        else if(songname=="青蛙 - 小跳蛙.mp3")
+            return "xiaotiaowa.mp3";
+        else if(songname=="薛之谦 - 演员.mp3")
+            return "yanyuan.mp3";
+        else if(songname=="张靓颖、李荣浩 - 女儿国.mp3")
+            return "nverguo.mp3";
+        else if(songname=="Delacey - Dream It Possible.mp3")
+            return "DreamItPossible.mp3";
         else
-            return songname;
-
+            return "test.mp3";
     }
 
 

@@ -9,7 +9,8 @@
 #include <cstdio>
 #include <cstring>
 #include <boost/shared_ptr.hpp>
-
+#include <ios>
+#include <string.h>
 
 void sender(asio::io_service& io, const char* ip_address, unsigned port, const char* filename)
 {
@@ -306,7 +307,7 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         }
         //--------------s----------------
         char csong[50];
-        int length = downloadM[3].copy(csong,49);
+        int length = downloadM[0].copy(csong,49);
         csong[length-1] = '\0';
         //--------------e----------------------
         std::string c = "INSERT INTO download VALUES('" + downloadM[0] + "','" + downloadM[1] + "','" + downloadM[2] + "','" + downloadM[3] + "','" + downloadM[4] + "','" + downloadM[5] + "');";
@@ -334,8 +335,12 @@ void Server::read_handler(const boost::system::error_code&ec,sock_ptr sock)
         //---------------s-------------
         char s_source[100]="../server/source/song/";
         strcat(s_source, csong);
+        int length_ = strlen(s_source);
+        s_source[length_]='\0';
+        std::cout<<"sss"<<s_source<<"eee"<<std::endl;
 
         //-----------------e---------------
+        //char songadd[50]="/root/陈奕迅 - 好久不见.mp3";
         sender(m_ser, caddress,1345, s_source);
         //------------e---------------------
 

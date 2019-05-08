@@ -246,6 +246,7 @@ App {
     Connections {
         target: qtLyric
         onOk: {
+            if(!(load.sourceComponent == songinterface && load.item.visible == false))
             load.sourceComponent = songinterface
         }
     }

@@ -29,6 +29,16 @@ SimplePlayer::~SimplePlayer()
 
 }
 
+QString SimplePlayer::nextSongAddr()
+{
+    return m_nextSongAddr;
+}
+
+void SimplePlayer::setNextSongAddr(QString addr)
+{
+    m_nextSongAddr = addr;
+}
+
 //void SimplePlayer::openLocal()
 //{
 //    QString file =
@@ -47,16 +57,18 @@ SimplePlayer::~SimplePlayer()
 void SimplePlayer::openUrl(QString add)
 {
     //QString url = "rtsp://192.168.42.193/test.mp3";
-    //QString url = "rtsp://0.0.0.0/test.mp3";
+    //QString url = ;
     QString url = add;
+
 
 
     if (url.isEmpty())
         return;
 
-    if(_media!=nullptr)
-        delete _media;
+//    if(_media!=nullptr)
+//        delete _media;
     _media = new VlcMedia(url, _instance);
+
 
     _player->open(_media);
 }

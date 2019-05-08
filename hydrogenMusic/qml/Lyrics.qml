@@ -18,7 +18,7 @@ Page {
         onTriggered: {
             current = simplePlayer.getpositon()
             isTimerChange = true
-            listView.currentIndex = at
+            if(at.prop !== undefined) listView.currentIndex = at
         }
     }
 
