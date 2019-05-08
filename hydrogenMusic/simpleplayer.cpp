@@ -54,6 +54,8 @@ void SimplePlayer::openUrl(QString add)
     if (url.isEmpty())
         return;
 
+    if(_media!=nullptr)
+        delete _media;
     _media = new VlcMedia(url, _instance);
 
     _player->open(_media);

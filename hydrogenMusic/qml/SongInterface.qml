@@ -9,18 +9,21 @@ Page {
     property var thisSong
     property string bigCover :"../assets/advertise/0.jpg"
     //-----xiaoyao--s--------
-    property string add: "rtsp://10.253.97.108/"+thisSong[0].substring(0, thisSong[0].length)
+    property string add: "rtsp://0.0.0.0/"+thisSong[0].substring(0, thisSong[0].length)
     //-----xiaoyao--s--------
     property string prefixx: "../assets/music/"
     property var model:[IconType.arrowcircledown,IconType.arrowcircleoup,IconType.arrowcircleleft]
     signal songinterfaceBack
+    property var realaddr;
 
     onThisSongChanged: {
         pausePictrue.paused = false
         pausePictrue.icon = IconType.pause
         //-----xiaoyao--s--------------
         //var addhead = "rtsp://0.0.0.0/"+thisSong
-        simplePlayer.openUrl(add)
+
+        realaddr="rtsp://0.0.0.0/"+control.switchname(thisSong[0].substring(0, thisSong[0].length))
+        simplePlayer.openUrl(realaddr)
         console.log("kkkkkkkkkkkk"+thisSong[0].substring(0, thisSong[0].length - 1)+"jjj")
         //-----xiaoyao-----e------------
     }
@@ -476,8 +479,8 @@ Page {
 
         }
         onSearchCover:{
-            if((cover == "nopicture"))
-                bigcover = "../assets/advertise/"+cover
+            //if((cover == "nopicture"))
+             //   bigcover = "../assets/advertise/"+cover
         }
     }
 

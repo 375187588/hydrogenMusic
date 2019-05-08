@@ -50,6 +50,26 @@ public:
     Q_INVOKABLE QList<QString> nextSong(int model,int index);
     Q_INVOKABLE int currentSong(QString nameArID);
     Q_INVOKABLE void send(QString file);
+    Q_INVOKABLE QString switchname(QString songname)
+    {
+        if(songname=="蔡旻佑 - 好不好.mp3")
+            return "haobuhao.mp3";
+        else if(songname=="沈以诚 - 好想你.mp3")
+            return "haoxiangni.mp3";
+        else if(songname=="陈奕迅 - 好久不见.mp3")
+            return "haojiubujian.mp3";
+        else if(songname=="Rocky - 那就这样吧.mp3")
+            return "najiuzheyangba.mp3";
+        else if(songname=="李雪莱 - 好想你.mp3")
+            return "lihaoxiangni.mp3";
+        else
+            return songname;
+
+    }
+
+
+
+
     Q_INVOKABLE QString getSongName(QString songName); //get name from address of the song.
     QList<Song *> detach(std::string ret); //datach to song*
     QList<QString> detachToQstring(std::string ret);
