@@ -1,0 +1,25 @@
+程序运行需知：
+1.服务器端需建立hydrogenMusicDB数据库。
+2.目前工作人员端的上传音乐（将.mp3解析出数据存到数据库）和一般听歌用户功能合并在了一个客户端上，所以这个客户端既可以以工作人员的角色上传音乐，
+又可以以一般用户的角色拥有听歌体验。
+3.程序运行起来后，曲库的内容默认为空，需要用户自己添加歌曲到曲库中，然后才能进行在线查看、播放音乐等操作。
+4.歌词显示只支持.lrc格式的歌词。
+5.本程序的运行环境：
+linux操作系统、开发环境与工具：live555开源流媒体库、VLC-QT多媒体开发库、MySQL数据库、v-play跨平台开发引擎（现改名为Felgo）、Qt5开发框架、
+QtCreator集成开发环境、Boost.Asio网络编程库、c++、qml程序开发语言、ffmpeg、SDL。
+
+
+程序初次运行：
+运行此程序，需提供上述的运行环境。
+1、终端运行hydrogenMusic/server/source/song/live555MediaServer，注意RTSP服务器的地址与客户端代码中的地址是否相同，不相同要修改客户端请求媒体资源的rtsp地址。
+2、运行mysql数据库，然后创建hydrogenMusicDB数据库（数据库名参考代码）。
+3、QtCreator运行server、client。（需配置相关的编译环境，编译参数可能因环境不同而不同）
+
+
+再次运行：
+1、先启动mysql数据库。
+2、终端运行hydrogenMusic/server/source/song/live555MediaServer。
+3、QtCreator运行server、 client。
+
+
+如果上传歌曲未传封面，则加载本地"../assets/advertise/0.jpg"，所以这个目录下这张图片不要删
